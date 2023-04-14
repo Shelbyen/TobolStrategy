@@ -8,6 +8,7 @@ public class Builder : MonoBehaviour
 
     public bool DestroyMode;
     public bool GridMode;
+    public GameObject building;
 
     public GameObject ActiveBuilding;
     public RaycastHit BuilderHit;
@@ -46,10 +47,10 @@ public class Builder : MonoBehaviour
             else ActiveBuilding.transform.position = BuilderHit.point;
         }
     }
-    public void StartBuilding(GameObject BuildingPrefab)
+    public void StartBuilding()
     {
         GameManager.BlockRaycast = true;
-        ActiveBuilding = Instantiate(BuildingPrefab);
+        ActiveBuilding = Instantiate(building);
         Debug.Log("Building instantiated");
     }
 
