@@ -69,9 +69,12 @@ MonoBehaviour:
   BaseMaterial: {fileID: 0}
   BuildingCollider: {fileID: 0}
   BuilderScript: {fileID: 0}
+  ResManager: {fileID: 0}
   HP: 0
   BuildProgress: 0
-  CollisionCount: 0
+  WoodNeed: 7
+  StoneNeed: 0
+  IronNeed: 0
 --- !u!54 &3401789082355311394
 Rigidbody:
   m_ObjectHideFlags: 0

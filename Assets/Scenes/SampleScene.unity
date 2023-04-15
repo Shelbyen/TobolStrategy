@@ -131,9 +131,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 113245803}
-  - component: {fileID: 113245802}
-  - component: {fileID: 113245804}
+
   m_Layer: 0
   m_Name: CameraView
   m_TagString: Untagged
@@ -186,11 +184,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GameManager: {fileID: 0}
+  Gold: 0
+  GoldCount: {fileID: 1561455546}
   DestroyMode: 0
   GridMode: 0
   WrongMaterial: {fileID: 0}
   GoodMaterial: {fileID: 0}
   ActiveBuilding: {fileID: 0}
+
 --- !u!1 &160120854
 GameObject:
   m_ObjectHideFlags: 0
@@ -317,7 +318,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Kazarma
+  m_text: Barak
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -5887,7 +5888,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Cercov
+  m_text: 'Church
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -6058,6 +6061,8 @@ RectTransform:
   m_Children:
   - {fileID: 361061322}
   - {fileID: 899575472}
+  - {fileID: 1794288131}
+  - {fileID: 1561455545}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -22.278, y: 0, z: 0}
