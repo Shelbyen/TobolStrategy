@@ -164,8 +164,11 @@ MonoBehaviour:
   Placed: 0
   Built: 0
   Destruction: 0
+  BaseMaterial: {fileID: 2100000, guid: ad3801a339c371d45a0c2b9b0793f2be, type: 2}
+  BuildingCollider: {fileID: 0}
   HP: 0
   Enter: {x: 0, y: 0, z: 0}
+  CollisionCount: 0
 --- !u!65 &5992470404209634533
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -177,7 +180,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.95, z: 1}
+  m_Size: {x: 1.1, y: 0.95, z: 1.1}
   m_Center: {x: 0, y: 0.525, z: 0}
 --- !u!54 &4988231443566785920
 Rigidbody:

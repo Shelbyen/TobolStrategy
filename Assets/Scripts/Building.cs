@@ -9,10 +9,19 @@ public class Building : MonoBehaviour
     public bool Built;
     public bool Destruction;
 
+    public Material BaseMaterial;
+    public Collider BuildingCollider;
+
     public float HP;
     public Vector3 Enter;
 
     public int CollisionCount;
+
+    public void Awake()
+    {
+        BuildingCollider = GetComponent<Collider>();
+        BaseMaterial = GetComponentsInChildren<Renderer>()[0].material;
+    }
 
     public void OnTriggerEnter(Collider Collider)
     {
