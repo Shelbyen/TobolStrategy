@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Builder : MonoBehaviour
 {
     public GameManagerScript GameManager;
+    public int Gold;
+    public TMP_Text GoldCount;
 
     public bool DestroyMode;
     public bool GridMode;
@@ -33,6 +36,8 @@ public class Builder : MonoBehaviour
             if (Input.GetMouseButtonDown(1)) PlaceBuilding();
             if (Input.GetMouseButtonDown(0)) CancelBuilding();
         }
+
+        GoldCount.text = $"{"Gold: " + Gold}";
     }
 
     public void HotKeys()

@@ -15,16 +15,34 @@ public class Building : MonoBehaviour
     public float HP;
     public float BuildProgress;
 
-    public int CollisionCount;
+    public int GoldCost;
+
+    private int CollisionCount;
 
     public void Awake()
     {
         BuilderScript = GameObject.Find("CameraObject").GetComponent<Builder>();
         BuildingCollider = GetComponent<Collider>();
         BaseMaterial = GetComponentsInChildren<Renderer>()[0].material;
+
+        if (GoldCost <= BuilderScript.Gold) WrongPlace();
+        else GoodPlace();
+
         if (!Placed) for (int i = 0; i < GetComponentsInChildren<Renderer>().Length; i += 1)
         {
             GetComponentsInChildren<Renderer>()[i].material = BuilderScript.GoodMaterial;
+        }
+    }
+
+    public void FixedUpdate()
+    {
+        if (!Built)
+        {
+            if (Placed) BuildProgress += 1;
+            if (BuildProgress >= 100) BuildThis();
+
+            if (GoldCost <= BuilderScript.Gold) WrongPlace();
+            else GoodPlace();
         }
     }
 
