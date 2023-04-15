@@ -9,6 +9,9 @@ public class Builder : MonoBehaviour
     public bool DestroyMode;
     public bool GridMode;
 
+    public Material WrongMaterial;
+    public Material GoodMaterial;
+
     public GameObject ActiveBuilding;
     public RaycastHit BuilderHit;
 
@@ -58,6 +61,7 @@ public class Builder : MonoBehaviour
     {
         GameManager.BlockRaycast = true;
         ActiveBuilding = Instantiate(BuildingPrefab);
+
         Debug.Log("Building instantiated");
     }
 
@@ -66,6 +70,7 @@ public class Builder : MonoBehaviour
         if (Physics.Raycast(GameManager.MainCamera.ScreenPointToRay(Input.mousePosition), out BuilderHit, 100f, (1 << 7)))
         {
             Destroy(BuilderHit.transform.gameObject);
+
             Debug.Log("Building erased");
         }
     }
@@ -76,6 +81,7 @@ public class Builder : MonoBehaviour
         {
             ActiveBuilding.GetComponent<Building>().Placed = true;
             ActiveBuilding = null;
+
             Debug.Log("Building placed");
         }
     }
@@ -83,6 +89,7 @@ public class Builder : MonoBehaviour
     public void CancelBuilding()
     {
         Destroy(ActiveBuilding);
+
         Debug.Log("Cancel building");
     }
 }
