@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18230188, g: 0.22486997, b: 0.28911617, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -173,6 +173,8 @@ MonoBehaviour:
   GameManager: {fileID: 0}
   DestroyMode: 0
   GridMode: 0
+  WrongMaterial: {fileID: 2100000, guid: b4e076f02a49fd546a21e1e21a7a65bc, type: 2}
+  GoodMaterial: {fileID: 2100000, guid: 1906937684a09694c86960df614369ba, type: 2}
   ActiveBuilding: {fileID: 0}
 --- !u!114 &146525431
 MonoBehaviour:
@@ -195,7 +197,7 @@ MonoBehaviour:
   MovementX: 0
   AxisZ: 0
   AxisX: 0
-  BorderMovementDistance: 0.005
+  BorderMovementDistance: -1e+14
   BlockCameraRotation: 0
   CameraRotationSpeed: 750
   BlockRaycast: 0
@@ -623,14 +625,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 705507993}
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
+  m_LocalRotation: {x: -0.9512513, y: 0.044943422, z: -0.25488698, w: -0.16773117}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: -200, y: -30, z: 0}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
