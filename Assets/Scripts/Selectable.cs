@@ -7,6 +7,13 @@ public class Selectable : MonoBehaviour
     public string Name;
     public bool Selected;
 
+    public Building Building;
+
+    public void Awake()
+    {
+        Building = GetComponent<Building>();
+    }
+
     public void SelectThis()
     {
         Selected = true;

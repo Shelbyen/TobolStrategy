@@ -47,8 +47,6 @@ public class Builder : MonoBehaviour
         }
 
         if (Input.GetKeyDown("r")) Rotate45();
-
-
     }
 
     public void Rotate45()
@@ -74,9 +72,12 @@ public class Builder : MonoBehaviour
 
     public void PlaceBuilding()
     {
-        ActiveBuilding.GetComponent<Building>().Placed = true;
-        ActiveBuilding = null;
-        Debug.Log("Building placed");
+        if (!ActiveBuilding.GetComponent<Building>().IsWrongPlace)
+        {
+            ActiveBuilding.GetComponent<Building>().Placed = true;
+            ActiveBuilding = null;
+            Debug.Log("Building placed");
+        }
     }
 
     public void CancelBuilding()
