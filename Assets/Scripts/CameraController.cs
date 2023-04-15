@@ -28,7 +28,7 @@ public class CameraController : MonoBehaviour
 
         transform.Translate(new Vector3(hor, 0, ver) * Time.deltaTime * _mult * speed, Space.Self);
 
-        transform.position += transform.up * -Input.GetAxis("Mouse ScrollWheel") * zoomSpeed;
+        transform.Translate(0, 0, -Input.GetAxis("Mouse ScrollWheel") * zoomSpeed, Space.Self);
 
         transform.position = new Vector3(
             transform.position.x,
