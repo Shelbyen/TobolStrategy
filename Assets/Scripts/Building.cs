@@ -28,10 +28,13 @@ public class Building : MonoBehaviour
         if (GoldCost <= BuilderScript.Gold && CollisionCount <= 0) GoodPlace();
         else WrongPlace();
 
-        if (!Placed) for (int i = 0; i < GetComponentsInChildren<Renderer>().Length; i += 1)
+        if (!Placed) 
+        {
+            foreach (Renderer renderer in GetComponentsInChildren<Renderer>()) 
             {
-                GetComponentsInChildren<Renderer>()[i].material = BuilderScript.GoodMaterial;
+                renderer.material = BuilderScript.GoodMaterial;
             }
+        }
     }
 
     public void FixedUpdate()
@@ -67,9 +70,9 @@ public class Building : MonoBehaviour
     {
         Debug.Log("Good place or No money");
         IsWrongPlace = true;
-        for (int i = 0; i < GetComponentsInChildren<Renderer>().Length; i += 1)
+        foreach (Renderer renderer in GetComponentsInChildren<Renderer>()) 
         {
-            GetComponentsInChildren<Renderer>()[i].material = BuilderScript.WrongMaterial;
+            renderer.material = BuilderScript.WrongMaterial;
         }
     }
 
@@ -77,27 +80,27 @@ public class Building : MonoBehaviour
     {
         Debug.Log("All is good");
         IsWrongPlace = false;
-        for (int i = 0; i < GetComponentsInChildren<Renderer>().Length; i += 1)
+        foreach (Renderer renderer in GetComponentsInChildren<Renderer>()) 
         {
-            GetComponentsInChildren<Renderer>()[i].material = BuilderScript.GoodMaterial;
+            renderer.material = BuilderScript.GoodMaterial;
         }
     }
 
     public void PlaceThis()
     {
         Placed = true;
-        for (int i = 0; i < GetComponentsInChildren<Renderer>().Length; i += 1)
+        foreach (Renderer renderer in GetComponentsInChildren<Renderer>()) 
         {
-            GetComponentsInChildren<Renderer>()[i].material = BuilderScript.GoodMaterial;
+            renderer.material = BuilderScript.GoodMaterial;
         }
     }
 
     public void BuildThis()
     {
         Built = true;
-        for (int i = 0; i < GetComponentsInChildren<Renderer>().Length; i += 1)
+        foreach (Renderer renderer in GetComponentsInChildren<Renderer>()) 
         {
-            GetComponentsInChildren<Renderer>()[i].material = BaseMaterial;
+            renderer.material = BaseMaterial;
         }
     }
 }

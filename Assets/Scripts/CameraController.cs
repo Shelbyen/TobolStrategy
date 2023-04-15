@@ -4,8 +4,13 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    public float rotateSpeed = 16.0f, speed = 10.0f, zoomSpeed = 10.0f;
+    public float rotateSpeed = 16.0f;
+    public float movmentSpeed = 10.0f;
+    public float zoomSpeed = 10.0f;
+    public float sensitivity=1f;
 
+    private float _zoomLevel;
+    private float _zoomPosition;
     private float _mult = 1f;
 
     private void Update() 
@@ -26,13 +31,15 @@ public class CameraController : MonoBehaviour
 
         transform.Rotate(Vector3.up * rotateSpeed * Time.deltaTime * rotate * _mult, Space.World);
 
-        transform.Translate(new Vector3(hor, 0, ver) * Time.deltaTime * _mult * speed, Space.Self);
+        transform.Translate(new Vector3(hor, 0, ver) * Time.deltaTime * _mult * movmentSpeed, Space.Self);
 
-        transform.Translate(0, 0, -Input.GetAxis("Mouse ScrollWheel") * zoomSpeed, Space.Self);
+        _zoomLevel = Mathf.Clamp(Input.GetAxis("Mouse ScrollWheel") * sensitivity, -5, 5);
+        _zoomPosition = Mathf.MoveTowards(_zoomPosition, _zoomLevel, zoomSpeed * Time.deltaTime);
+        transform.position = transform.position + (Camera.main.transform.forward * _zoomPosition);
 
         transform.position = new Vector3(
             transform.position.x,
-            Mathf.Clamp(transform.position.y, -6f, 8f),
+            Mathf.Clamp(transform.position.y, -6, 10),
             transform.position.z
         );
     }

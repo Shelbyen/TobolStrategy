@@ -34,11 +34,7 @@ public class Builder : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown("f"))
-        {
-            if (BuildMode) SiwtchbuildMode(false);
-            else SiwtchbuildMode(true);
-        }
+        if (Input.GetKeyDown("f")) SiwtchbuildMode(!BuildMode);
 
         if (BuildMode)
         {
@@ -55,7 +51,7 @@ public class Builder : MonoBehaviour
             }
         }
 
-        GoldCount.text = $"{Gold}";
+        GoldCount.text = Gold.ToString();
     }
 
     public void HotKeys()
@@ -76,8 +72,8 @@ public class Builder : MonoBehaviour
         CancelBuilding();
         DestroyMode = !DestroyMode;
         Debug.Log("Destroy Switched");
-        if (DestroyMode) Info.text = $"{"Destroy mode"}";
-        else Info.text = $"{" "}";
+        if (DestroyMode) Info.text = "Destroy mode";
+        else Info.text = "";
     }
 
     public void SwitchGridMode()
@@ -88,24 +84,21 @@ public class Builder : MonoBehaviour
 
     public void MoveBuilding()
     {
-        if (Physics.Raycast(GameManager.MainCamera.ScreenPointToRay(Input.mousePosition), out BuilderHit, 100f, (1 << 6)))
+        if (Physics.Raycast(GameManager.MainCamera.ScreenPointToRay(Input.mousePosition), out BuilderHit, 100f, 64))
         {
             if (GridMode) ActiveBuilding.transform.position = new Vector3 (Mathf.Round(BuilderHit.point.x), BuilderHit.point.y, Mathf.Round(BuilderHit.point.z));
             else ActiveBuilding.transform.position = BuilderHit.point;
         }
 
-        if (Input.GetKeyDown("r")) Rotate45();
-    }
-
-    public void Rotate45()
-    {
-        ActiveBuilding.transform.Rotate(0, 45, 0);
+        if(Input.GetKeyDown(KeyCode.R)) {
+            ActiveBuilding.transform.Rotate(Vector3.up * 45);
+        }
     }
 
     public void StartBuilding(GameObject BuildingPrefab)
     {
         DestroyMode = false;
-        Info.text = $"{" "}";
+        Info.text = "";
         CancelBuilding();
         ActiveBuilding = Instantiate(BuildingPrefab);
 
@@ -114,7 +107,7 @@ public class Builder : MonoBehaviour
 
     public void DestroyBuilding()
     {
-        if (Physics.Raycast(GameManager.MainCamera.ScreenPointToRay(Input.mousePosition), out BuilderHit, 100f, (1 << 7)))
+        if (Physics.Raycast(GameManager.MainCamera.ScreenPointToRay(Input.mousePosition), out BuilderHit, 100f, 128))
         {
             if (!BuilderHit.transform.gameObject.GetComponent<Building>().Built) Gold += BuilderHit.transform.gameObject.GetComponent<Building>().GoldCost;
             Destroy(BuilderHit.transform.gameObject);
@@ -125,10 +118,12 @@ public class Builder : MonoBehaviour
 
     public void PlaceBuilding()
     {
-        if (!ActiveBuilding.GetComponent<Building>().IsWrongPlace)
+        Building buildingComponent = ActiveBuilding.GetComponent<Building>();
+        
+        if (!buildingComponent.IsWrongPlace)
         {
-            ActiveBuilding.GetComponent<Building>().Placed = true;
-            Gold -= ActiveBuilding.GetComponent<Building>().GoldCost;
+            buildingComponent.Placed = true;
+            Gold -= buildingComponent.GoldCost;
             ActiveBuilding = null;
             GameManager.BlockRaycast = false;
 
