@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.AI;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManagerScript : MonoBehaviour
 {
@@ -28,6 +29,9 @@ public class GameManagerScript : MonoBehaviour
     public bool BlockRaycast;
     public GameObject SelectedObject;
     public RaycastHit SelectingHit;
+    public Image Timer;
+    public float TimeBeforeRaid;
+    public float TimeLeft;
 
 
     void Awake()
@@ -45,6 +49,12 @@ public class GameManagerScript : MonoBehaviour
         {
             SelectObject();
         }
+    }
+
+    void FixedUpdate()
+    {
+        TimeLeft += Time.fixedDeltaTime / TimeBeforeRaid;
+        Timer.fillAmount = TimeLeft;
     }
 
     /*public void CameraMovement()

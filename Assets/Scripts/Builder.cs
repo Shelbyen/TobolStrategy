@@ -20,6 +20,9 @@ public class Builder : MonoBehaviour
     public RaycastHit BuilderHit;
 
     public GameObject Menu;
+    //public Image GridButton;
+    //public Image DestroyButton;
+    public TMP_Text Info;
 
     public bool BuildMode;
 
@@ -70,8 +73,11 @@ public class Builder : MonoBehaviour
 
     public void SwitchDestroyMode()
     {
+        CancelBuilding();
         DestroyMode = !DestroyMode;
         Debug.Log("Destroy Switched");
+        if (DestroyMode) Info.text = $"{"Destroy mode"}";
+        else Info.text = $"{" "}";
     }
 
     public void SwitchGridMode()
@@ -98,6 +104,8 @@ public class Builder : MonoBehaviour
 
     public void StartBuilding(GameObject BuildingPrefab)
     {
+        DestroyMode = false;
+        Info.text = $"{" "}";
         CancelBuilding();
         ActiveBuilding = Instantiate(BuildingPrefab);
 
@@ -108,6 +116,7 @@ public class Builder : MonoBehaviour
     {
         if (Physics.Raycast(GameManager.MainCamera.ScreenPointToRay(Input.mousePosition), out BuilderHit, 100f, (1 << 7)))
         {
+            if (!BuilderHit.transform.gameObject.GetComponent<Building>().Built) Gold += BuilderHit.transform.gameObject.GetComponent<Building>().GoldCost;
             Destroy(BuilderHit.transform.gameObject);
 
             Debug.Log("Building erased");
