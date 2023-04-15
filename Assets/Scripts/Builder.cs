@@ -85,6 +85,7 @@ public class Builder : MonoBehaviour
         if (!ActiveBuilding.GetComponent<Building>().IsWrongPlace)
         {
             ActiveBuilding.GetComponent<Building>().Placed = true;
+            Gold -= ActiveBuilding.GetComponent<Building>().GoldCost;
             ActiveBuilding = null;
 
             Debug.Log("Building placed");

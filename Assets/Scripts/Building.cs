@@ -16,7 +16,6 @@ public class Building : MonoBehaviour
     public float BuildProgress;
 
     public int GoldCost;
-    public bool HaveMoney;
 
     private int CollisionCount;
 
@@ -26,8 +25,8 @@ public class Building : MonoBehaviour
         BuildingCollider = GetComponent<Collider>();
         BaseMaterial = GetComponentsInChildren<Renderer>()[0].material;
 
-        //if (GoldCost <= BuilderScript.Gold) WrongPlace();
-        //else GoodPlace();
+        if (GoldCost <= BuilderScript.Gold && CollisionCount <= 0) GoodPlace();
+        else WrongPlace();
 
         if (!Placed) for (int i = 0; i < GetComponentsInChildren<Renderer>().Length; i += 1)
             {
@@ -39,11 +38,13 @@ public class Building : MonoBehaviour
     {
         if (!Built)
         {
-            if (Placed) BuildProgress += 1;
+            if (Placed) BuildProgress += 10 * Time.fixedDeltaTime;
             if (BuildProgress >= 100) BuildThis();
-
-            //if (GoldCost <= BuilderScript.Gold) WrongPlace();
-            //else GoodPlace();
+        }
+        if (!Placed)
+        { 
+            if (GoldCost <= BuilderScript.Gold && CollisionCount <= 0) GoodPlace();
+            else WrongPlace();
         }
     }
 
@@ -52,7 +53,6 @@ public class Building : MonoBehaviour
         if (!Placed)
         {
             CollisionCount += 1;
-            WrongPlace();
         }
     }
     public void OnTriggerExit(Collider Collider)
@@ -60,13 +60,12 @@ public class Building : MonoBehaviour
         if (!Placed)
         {
             CollisionCount -= 1;
-            if (CollisionCount == 0) GoodPlace();
         }
     }
 
     public void WrongPlace()
     {
-        Debug.Log("Wrong place");
+        Debug.Log("Good place or No money");
         IsWrongPlace = true;
         for (int i = 0; i < GetComponentsInChildren<Renderer>().Length; i += 1)
         {
@@ -76,7 +75,7 @@ public class Building : MonoBehaviour
 
     public void GoodPlace()
     {
-        Debug.Log("Good place");
+        Debug.Log("All is good");
         IsWrongPlace = false;
         for (int i = 0; i < GetComponentsInChildren<Renderer>().Length; i += 1)
         {
@@ -89,12 +88,16 @@ public class Building : MonoBehaviour
         Placed = true;
         for (int i = 0; i < GetComponentsInChildren<Renderer>().Length; i += 1)
         {
-            GetComponentsInChildren<Renderer>()[i].material = BaseMaterial;
+            GetComponentsInChildren<Renderer>()[i].material = BuilderScript.GoodMaterial;
         }
     }
 
     public void BuildThis()
     {
         Built = true;
+        for (int i = 0; i < GetComponentsInChildren<Renderer>().Length; i += 1)
+        {
+            GetComponentsInChildren<Renderer>()[i].material = BaseMaterial;
+        }
     }
 }
