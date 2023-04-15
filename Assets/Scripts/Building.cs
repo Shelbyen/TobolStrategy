@@ -12,9 +12,17 @@ public class Building : MonoBehaviour
     public float HP;
     public Vector3 Enter;
 
-    void OnColliderStay(Collider Collider)
+    public int CollisionCount;
+
+    public void OnTriggerEnter(Collider Collider)
     {
+        CollisionCount += 1;
         WrongPlace();
+    }
+    public void OnTriggerExit(Collider Collider)
+    {
+        CollisionCount -= 1;
+        if (CollisionCount == 0) GoodPlace();
     }
 
     public void WrongPlace()
@@ -25,6 +33,7 @@ public class Building : MonoBehaviour
 
     public void GoodPlace()
     {
+        Debug.Log("Good place");
         IsWrongPlace = false;
     }
 }
