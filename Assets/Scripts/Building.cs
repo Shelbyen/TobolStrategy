@@ -22,7 +22,7 @@ public class Building : MonoBehaviour
         BuilderScript = GameObject.Find("CameraObject").GetComponent<Builder>();
         BuildingCollider = GetComponent<Collider>();
         BaseMaterial = GetComponentsInChildren<Renderer>()[0].material;
-        for (int i = 0; i < GetComponentsInChildren<Renderer>().Length; i += 1)
+        if (!Placed) for (int i = 0; i < GetComponentsInChildren<Renderer>().Length; i += 1)
         {
             GetComponentsInChildren<Renderer>()[i].material = BuilderScript.GoodMaterial;
         }
