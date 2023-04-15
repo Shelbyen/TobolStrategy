@@ -45,6 +45,8 @@ public class Builder : MonoBehaviour
             if (GridMode) ActiveBuilding.transform.position = new Vector3 (Mathf.Round(BuilderHit.point.x), BuilderHit.point.y, Mathf.Round(BuilderHit.point.z));
             else ActiveBuilding.transform.position = BuilderHit.point;
         }
+        //re
+        
     }
     public void StartBuilding(GameObject BuildingPrefab)
     {
