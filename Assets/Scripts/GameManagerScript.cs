@@ -5,12 +5,12 @@ using UnityEngine;
 
 public class GameManagerScript : MonoBehaviour
 {
-    //Объекты камеры
+    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
     public Camera MainCamera;
     public GameObject CameraRotator;
     public GameObject CameraObject;
 
-    //Перемещение
+    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     public bool BlockCameraController;
     public float CameraSpeed;
     public float MovementZ;
@@ -19,11 +19,11 @@ public class GameManagerScript : MonoBehaviour
     public float AxisX;
     public float BorderMovementDistance;
 
-    //Вращение (ось Y)
+    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅ Y)
     public bool BlockCameraRotation;
     public float CameraRotationSpeed;
 
-    //Выделение
+    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     public bool BlockRaycast;
     public GameObject SelectedObject;
     public RaycastHit SelectingHit;
@@ -38,8 +38,8 @@ public class GameManagerScript : MonoBehaviour
 
     void Update()
     {
-        if (!BlockCameraController) CameraMovement();
-        if (!BlockCameraRotation) CameraRotation();
+        // if (!BlockCameraController) CameraMovement();
+        // if (!BlockCameraRotation) CameraRotation();
         if (!BlockRaycast) SelectObject();
 
     }
