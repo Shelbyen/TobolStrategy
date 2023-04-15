@@ -12,13 +12,14 @@ public class Building : MonoBehaviour
     public float HP;
     public Vector3 Enter;
 
-    void OnColliderStay()
+    void OnColliderStay(Collider Collider)
     {
-
+        WrongPlace();
     }
 
     public void WrongPlace()
     {
+        Debug.Log("Wrong place");
         IsWrongPlace = true;
     }
 
