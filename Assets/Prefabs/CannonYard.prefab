@@ -69,12 +69,9 @@ MonoBehaviour:
   BaseMaterial: {fileID: 0}
   BuildingCollider: {fileID: 0}
   BuilderScript: {fileID: 0}
-  ResManager: {fileID: 0}
   HP: 0
   BuildProgress: 0
-  WoodNeed: 5
-  StoneNeed: 5
-  IronNeed: 5
+  GoldCost: 175
 --- !u!65 &-7726986225414062162
 BoxCollider:
   m_ObjectHideFlags: 0

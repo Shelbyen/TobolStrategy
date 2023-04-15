@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class Builder : MonoBehaviour
@@ -18,32 +19,65 @@ public class Builder : MonoBehaviour
     public GameObject ActiveBuilding;
     public RaycastHit BuilderHit;
 
+    public GameObject Menu;
+
+    public bool BuildMode;
+
     void Awake()
     {
         GameManager = GetComponent<GameManagerScript>();
+        Menu.SetActive(false);
     }
 
     void Update()
     {
-        HotKeys();
-        if (DestroyMode)
+        if (Input.GetKeyDown("f"))
         {
-            if (Input.GetMouseButtonDown(0)) DestroyBuilding();
-        }
-        if (ActiveBuilding != null)
-        {
-            MoveBuilding();
-            if (Input.GetMouseButtonDown(1)) PlaceBuilding();
-            if (Input.GetMouseButtonDown(0)) CancelBuilding();
+            if (BuildMode) SiwtchbuildMode(false);
+            else SiwtchbuildMode(true);
         }
 
-        GoldCount.text = $"{"Gold: " + Gold}";
+        if (BuildMode)
+        {
+            HotKeys();
+            if (DestroyMode)
+            {
+                if (Input.GetMouseButtonDown(0)) DestroyBuilding();
+            }
+            if (ActiveBuilding != null)
+            {
+                MoveBuilding();
+                if (Input.GetMouseButtonDown(1)) PlaceBuilding();
+                if (Input.GetKeyDown("delete")) CancelBuilding();
+            }
+        }
+
+        GoldCount.text = $"{Gold}";
     }
 
     public void HotKeys()
     {
-        if (Input.GetKeyDown("delete")) DestroyMode = !DestroyMode;
-        if (Input.GetKeyDown("g")) GridMode = !GridMode;
+        if (Input.GetKeyDown("delete") && ActiveBuilding == null) SwitchDestroyMode();
+        if (Input.GetKeyDown("g")) SwitchGridMode();
+    }
+
+    public void SiwtchbuildMode(bool Status)
+    {
+        BuildMode = Status;
+        Menu.SetActive(Status);
+        GameManager.BlockRaycast = Status;
+    }
+
+    public void SwitchDestroyMode()
+    {
+        DestroyMode = !DestroyMode;
+        Debug.Log("Destroy Switched");
+    }
+
+    public void SwitchGridMode()
+    {
+        GridMode = !GridMode;
+        Debug.Log("Grid Switched");
     }
 
     public void MoveBuilding()
@@ -64,7 +98,7 @@ public class Builder : MonoBehaviour
 
     public void StartBuilding(GameObject BuildingPrefab)
     {
-        GameManager.BlockRaycast = true;
+        CancelBuilding();
         ActiveBuilding = Instantiate(BuildingPrefab);
 
         Debug.Log("Building instantiated");
@@ -87,6 +121,7 @@ public class Builder : MonoBehaviour
             ActiveBuilding.GetComponent<Building>().Placed = true;
             Gold -= ActiveBuilding.GetComponent<Building>().GoldCost;
             ActiveBuilding = null;
+            GameManager.BlockRaycast = false;
 
             Debug.Log("Building placed");
         }

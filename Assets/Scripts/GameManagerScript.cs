@@ -41,8 +41,10 @@ public class GameManagerScript : MonoBehaviour
     {
         //if (!BlockCameraController) CameraMovement();
         //if (!BlockCameraRotation) CameraRotation();
-        if (!BlockRaycast) SelectObject();
-
+        if (!BlockRaycast)
+        {
+            SelectObject();
+        }
     }
 
     /*public void CameraMovement()
@@ -101,12 +103,18 @@ public class GameManagerScript : MonoBehaviour
                 SelectedObject = SelectingHit.transform.gameObject;
                 SelectedObject.GetComponent<Selectable>().SelectThis();
                 Debug.Log(SelectedObject.GetComponent<Selectable>().Name + " is selected");
+
             }
         }
         if (Input.GetMouseButtonDown(1) && SelectedObject != null)
         {
             DeselectObject();
         }
+    }
+    
+    public void HotKeys()
+    {
+
     }
 
     public void DeselectObject()
