@@ -8,7 +8,6 @@ public class Builder : MonoBehaviour
 
     public bool DestroyMode;
     public bool GridMode;
-    public GameObject building;
 
     public GameObject ActiveBuilding;
     public RaycastHit BuilderHit;
@@ -46,13 +45,21 @@ public class Builder : MonoBehaviour
             if (GridMode) ActiveBuilding.transform.position = new Vector3 (Mathf.Round(BuilderHit.point.x), BuilderHit.point.y, Mathf.Round(BuilderHit.point.z));
             else ActiveBuilding.transform.position = BuilderHit.point;
         }
-        //re
-        
+
+        if (Input.GetKeyDown("r")) Rotate45();
+
+
     }
-    public void StartBuilding()
+
+    public void Rotate45()
+    {
+        ActiveBuilding.transform.Rotate(0, 45, 0);
+    }
+
+    public void StartBuilding(GameObject BuildingPrefab)
     {
         GameManager.BlockRaycast = true;
-        ActiveBuilding = Instantiate(building);
+        ActiveBuilding = Instantiate(BuildingPrefab);
         Debug.Log("Building instantiated");
     }
 

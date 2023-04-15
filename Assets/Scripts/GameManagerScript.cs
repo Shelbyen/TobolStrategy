@@ -38,8 +38,8 @@ public class GameManagerScript : MonoBehaviour
 
     void Update()
     {
-        // if (!BlockCameraController) CameraMovement();
-        // if (!BlockCameraRotation) CameraRotation();
+        if (!BlockCameraController) CameraMovement();
+        if (!BlockCameraRotation) CameraRotation();
         if (!BlockRaycast) SelectObject();
 
     }
