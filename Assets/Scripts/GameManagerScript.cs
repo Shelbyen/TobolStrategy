@@ -7,9 +7,10 @@ public class GameManagerScript : MonoBehaviour
 {
     //������� ������
     public Camera MainCamera;
-    public GameObject CameraRotator;
+    //public GameObject CameraRotator;
     public GameObject CameraObject;
 
+    /*
     //�����������
     public bool BlockCameraController;
     public float CameraSpeed;
@@ -21,7 +22,7 @@ public class GameManagerScript : MonoBehaviour
 
     //�������� (��� Y)
     public bool BlockCameraRotation;
-    public float CameraRotationSpeed;
+    public float CameraRotationSpeed;*/
 
     //���������
     public bool BlockRaycast;
@@ -32,19 +33,19 @@ public class GameManagerScript : MonoBehaviour
     void Awake()
     {
         MainCamera = Camera.main;
-        CameraRotator = MainCamera.gameObject.transform.parent.gameObject;
-        CameraObject = CameraRotator.gameObject.transform.parent.gameObject;
+        //CameraRotator = MainCamera.gameObject.transform.parent.gameObject;
+        //CameraObject = CameraRotator.gameObject.transform.parent.gameObject;
     }
 
     void Update()
     {
-        if (!BlockCameraController) CameraMovement();
-        if (!BlockCameraRotation) CameraRotation();
+        //if (!BlockCameraController) CameraMovement();
+        //if (!BlockCameraRotation) CameraRotation();
         if (!BlockRaycast) SelectObject();
 
     }
 
-    public void CameraMovement()
+    /*public void CameraMovement()
     {
         MovementZ = Input.GetAxis("Vertical") / Time.timeScale;
         MovementX = Input.GetAxis("Horizontal") / Time.timeScale;
@@ -72,9 +73,9 @@ public class GameManagerScript : MonoBehaviour
             CameraObject.transform.Translate(Vector3.forward * MovementZ * CameraSpeed * Time.deltaTime);
             CameraObject.transform.Translate(Vector3.right * MovementX * CameraSpeed * Time.deltaTime);
         }
-    }
+    }*/
 
-    public void CameraRotation()
+    /*public void CameraRotation()
     {
         if (Input.GetMouseButton(2))
         {
@@ -88,7 +89,7 @@ public class GameManagerScript : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.Confined;
         }
-    }
+    }*/
 
     public void SelectObject()
     {

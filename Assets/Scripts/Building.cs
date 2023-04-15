@@ -16,6 +16,7 @@ public class Building : MonoBehaviour
     public float BuildProgress;
 
     public int GoldCost;
+    public bool HaveMoney;
 
     private int CollisionCount;
 
@@ -25,13 +26,13 @@ public class Building : MonoBehaviour
         BuildingCollider = GetComponent<Collider>();
         BaseMaterial = GetComponentsInChildren<Renderer>()[0].material;
 
-        if (GoldCost <= BuilderScript.Gold) WrongPlace();
-        else GoodPlace();
+        //if (GoldCost <= BuilderScript.Gold) WrongPlace();
+        //else GoodPlace();
 
         if (!Placed) for (int i = 0; i < GetComponentsInChildren<Renderer>().Length; i += 1)
-        {
-            GetComponentsInChildren<Renderer>()[i].material = BuilderScript.GoodMaterial;
-        }
+            {
+                GetComponentsInChildren<Renderer>()[i].material = BuilderScript.GoodMaterial;
+            }
     }
 
     public void FixedUpdate()
@@ -41,8 +42,8 @@ public class Building : MonoBehaviour
             if (Placed) BuildProgress += 1;
             if (BuildProgress >= 100) BuildThis();
 
-            if (GoldCost <= BuilderScript.Gold) WrongPlace();
-            else GoodPlace();
+            //if (GoldCost <= BuilderScript.Gold) WrongPlace();
+            //else GoodPlace();
         }
     }
 
