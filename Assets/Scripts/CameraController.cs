@@ -37,6 +37,16 @@ public class CameraController : MonoBehaviour
         _zoomPosition = Mathf.MoveTowards(_zoomPosition, _zoomLevel, zoomSpeed * Time.deltaTime);
         transform.position = transform.position + (Camera.main.transform.forward * _zoomPosition);
 
+        if (Input.GetMouseButton(2)) {
+            transform.Rotate(0, Input.GetAxis("Mouse X") * Time.deltaTime * rotateSpeed * 30, 0);
+        }
+        if (Input.GetMouseButtonDown(2)) {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+        if (Input.GetMouseButtonUp(2)) {
+            Cursor.lockState = CursorLockMode.Confined;
+        }
+
         transform.position = new Vector3(
             transform.position.x,
             Mathf.Clamp(transform.position.y, -6, 10),
