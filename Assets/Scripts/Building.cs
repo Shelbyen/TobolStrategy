@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Building : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class Building : MonoBehaviour
     public int UnitNumber;
     public GameObject Enter;
 
+    private NavMeshObstacle Obstacle;
     private Builder BuilderScript;
     private int CollisionCount;
     private Material BaseMaterial;
@@ -23,6 +25,8 @@ public class Building : MonoBehaviour
 
     public void Awake()
     {
+        Obstacle = GetComponent<NavMeshObstacle>();
+        Obstacle.enabled = false;
         BuilderScript = GameObject.Find("CameraObject").GetComponent<Builder>();
         BuildingCollider = GetComponent<Collider>();
         BaseMaterial = GetComponentsInChildren<Renderer>()[0].material;
@@ -90,6 +94,7 @@ public class Building : MonoBehaviour
 
     public void PlaceThis()
     {
+        Obstacle.enabled = true;
         Placed = true;
         foreach (Renderer renderer in GetComponentsInChildren<Renderer>())
         {

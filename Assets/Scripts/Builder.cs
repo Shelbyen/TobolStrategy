@@ -55,6 +55,7 @@ public class Builder : MonoBehaviour
 
     public void BlockBuild(bool Status)
     {
+        CancelBuilding();
         BlockBuilder = Status;
         SiwtchbuildMode(!Status);
     }
@@ -66,6 +67,7 @@ public class Builder : MonoBehaviour
 
     public void SiwtchbuildMode(bool Status)
     {
+        CancelBuilding();
         BuildMode = Status;
         Menu.SetActive(Status);
         GameManager.BlockRaycast = Status;
