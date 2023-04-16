@@ -8,12 +8,21 @@ public class SetTerrainHeights : MonoBehaviour
 
     public int width = 1000;
     public int height = 1000;
-
     public int depth = 30;
+
+    public bool isUpdate = false;
     private HeightMapGenerator _heightMapGenerator;
 
     private void Start() {
-        StartCoroutine(Timer());
+        if (isUpdate) {
+            StartCoroutine(Timer());
+        }
+        else {
+            _heightMapGenerator = new HeightMapGenerator();
+            Terrain terrain = GetComponent<Terrain>();
+            _heightMapGenerator.Init(permission, baseHeight: depth);
+            terrain.terrainData = GenerateTerrain(terrain.terrainData); 
+        }
     }
 
     public IEnumerator Timer()
