@@ -14,7 +14,10 @@ public class Builder : MonoBehaviour
     public TMP_Text GoldCount;
     public GameObject Menu;
     public TMP_Text Info;
+    public TMP_Text ToggleText;
+    public GameObject GoldCost;
     public bool BlockBuilder;
+
 
     private GameManagerScript GameManager;
     private Camera MainCamera;
@@ -29,6 +32,9 @@ public class Builder : MonoBehaviour
         MainCamera = Camera.main;
         GameManager = GetComponent<GameManagerScript>();
         Menu.SetActive(false);
+
+        GoldCost.SetActive(false);
+        GoldCost.GetComponentsInChildren<TMP_Text>()[0].text = "";
     }
 
     void Update()
@@ -53,6 +59,11 @@ public class Builder : MonoBehaviour
         GoldCount.text = ResourceManager.GetInstance().getCountGold().ToString();
     }
 
+    public void Toggle()
+    {
+        SiwtchbuildMode(!BuildMode);
+    }
+
     public void BlockBuild(bool Status)
     {
         CancelBuilding();
@@ -61,7 +72,7 @@ public class Builder : MonoBehaviour
     }
     public void HotKeys()
     {
-        if (Input.GetKeyDown("delete")) SwitchDestroyMode();
+        if (Input.GetKeyDown("delete") && ActiveBuilding == null) SwitchDestroyMode();
         if (Input.GetKeyDown("g")) SwitchGridMode();
     }
 
@@ -71,6 +82,8 @@ public class Builder : MonoBehaviour
         BuildMode = Status;
         Menu.SetActive(Status);
         GameManager.BlockRaycast = Status;
+        if (BuildMode) ToggleText.text = "View";
+        else ToggleText.text = "Build";
     }
 
     public void SwitchDestroyMode()
@@ -104,9 +117,11 @@ public class Builder : MonoBehaviour
     public void StartBuilding(GameObject BuildingPrefab)
     {
         DestroyMode = false;
-        Info.text = "";
         CancelBuilding();
         ActiveBuilding = Instantiate(BuildingPrefab);
+        Info.text = ActiveBuilding.GetComponent<Building>().Discription;
+        GoldCost.SetActive(true);
+        GoldCost.GetComponentsInChildren<TMP_Text>()[0].text = $"{ActiveBuilding.GetComponent<Building>().GoldCost}";
 
         Debug.Log("Building instantiated");
     }
@@ -118,6 +133,7 @@ public class Builder : MonoBehaviour
             if (!BuilderHit.transform.gameObject.GetComponent<Building>().Built) {
                 ResourceManager.GetInstance().addGold(BuilderHit.transform.gameObject.GetComponent<Building>().GoldCost);
             }
+            BuilderHit.transform.gameObject.GetComponent<Building>().KillAll();
             Destroy(BuilderHit.transform.gameObject);
 
             Debug.Log("Building erased");
@@ -134,6 +150,9 @@ public class Builder : MonoBehaviour
             ResourceManager.GetInstance().checkAndBuyGold(buildingComponent.GoldCost);
             ActiveBuilding = null;
             GameManager.BlockRaycast = false;
+            Info.text = "";
+            GoldCost.SetActive(false);
+            GoldCost.GetComponentsInChildren<TMP_Text>()[0].text = "";
 
             Debug.Log("Building placed");
         }
@@ -142,6 +161,9 @@ public class Builder : MonoBehaviour
     public void CancelBuilding()
     {
         Destroy(ActiveBuilding);
+        Info.text = "";
+        GoldCost.SetActive(false);
+        GoldCost.GetComponentsInChildren<TMP_Text>()[0].text = "";
 
         Debug.Log("Cancel building");
     }

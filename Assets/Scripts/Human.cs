@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class Human : MonoBehaviour
 {
+    public float MaxHP;
     public float HP;
     public Vector3 Target;
     public GameObject TargetEnemy;
@@ -22,10 +23,15 @@ public class Human : MonoBehaviour
 
     public void Awake() 
     {
-        Target = gameObject.transform.position;
+        HP = MaxHP;
         Agent = GetComponent<NavMeshAgent>();
         MainCamera = Camera.main;
         SelectableScript = GetComponent<Selectable>();
+    }
+
+    public void Start()
+    {
+        Target = gameObject.transform.position;
     }
 
     public void Update()
@@ -87,13 +93,13 @@ public class Human : MonoBehaviour
             if (EnemyList[x] != gameObject && EnemyList[x].GetComponent<Human>().IsEnemy != IsEnemy)
             { 
                 Vector3 dist = EnemyList[x].transform.position - transform.position;
-                if ((dist.x + dist.z) < (EnemyDistance.x + EnemyDistance.z))
+                if (Mathf.Sqrt(dist.x * dist.x + dist.z * dist.z) < Mathf.Sqrt(EnemyDistance.x * EnemyDistance.x + EnemyDistance.z * EnemyDistance.x))
                 {
                     EnemyDistance = dist;
                     Enemy = x;
                 }
             }
         }
-        if( Enemy != -1) TargetEnemy = EnemyList[Enemy].gameObject;
+        if(Enemy != -1) TargetEnemy = EnemyList[Enemy].gameObject;
     }
 }

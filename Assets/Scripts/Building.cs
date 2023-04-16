@@ -5,6 +5,11 @@ using UnityEngine.AI;
 
 public class Building : MonoBehaviour
 {
+    public string Discription;
+
+    public bool IsEnemy;
+    public bool BuildOnStart;
+
     public bool IsWrongPlace;
     public bool Placed;
     public bool Built;
@@ -21,8 +26,10 @@ public class Building : MonoBehaviour
     private NavMeshObstacle Obstacle;
     private Builder BuilderScript;
     private int CollisionCount;
-    private Material BaseMaterial;
+    private Material[] BaseMaterial;
+    private Renderer[] Render;
     private Collider BuildingCollider;
+    private GameObject[] BuildingsUnits;
 
     public void Awake()
     {
@@ -30,16 +37,31 @@ public class Building : MonoBehaviour
         Obstacle.enabled = false;
         BuilderScript = GameObject.Find("CameraObject").GetComponent<Builder>();
         BuildingCollider = GetComponent<Collider>();
-        BaseMaterial = GetComponentsInChildren<Renderer>()[0].material;
-
-        if (GoldCost <= ResourceManager.GetInstance().getCountGold() && CollisionCount <= 0) GoodPlace();
-        else WrongPlace();
-
-        if (!Placed)
+        Render = GetComponentsInChildren<Renderer>();
+        BaseMaterial = new Material[Render.Length];
+        BuildingsUnits = new GameObject[UnitNumber];
+        for (int i = 0; i < Render.Length; i += 1)
         {
-            foreach (Renderer renderer in GetComponentsInChildren<Renderer>())
+            BaseMaterial[i] = Render[i].material;
+        }
+
+        if (BuildOnStart)
+        {
+            Obstacle.enabled = true;
+            Placed = true;
+            BuildThis();
+        }
+        else
+        {
+            if (GoldCost <= ResourceManager.GetInstance().getCountGold() && CollisionCount <= 0) GoodPlace();
+            else WrongPlace();
+
+            if (!Placed)
             {
-                renderer.material = BuilderScript.GoodMaterial;
+                foreach (Renderer renderer in GetComponentsInChildren<Renderer>())
+                {
+                    renderer.material = BuilderScript.GoodMaterial;
+                }
             }
         }
     }
@@ -106,12 +128,13 @@ public class Building : MonoBehaviour
     public void BuildThis()
     {
         Built = true;
-        foreach (Renderer renderer in GetComponentsInChildren<Renderer>())
+        for (int i = 0; i < Render.Length; i += 1)
         {
-            renderer.material = BaseMaterial;
+            Render[i].material = BaseMaterial[i];
         }
         if (GoldMining != 0) StartCoroutine(GoldMine());
-        if (UnitNumber != 0) StartCoroutine(SpawnUnits());
+        if (UnitNumber != 0 && !IsEnemy) StartCoroutine(SpawnUnits());
+        if (GetComponent<HealBuilding>()) GetComponent<HealBuilding>().StartHeal();
     }
 
     public IEnumerator SpawnUnits()
@@ -119,10 +142,18 @@ public class Building : MonoBehaviour
         int z = 0;
         while (z < UnitNumber)
         {
+            BuildingsUnits[z] = Instantiate(Unit);
+            BuildingsUnits[z].transform.position = Enter.transform.position;
             z += 1;
-            GameObject SpawnedUnit = Instantiate(Unit);
-            SpawnedUnit.transform.position = Enter.transform.position;
             yield return new WaitForSeconds(1);
+        }
+    }
+
+    public void KillAll()
+    {
+        foreach(GameObject UnitForKill in BuildingsUnits)
+        {
+            Destroy(UnitForKill);
         }
     }
 

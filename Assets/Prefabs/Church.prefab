@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5df7fbac18364d344be19c1a9320dc77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: Cercov
+  Name: Church
   Selected: 0
 --- !u!114 &-2391064427850470955
 MonoBehaviour:
@@ -63,12 +63,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f8a287c3358d1f49b02d3e5a6c92ee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Discription: The church collects donations during the raid
+  IsEnemy: 0
+  BuildOnStart: 0
   IsWrongPlace: 0
   Placed: 0
   Built: 0
   HP: 0
   BuildProgress: 0
-  GoldCost: 300
+  GoldCost: 350
   GoldMining: 3
   Unit: {fileID: 0}
   UnitNumber: 0
