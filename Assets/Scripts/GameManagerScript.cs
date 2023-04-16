@@ -8,13 +8,8 @@ public class GameManagerScript : MonoBehaviour
 {
     public bool BlockRaycast;
     public GameObject SelectedObject;
-    public Image Timer;
-
     private Camera MainCamera;
-    private float TimeLeft;
     private RaycastHit SelectingHit;
-    private float TimeBeforeRaid;
-
 
     void Awake()
     {
@@ -27,12 +22,6 @@ public class GameManagerScript : MonoBehaviour
         {
             SelectObject();
         }
-    }
-
-    void FixedUpdate()
-    {
-        TimeLeft += Time.fixedDeltaTime / TimeBeforeRaid;
-        Timer.fillAmount = TimeLeft;
     }
 
     public void SelectObject()
