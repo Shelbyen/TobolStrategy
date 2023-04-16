@@ -15,10 +15,12 @@ public class Human : MonoBehaviour
     private Camera MainCamera;
     private NavMeshAgent Agent;
 
+    public Collider AtackCollider;
+    public float AtackForce;
 
     public void Awake() 
     {
-
+        Target = transform.position;
         Agent = GetComponent<NavMeshAgent>();
         MainCamera = Camera.main;
         SelectableScript = GetComponent<Selectable>();
@@ -54,6 +56,13 @@ public class Human : MonoBehaviour
     public void FixedUpdate()
     { 
         Agent.SetDestination(Target);
+
+        if (HP <= 0) Destroy(gameObject);
+    }
+
+    public void OnTriggerStay(Collider Collider)
+    {
+        if (Collider.gameObject == TargetEnemy) Collider.gameObject.GetComponent<Human>().HP -= AtackForce;
     }
 
     public void FindEnemy()
@@ -61,11 +70,11 @@ public class Human : MonoBehaviour
         GameObject[] EnemyList = GameObject.FindGameObjectsWithTag("Human");
 
         Vector3 EnemyDistance = new Vector3(10000, 10000, 10000);
-        int Enemy = 10000;
+        int Enemy = -1;
 
         for (int x = 0; x < EnemyList.Length; x += 1)
         {
-            if (EnemyList[x] != gameObject)
+            if (EnemyList[x] != gameObject && EnemyList[x].GetComponent<Human>().IsEnemy != IsEnemy)
             { 
                 Vector3 dist = EnemyList[x].transform.position - transform.position;
                 if ((dist.x + dist.z) < (EnemyDistance.x + EnemyDistance.z))
@@ -75,6 +84,6 @@ public class Human : MonoBehaviour
                 }
             }
         }
-        TargetEnemy = EnemyList[Enemy].gameObject;
+        if (Enemy != -1) TargetEnemy = EnemyList[Enemy].gameObject;
     }
 }
