@@ -20,7 +20,7 @@ public class Human : MonoBehaviour
 
     public void Awake() 
     {
-        Target = transform.position;
+        Target = gameObject.transform.position;
         Agent = GetComponent<NavMeshAgent>();
         MainCamera = Camera.main;
         SelectableScript = GetComponent<Selectable>();

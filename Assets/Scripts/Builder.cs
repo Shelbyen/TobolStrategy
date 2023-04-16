@@ -14,6 +14,7 @@ public class Builder : MonoBehaviour
     public TMP_Text GoldCount;
     public GameObject Menu;
     public TMP_Text Info;
+    public bool BlockBuilder;
 
     private GameManagerScript GameManager;
     private Camera MainCamera;
@@ -32,7 +33,7 @@ public class Builder : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown("f")) SiwtchbuildMode(!BuildMode);
+        if (Input.GetKeyDown("f") && !BlockBuilder) SiwtchbuildMode(!BuildMode);
 
         if (BuildMode)
         {
@@ -52,6 +53,11 @@ public class Builder : MonoBehaviour
         GoldCount.text = ResourceManager.GetInstance().getCountGold().ToString();
     }
 
+    public void BlockBuild(bool Status)
+    {
+        BlockBuilder = Status;
+        SiwtchbuildMode(!Status);
+    }
     public void HotKeys()
     {
         if (Input.GetKeyDown("delete")) SwitchDestroyMode();

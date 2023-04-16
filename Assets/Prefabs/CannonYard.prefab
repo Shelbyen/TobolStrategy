@@ -50,7 +50,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Arsenal
   Selected: 0
-  Building: {fileID: 0}
 --- !u!114 &973600801095790679
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66,12 +65,12 @@ MonoBehaviour:
   IsWrongPlace: 0
   Placed: 0
   Built: 0
-  BaseMaterial: {fileID: 0}
-  BuildingCollider: {fileID: 0}
-  BuilderScript: {fileID: 0}
   HP: 0
   BuildProgress: 0
   GoldCost: 175
+  Unit: {fileID: 0}
+  UnitNumber: 0
+  Enter: {fileID: 0}
 --- !u!65 &-7726986225414062162
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -83,8 +82,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 5.25, y: 1.25, z: 3.25}
-  m_Center: {x: 1.125, y: 0.7, z: 0}
+  m_Size: {x: 5, y: 1.25, z: 3}
+  m_Center: {x: 1, y: 0.7, z: 0}
 --- !u!54 &-7715733638047591644
 Rigidbody:
   m_ObjectHideFlags: 0

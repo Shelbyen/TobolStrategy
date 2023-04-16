@@ -50,7 +50,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Cercov
   Selected: 0
-  Building: {fileID: 0}
 --- !u!114 &-2391064427850470955
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66,12 +65,12 @@ MonoBehaviour:
   IsWrongPlace: 0
   Placed: 0
   Built: 0
-  BaseMaterial: {fileID: 0}
-  BuildingCollider: {fileID: 0}
-  BuilderScript: {fileID: 0}
   HP: 0
   BuildProgress: 0
   GoldCost: 100
+  Unit: {fileID: 0}
+  UnitNumber: 0
+  Enter: {fileID: 0}
 --- !u!65 &2481300152804536466
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -83,8 +82,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 4.6060057, y: 1.9, z: 2.75}
-  m_Center: {x: -0.08001375, y: 1.05, z: 0}
+  m_Size: {x: 5, y: 1.9, z: 3}
+  m_Center: {x: 0, y: 1.05, z: 0}
 --- !u!54 &-735044425971809213
 Rigidbody:
   m_ObjectHideFlags: 0

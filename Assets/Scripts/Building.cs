@@ -12,7 +12,9 @@ public class Building : MonoBehaviour
     public float BuildProgress;
     public int GoldCost;
 
-    public GameObject unit;
+    public GameObject Unit;
+    public int UnitNumber;
+    public GameObject Enter;
 
     private Builder BuilderScript;
     private int CollisionCount;
@@ -28,9 +30,9 @@ public class Building : MonoBehaviour
         if (GoldCost <= ResourceManager.GetInstance().getCountGold() && CollisionCount <= 0) GoodPlace();
         else WrongPlace();
 
-        if (!Placed) 
+        if (!Placed)
         {
-            foreach (Renderer renderer in GetComponentsInChildren<Renderer>()) 
+            foreach (Renderer renderer in GetComponentsInChildren<Renderer>())
             {
                 renderer.material = BuilderScript.GoodMaterial;
             }
@@ -45,7 +47,7 @@ public class Building : MonoBehaviour
             if (BuildProgress >= 100) BuildThis();
         }
         if (!Placed)
-        { 
+        {
             if (GoldCost <= ResourceManager.GetInstance().getCountGold() && CollisionCount <= 0) GoodPlace();
             else WrongPlace();
         }
@@ -70,7 +72,7 @@ public class Building : MonoBehaviour
     {
         Debug.Log("Good place or No money");
         IsWrongPlace = true;
-        foreach (Renderer renderer in GetComponentsInChildren<Renderer>()) 
+        foreach (Renderer renderer in GetComponentsInChildren<Renderer>())
         {
             renderer.material = BuilderScript.WrongMaterial;
         }
@@ -80,7 +82,7 @@ public class Building : MonoBehaviour
     {
         Debug.Log("All is good");
         IsWrongPlace = false;
-        foreach (Renderer renderer in GetComponentsInChildren<Renderer>()) 
+        foreach (Renderer renderer in GetComponentsInChildren<Renderer>())
         {
             renderer.material = BuilderScript.GoodMaterial;
         }
@@ -89,7 +91,7 @@ public class Building : MonoBehaviour
     public void PlaceThis()
     {
         Placed = true;
-        foreach (Renderer renderer in GetComponentsInChildren<Renderer>()) 
+        foreach (Renderer renderer in GetComponentsInChildren<Renderer>())
         {
             renderer.material = BuilderScript.GoodMaterial;
         }
@@ -98,9 +100,23 @@ public class Building : MonoBehaviour
     public void BuildThis()
     {
         Built = true;
-        foreach (Renderer renderer in GetComponentsInChildren<Renderer>()) 
+        foreach (Renderer renderer in GetComponentsInChildren<Renderer>())
         {
             renderer.material = BaseMaterial;
+        }
+
+        if (UnitNumber != 0) StartCoroutine(SpawnUnits());
+    }
+
+    public IEnumerator SpawnUnits()
+    {
+        int z = 0;
+        while (z < UnitNumber)
+        {
+            z += 1;
+            GameObject SpawnedUnit = Instantiate(Unit);
+            SpawnedUnit.transform.position = Enter.transform.position;
+            yield return new WaitForSeconds(1);
         }
     }
 }
