@@ -110,7 +110,7 @@ public class Building : MonoBehaviour
         {
             renderer.material = BaseMaterial;
         }
-
+        if (GoldMining != 0) StartCoroutine(GoldMine());
         if (UnitNumber != 0) StartCoroutine(SpawnUnits());
     }
 
@@ -123,6 +123,15 @@ public class Building : MonoBehaviour
             GameObject SpawnedUnit = Instantiate(Unit);
             SpawnedUnit.transform.position = Enter.transform.position;
             yield return new WaitForSeconds(1);
+        }
+    }
+
+    public IEnumerator GoldMine()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(5);
+            if (Camera.main.gameObject.GetComponentInParent<StateManager>().getState()) ResourceManager.GetInstance().addGold(3);
         }
     }
 }
