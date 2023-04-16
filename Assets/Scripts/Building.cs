@@ -12,6 +12,7 @@ public class Building : MonoBehaviour
     public float HP;
     public float BuildProgress;
     public int GoldCost;
+    public int GoldMining;
 
     public GameObject Unit;
     public int UnitNumber;
