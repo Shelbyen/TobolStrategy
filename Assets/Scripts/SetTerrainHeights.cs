@@ -11,13 +11,15 @@ public class SetTerrainHeights : MonoBehaviour
     public int depth = 15;
 
     public bool isUpdate = false;
+
+    public bool isGenerate = false;
     private HeightMapGenerator _heightMapGenerator;
 
     private void Start() {
         if (isUpdate) {
             StartCoroutine(Timer());
         }
-        else {
+        else if (isGenerate){
             _heightMapGenerator = new HeightMapGenerator();
             Terrain terrain = GetComponent<Terrain>();
             _heightMapGenerator.Init(permission, baseHeight: depth);
