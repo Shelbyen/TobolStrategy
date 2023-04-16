@@ -14,7 +14,9 @@ public class Human : MonoBehaviour
     private RaycastHit Hit;
     private Camera MainCamera;
     private NavMeshAgent Agent;
+    private bool Shooting;
 
+    public bool CanShoot;
     public Collider AtackCollider;
     public float AtackForce;
 
@@ -62,7 +64,16 @@ public class Human : MonoBehaviour
 
     public void OnTriggerStay(Collider Collider)
     {
-        if (Collider.gameObject == TargetEnemy) Collider.gameObject.GetComponent<Human>().HP -= AtackForce;
+        if (Collider.gameObject == TargetEnemy && Collider.isTrigger)
+        {
+            if (CanShoot)
+            {
+                Target = gameObject.transform.position;
+                Shooting = true;
+            }
+            else Shooting = false;
+            Collider.gameObject.GetComponent<Human>().HP -= AtackForce;
+        }
     }
 
     public void FindEnemy()
@@ -84,6 +95,6 @@ public class Human : MonoBehaviour
                 }
             }
         }
-        if (Enemy != -1) TargetEnemy = EnemyList[Enemy].gameObject;
+        if (Enemy != -1 && !Shooting) TargetEnemy = EnemyList[Enemy].gameObject;
     }
 }

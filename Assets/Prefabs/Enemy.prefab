@@ -68,7 +68,7 @@ MonoBehaviour:
   Target: {x: 0, y: 0, z: 0}
   TargetEnemy: {fileID: 0}
   IsEnemy: 1
-  AtackCollider: {fileID: 0}
+  AtackCollider: {fileID: 1702415502020931729}
   AtackForce: 1.25
 --- !u!195 &6125346177206398884
 NavMeshAgent:

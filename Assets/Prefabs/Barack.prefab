@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 2610639959890536086}
   - component: {fileID: 3887277382568995205}
   m_Layer: 7
-  m_Name: Kazarma
+  m_Name: Barack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -100,7 +100,7 @@ MonoBehaviour:
   Built: 0
   HP: 0
   BuildProgress: 0
-  GoldCost: 50
+  GoldCost: 80
   Unit: {fileID: 2159842543124927855, guid: 8954719e03c058f418f05632515fa9b8, type: 3}
   UnitNumber: 3
   Enter: {fileID: 81704559710495901}

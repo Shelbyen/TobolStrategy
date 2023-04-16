@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 973600801095790679}
   - component: {fileID: -7726986225414062162}
   - component: {fileID: -7715733638047591644}
+  - component: {fileID: 3654170606109367719}
   m_Layer: 7
   m_Name: CannonYard
   m_TagString: Untagged
@@ -67,7 +68,7 @@ MonoBehaviour:
   Built: 0
   HP: 0
   BuildProgress: 0
-  GoldCost: 175
+  GoldCost: 200
   Unit: {fileID: 0}
   UnitNumber: 0
   Enter: {fileID: 0}
@@ -82,8 +83,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 5, y: 1.25, z: 3}
-  m_Center: {x: 1, y: 0.7, z: 0}
+  m_Size: {x: 12, y: 3, z: 7}
+  m_Center: {x: 2.5, y: 2, z: 0}
 --- !u!54 &-7715733638047591644
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -100,6 +101,22 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!208 &3654170606109367719
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1114430890793227329}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 5, y: 1.5, z: 2.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 2.5, y: 2, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1001 &7781008334203415654
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -113,15 +130,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 755d9115389646247a4b64c627c379d9, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.28
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 755d9115389646247a4b64c627c379d9, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.28
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 755d9115389646247a4b64c627c379d9, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.28
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 755d9115389646247a4b64c627c379d9, type: 3}
       propertyPath: m_LocalPosition.x
