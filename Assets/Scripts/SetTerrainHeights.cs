@@ -8,7 +8,7 @@ public class SetTerrainHeights : MonoBehaviour
 
     public int width = 1000;
     public int height = 1000;
-    public int depth = 30;
+    public int depth = 15;
 
     public bool isUpdate = false;
     private HeightMapGenerator _heightMapGenerator;
