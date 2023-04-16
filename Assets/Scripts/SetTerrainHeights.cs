@@ -4,28 +4,35 @@ using UnityEngine;
 
 public class SetTerrainHeights : MonoBehaviour
 {
-    // public PaintTerrain paintTerrain;
+    public int permission = 6;
 
-    public int depth = 10;
+    public int width = 1000;
+    public int height = 1000;
 
-    public int width = 256;
-    public int height = 256;
-
+    public int depth = 30;
     private HeightMapGenerator _heightMapGenerator;
 
-    void Start()
+    private void Start() {
+        StartCoroutine(Timer());
+    }
+
+    public IEnumerator Timer()
     {
-        Terrain terrain = GetComponent<Terrain>();
-        terrain.terrainData.size = new Vector3(width, depth, height);
-        _heightMapGenerator.Init(256);
-        var map = _heightMapGenerator.Generate();
-        // var waterLevel = HeightMapProvider.WaterLevel;
+        while (true) {
+            yield return new WaitForSeconds(3);
 
-        terrain.terrainData.SetHeights(0, 0, map);
+            _heightMapGenerator = new HeightMapGenerator();
+            Terrain terrain = GetComponent<Terrain>();
+            _heightMapGenerator.Init(permission, baseHeight: depth);
+            terrain.terrainData = GenerateTerrain(terrain.terrainData); 
+        }
+    }
 
-        // paintTerrain.StartPaint();
+    TerrainData GenerateTerrain (TerrainData terrainData) {
+        terrainData.heightmapResolution = (int)Mathf.Pow(2, permission) + 1;
+        terrainData.size = new Vector3(width, depth, height);
+        terrainData.SetHeights(0, 0, _heightMapGenerator.Generate());
 
-        // var waterObj = GameObject.Find("Water");
-        // waterObj.transform.position = new Vector3(waterObj.transform.position.x, waterLevel * TerrainMain.terrainData.size.y, waterObj.transform.position.z);
+        return terrainData;
     }
 }

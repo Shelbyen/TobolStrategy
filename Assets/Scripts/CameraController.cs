@@ -49,7 +49,7 @@ public class CameraController : MonoBehaviour
 
         transform.position = new Vector3(
             transform.position.x,
-            Mathf.Clamp(transform.position.y, -6, 60),
+            Mathf.Clamp(transform.position.y, -6, 100),
             transform.position.z
         );
     }

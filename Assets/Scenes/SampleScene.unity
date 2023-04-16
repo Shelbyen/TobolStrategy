@@ -156,8 +156,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotateSpeed: 50
   movmentSpeed: 10
-  zoomSpeed: 50
-  sensitivity: 1
+  zoomSpeed: 60
+  sensitivity: 20
 --- !u!4 &113245803
 Transform:
   m_ObjectHideFlags: 0
@@ -215,7 +215,7 @@ MonoBehaviour:
   BlockRaycast: 0
   SelectedObject: {fileID: 0}
   Timer: {fileID: 748645723}
-  TimeBeforeRaid: 60
+  TimeBeforeRaid: 0
   TimeLeft: 0
 --- !u!1 &160120854
 GameObject:
@@ -1849,7 +1849,7 @@ GameObject:
   - component: {fileID: 1144306263}
   - component: {fileID: 1144306262}
   - component: {fileID: 1144306261}
-  - component: {fileID: 1144306260}
+  - component: {fileID: 1144306264}
   m_Layer: 0
   m_Name: Terrain
   m_TagString: Untagged
@@ -1857,23 +1857,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
---- !u!114 &1144306260
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1144306259}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9daad8a1cedf08846b94c6408aa9edc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  terrain: {fileID: 1144306262}
-  R: 10
-  GRAIN: 23
-  FLAT: 1
-  material: {fileID: 2100000, guid: 9952e49b7206d2e49a4ade4f3f1ed630, type: 2}
 --- !u!154 &1144306261
 TerrainCollider:
   m_ObjectHideFlags: 0
@@ -1910,7 +1893,7 @@ Terrain:
   m_DrawTreesAndFoliage: 1
   m_StaticShadowCaster: 0
   m_ReflectionProbeUsage: 1
-  m_MaterialTemplate: {fileID: 10652, guid: 0000000000000000f000000000000000, type: 0}
+  m_MaterialTemplate: {fileID: 2100000, guid: 9952e49b7206d2e49a4ade4f3f1ed630, type: 2}
   m_BakeLightProbesForTrees: 1
   m_PreserveTreePrototypeLayers: 0
   m_DeringLightProbesForTrees: 1
@@ -1934,6 +1917,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1144306264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1144306259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ae3baf8fdf63214ca32497c56bf5c51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  permission: 6
+  width: 1000
+  height: 1000
+  depth: 30
 --- !u!1 &1270316816
 GameObject:
   m_ObjectHideFlags: 0
