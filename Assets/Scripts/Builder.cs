@@ -56,7 +56,7 @@ public class Builder : MonoBehaviour
 
     public void HotKeys()
     {
-        if (Input.GetKeyDown("delete") && ActiveBuilding == null) SwitchDestroyMode();
+        if (Input.GetKeyDown("delete")) SwitchDestroyMode();
         if (Input.GetKeyDown("g")) SwitchGridMode();
     }
 
