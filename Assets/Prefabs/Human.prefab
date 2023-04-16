@@ -64,10 +64,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38f134ddcaefe094e8f7d227f75c1950, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 125
+  HP: 100
   Target: {x: 0, y: 0, z: 0}
   TargetEnemy: {fileID: 0}
   IsEnemy: 0
+  Shooting: 0
+  CanShoot: 0
   AtackCollider: {fileID: 3561221177358459704}
   AtackForce: 1
 --- !u!195 &-879794230699951091
@@ -197,7 +199,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ad3801a339c371d45a0c2b9b0793f2be, type: 2}
+  - {fileID: 2100000, guid: 6adddada6271b49488f326d09655e233, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

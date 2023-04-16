@@ -71,7 +71,7 @@ MonoBehaviour:
   BuildProgress: 0
   GoldCost: 150
   GoldMining: 0
-  Unit: {fileID: 141847358912457476, guid: 8a3186bff5b68fd4bb89bf530acae2eb, type: 3}
+  Unit: {fileID: 141847358912457476, guid: 17b5b21f39598f9478d0a0d27fc3e405, type: 3}
   UnitNumber: 3
   Enter: {fileID: 5161196462523661161}
 --- !u!65 &-7726986225414062162

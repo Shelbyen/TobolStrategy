@@ -13,8 +13,9 @@ public class StateManager : MonoBehaviour
     void FixedUpdate()
     {   
         if (!_isRaid) {
-            _timeLeft += (Time.fixedDeltaTime / TimeBeforeRaid) * 10;
-            timer.fillAmount = _timeLeft / 10;
+            _timeLeft += (Time.fixedDeltaTime / TimeBeforeRaid) * 5;
+            Debug.Log(_timeLeft);
+            timer.fillAmount = _timeLeft / 5;
         }
         
         if (_timeLeft >= TimeBeforeRaid) {
@@ -23,7 +24,7 @@ public class StateManager : MonoBehaviour
             timer.fillAmount = 0;
         }
     }
-    bool getState () {
+    public bool getState () {
         return _isRaid;
     }
 

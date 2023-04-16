@@ -64,10 +64,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38f134ddcaefe094e8f7d227f75c1950, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 75
+  HP: 110
   Target: {x: 0, y: 0, z: 0}
   TargetEnemy: {fileID: 0}
   IsEnemy: 1
+  Shooting: 0
+  CanShoot: 0
   AtackCollider: {fileID: 1702415502020931729}
   AtackForce: 1.25
 --- !u!195 &6125346177206398884
@@ -80,7 +82,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.6
+  m_Speed: 3.8
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -197,7 +199,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0ecd857ac895ea94488ddaac69575ca1, type: 2}
+  - {fileID: 2100000, guid: 6b1d87fde4f642e4dba79b54a7484640, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
