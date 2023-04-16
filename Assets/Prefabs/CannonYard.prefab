@@ -34,6 +34,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7814036345108630413}
+  - {fileID: 2900256102739290426}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -68,10 +69,10 @@ MonoBehaviour:
   Built: 0
   HP: 0
   BuildProgress: 0
-  GoldCost: 200
-  Unit: {fileID: 0}
-  UnitNumber: 0
-  Enter: {fileID: 0}
+  GoldCost: 150
+  Unit: {fileID: 141847358912457476, guid: 8a3186bff5b68fd4bb89bf530acae2eb, type: 3}
+  UnitNumber: 3
+  Enter: {fileID: 5161196462523661161}
 --- !u!65 &-7726986225414062162
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -117,6 +118,37 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 2.5, y: 2, z: 0}
   m_TimeToStationary: 0.5
+--- !u!1 &5161196462523661161
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2900256102739290426}
+  m_Layer: 7
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2900256102739290426
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5161196462523661161}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5, y: 0, z: 3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7588463820766649906}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &7781008334203415654
 PrefabInstance:
   m_ObjectHideFlags: 0

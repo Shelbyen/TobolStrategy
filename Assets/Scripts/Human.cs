@@ -14,7 +14,7 @@ public class Human : MonoBehaviour
     private RaycastHit Hit;
     private Camera MainCamera;
     private NavMeshAgent Agent;
-    private bool Shooting;
+    public bool Shooting;
 
     public bool CanShoot;
     public Collider AtackCollider;
@@ -49,7 +49,7 @@ public class Human : MonoBehaviour
             }
         }
 
-        if (TargetEnemy != null)
+        if (TargetEnemy != null && !Shooting)
         {
             Target = TargetEnemy.transform.position;
         }
@@ -57,8 +57,7 @@ public class Human : MonoBehaviour
     }
     public void FixedUpdate()
     { 
-        Agent.SetDestination(Target);
-
+        if (!Shooting) Agent.SetDestination(Target);
         if (HP <= 0) Destroy(gameObject);
     }
 
@@ -68,12 +67,12 @@ public class Human : MonoBehaviour
         {
             if (CanShoot)
             {
-                Target = gameObject.transform.position;
                 Shooting = true;
+                Agent.SetDestination(transform.position);
             }
-            else Shooting = false;
             Collider.gameObject.GetComponent<Human>().HP -= AtackForce;
         }
+        Shooting = false;
     }
 
     public void FindEnemy()
@@ -95,6 +94,6 @@ public class Human : MonoBehaviour
                 }
             }
         }
-        if (Enemy != -1 && !Shooting) TargetEnemy = EnemyList[Enemy].gameObject;
+        if( Enemy != -1) TargetEnemy = EnemyList[Enemy].gameObject;
     }
 }
