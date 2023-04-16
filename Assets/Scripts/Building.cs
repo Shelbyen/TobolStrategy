@@ -12,6 +12,8 @@ public class Building : MonoBehaviour
     public float BuildProgress;
     public int GoldCost;
 
+    public GameObject unit;
+
     private Builder BuilderScript;
     private int CollisionCount;
     private Material BaseMaterial;

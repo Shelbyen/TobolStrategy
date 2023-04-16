@@ -155,7 +155,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotateSpeed: 50
-  movmentSpeed: 10
+  movmentSpeed: 15
   zoomSpeed: 60
   sensitivity: 20
 --- !u!4 &113245803
