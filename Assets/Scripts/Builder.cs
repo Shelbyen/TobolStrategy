@@ -17,6 +17,7 @@ public class Builder : MonoBehaviour
     public TMP_Text GoldCount;
     public GameObject Menu;
     public TMP_Text Info;
+    public TMP_Text BuilderToggle;
 
     private GameManagerScript GameManager;
     private Camera MainCamera;
@@ -61,11 +62,26 @@ public class Builder : MonoBehaviour
         if (Input.GetKeyDown("g")) SwitchGridMode();
     }
 
+    public void Toogle()
+    {
+        SiwtchbuildMode(!BuildMode);
+    }
+
     public void SiwtchbuildMode(bool Status)
     {
         BuildMode = Status;
         Menu.SetActive(Status);
         GameManager.BlockRaycast = Status;
+        if (BuildMode)
+        {
+            BuilderToggle.text = "View";
+            Info.text = "Build mode";
+        }
+        else
+        {
+            BuilderToggle.text = "Build";
+            Info.text = " ";
+        }
     }
 
     public void SwitchDestroyMode()
@@ -74,7 +90,7 @@ public class Builder : MonoBehaviour
         DestroyMode = !DestroyMode;
         Debug.Log("Destroy Switched");
         if (DestroyMode) Info.text = "Destroy mode";
-        else Info.text = "";
+        else Info.text = "Build mode";
     }
 
     public void SwitchGridMode()
