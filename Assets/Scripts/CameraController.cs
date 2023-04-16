@@ -6,7 +6,7 @@ public class CameraController : MonoBehaviour
 {
     public float rotateSpeed = 16.0f;
     public float movmentSpeed = 10.0f;
-    public float zoomSpeed = 10.0f;
+    public float zoomSpeed = 30.0f;
     public float sensitivity=1f;
 
     private float _zoomLevel;
@@ -49,7 +49,7 @@ public class CameraController : MonoBehaviour
 
         transform.position = new Vector3(
             transform.position.x,
-            Mathf.Clamp(transform.position.y, -6, 10),
+            Mathf.Clamp(transform.position.y, -6, 100),
             transform.position.z
         );
     }

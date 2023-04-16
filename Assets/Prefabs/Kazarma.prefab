@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3401789082355311394}
   - component: {fileID: 2610639959890536086}
   m_Layer: 7
-  m_Name: Barack
+  m_Name: Kazarma
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
