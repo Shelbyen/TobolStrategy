@@ -50,7 +50,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Kazarma
   Selected: 0
-  Building: {fileID: 0}
 --- !u!114 &6015287561992413119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66,9 +65,6 @@ MonoBehaviour:
   IsWrongPlace: 0
   Placed: 0
   Built: 0
-  BaseMaterial: {fileID: 0}
-  BuildingCollider: {fileID: 0}
-  BuilderScript: {fileID: 0}
   HP: 0
   BuildProgress: 0
   GoldCost: 50
@@ -99,8 +95,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3.5, y: 1.5, z: 2.5}
-  m_Center: {x: -0.023518562, y: 0.8, z: 0}
+  m_Size: {x: 4, y: 1.5, z: 3}
+  m_Center: {x: 0, y: 0.8, z: 0}
 --- !u!1001 &6015287560925277563
 PrefabInstance:
   m_ObjectHideFlags: 0

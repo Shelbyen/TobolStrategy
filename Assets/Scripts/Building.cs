@@ -23,7 +23,7 @@ public class Building : MonoBehaviour
         BuildingCollider = GetComponent<Collider>();
         BaseMaterial = GetComponentsInChildren<Renderer>()[0].material;
 
-        if (GoldCost <= BuilderScript.Gold && CollisionCount <= 0) GoodPlace();
+        if (GoldCost <= ResourceManager.GetInstance().getCountGold() && CollisionCount <= 0) GoodPlace();
         else WrongPlace();
 
         if (!Placed) 
@@ -44,7 +44,7 @@ public class Building : MonoBehaviour
         }
         if (!Placed)
         { 
-            if (GoldCost <= BuilderScript.Gold && CollisionCount <= 0) GoodPlace();
+            if (GoldCost <= ResourceManager.GetInstance().getCountGold() && CollisionCount <= 0) GoodPlace();
             else WrongPlace();
         }
     }

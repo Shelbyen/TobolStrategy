@@ -10,9 +10,6 @@ public class Builder : MonoBehaviour
     public Material GoodMaterial;
     public GameObject ActiveBuilding;
 
-    //to ResManager
-    public int Gold;
-
     //to UImanager
     public TMP_Text GoldCount;
     public GameObject Menu;
@@ -52,7 +49,7 @@ public class Builder : MonoBehaviour
             }
         }
 
-        GoldCount.text = Gold.ToString();
+        GoldCount.text = ResourceManager.GetInstance().getCountGold().ToString();
     }
 
     public void HotKeys()
@@ -110,7 +107,9 @@ public class Builder : MonoBehaviour
     {
         if (Physics.Raycast(MainCamera.ScreenPointToRay(Input.mousePosition), out BuilderHit, 100f, 128))
         {
-            if (!BuilderHit.transform.gameObject.GetComponent<Building>().Built) Gold += BuilderHit.transform.gameObject.GetComponent<Building>().GoldCost;
+            if (!BuilderHit.transform.gameObject.GetComponent<Building>().Built) {
+                ResourceManager.GetInstance().addGold(BuilderHit.transform.gameObject.GetComponent<Building>().GoldCost);
+            }
             Destroy(BuilderHit.transform.gameObject);
 
             Debug.Log("Building erased");
@@ -124,7 +123,7 @@ public class Builder : MonoBehaviour
         if (!buildingComponent.IsWrongPlace)
         {
             buildingComponent.Placed = true;
-            Gold -= buildingComponent.GoldCost;
+            ResourceManager.GetInstance().checkAndBuyGold(buildingComponent.GoldCost);
             ActiveBuilding = null;
             GameManager.BlockRaycast = false;
 
