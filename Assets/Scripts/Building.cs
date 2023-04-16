@@ -8,16 +8,14 @@ public class Building : MonoBehaviour
     public bool Placed;
     public bool Built;
 
-    public Material BaseMaterial;
-    public Collider BuildingCollider;
-    public Builder BuilderScript;
-
     public float HP;
     public float BuildProgress;
-
     public int GoldCost;
 
+    private Builder BuilderScript;
     private int CollisionCount;
+    private Material BaseMaterial;
+    private Collider BuildingCollider;
 
     public void Awake()
     {
