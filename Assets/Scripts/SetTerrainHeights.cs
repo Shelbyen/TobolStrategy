@@ -4,18 +4,24 @@ using UnityEngine;
 
 public class SetTerrainHeights : MonoBehaviour
 {
-    public Terrain TerrainMain;
     // public PaintTerrain paintTerrain;
+
+    public int depth = 10;
+
+    public int width = 256;
+    public int height = 256;
 
     private HeightMapGenerator _heightMapGenerator;
 
     void Start()
     {
+        Terrain terrain = GetComponent<Terrain>();
+        terrain.terrainData.size = new Vector3(width, depth, height);
         _heightMapGenerator.Init(256);
-        var map = HeightMapGenerator.Generate();
+        var map = _heightMapGenerator.Generate();
         // var waterLevel = HeightMapProvider.WaterLevel;
 
-        TerrainMain.terrainData.SetHeights(0, 0, map);
+        terrain.terrainData.SetHeights(0, 0, map);
 
         // paintTerrain.StartPaint();
 
