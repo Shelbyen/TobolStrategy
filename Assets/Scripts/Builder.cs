@@ -10,15 +10,9 @@ public class Builder : MonoBehaviour
     public Material GoodMaterial;
     public GameObject ActiveBuilding;
 
-    //to UImanager
-    public TMP_Text GoldCount;
-    public GameObject Menu;
-    public TMP_Text Info;
-    public TMP_Text ToggleText;
-    public GameObject GoldCost;
+    private UIManagerScript UIManager;
+
     public bool BlockBuilder;
-
-
     private GameManagerScript GameManager;
     private Camera MainCamera;
     private RaycastHit BuilderHit;
@@ -31,10 +25,11 @@ public class Builder : MonoBehaviour
     {
         MainCamera = Camera.main;
         GameManager = GetComponent<GameManagerScript>();
-        Menu.SetActive(false);
+        UIManager = GetComponent<UIManagerScript>();
+        UIManager.ChangeStatusBuildMenu(false);
 
-        GoldCost.SetActive(false);
-        GoldCost.GetComponentsInChildren<TMP_Text>()[0].text = "";
+        UIManager.ChangeStatusGoldCost(false);
+        UIManager.ChangeTextGoldCost("");
     }
 
     void Update()
@@ -55,8 +50,6 @@ public class Builder : MonoBehaviour
                 if (Input.GetKeyDown("delete")) CancelBuilding();
             }
         }
-
-        GoldCount.text = ResourceManager.GetInstance().getCountGold().ToString();
     }
 
     public void Toggle()
@@ -80,10 +73,10 @@ public class Builder : MonoBehaviour
     {
         CancelBuilding();
         BuildMode = Status;
-        Menu.SetActive(Status);
+        UIManager.ChangeStatusBuildMenu(Status);
         GameManager.BlockRaycast = Status;
-        if (BuildMode) ToggleText.text = "View";
-        else ToggleText.text = "Build";
+        if (BuildMode) UIManager.ChangeTextToggleText("View");
+        else UIManager.ChangeTextToggleText("Build");
     }
 
     public void SwitchDestroyMode()
@@ -91,8 +84,8 @@ public class Builder : MonoBehaviour
         CancelBuilding();
         DestroyMode = !DestroyMode;
         Debug.Log("Destroy Switched");
-        if (DestroyMode) Info.text = "Destroy mode";
-        else Info.text = "";
+        if (DestroyMode) UIManager.ChangeTextStatusBar("Destroy mode");
+        else UIManager.ChangeTextStatusBar("");
     }
 
     public void SwitchGridMode()
@@ -119,9 +112,10 @@ public class Builder : MonoBehaviour
         DestroyMode = false;
         CancelBuilding();
         ActiveBuilding = Instantiate(BuildingPrefab);
-        Info.text = ActiveBuilding.GetComponent<Building>().Discription;
-        GoldCost.SetActive(true);
-        GoldCost.GetComponentsInChildren<TMP_Text>()[0].text = $"{ActiveBuilding.GetComponent<Building>().GoldCost}";
+
+        UIManager.ChangeTextStatusBar(ActiveBuilding.GetComponent<Building>().Discription);
+        UIManager.ChangeStatusGoldCost(true);
+        UIManager.ChangeTextGoldCost(ActiveBuilding.GetComponent<Building>().GoldCost.ToString());
 
         Debug.Log("Building instantiated");
     }
@@ -150,9 +144,9 @@ public class Builder : MonoBehaviour
             ResourceManager.GetInstance().checkAndBuyGold(buildingComponent.GoldCost);
             ActiveBuilding = null;
             GameManager.BlockRaycast = false;
-            Info.text = "";
-            GoldCost.SetActive(false);
-            GoldCost.GetComponentsInChildren<TMP_Text>()[0].text = "";
+            UIManager.ChangeTextStatusBar("");
+            UIManager.ChangeStatusGoldCost(false);
+            UIManager.ChangeTextGoldCost("");
 
             Debug.Log("Building placed");
         }
@@ -161,9 +155,9 @@ public class Builder : MonoBehaviour
     public void CancelBuilding()
     {
         Destroy(ActiveBuilding);
-        Info.text = "";
-        GoldCost.SetActive(false);
-        GoldCost.GetComponentsInChildren<TMP_Text>()[0].text = "";
+        UIManager.ChangeTextStatusBar("");
+        UIManager.ChangeStatusGoldCost(true);
+        UIManager.ChangeTextGoldCost("");
 
         Debug.Log("Cancel building");
     }
