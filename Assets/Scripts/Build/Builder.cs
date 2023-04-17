@@ -156,7 +156,7 @@ public class Builder : MonoBehaviour
     {
         Destroy(ActiveBuilding);
         UIManager.ChangeTextStatusBar("");
-        UIManager.ChangeStatusGoldCost(true);
+        UIManager.ChangeStatusGoldCost(false);
         UIManager.ChangeTextGoldCost("");
 
         Debug.Log("Cancel building");
