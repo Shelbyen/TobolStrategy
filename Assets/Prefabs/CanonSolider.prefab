@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 5692406247687274279}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 3.11, y: -2.88, z: -1.88}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalScale: {x: 0.18, y: 0.18, z: 0.18}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 101930803612676175}
@@ -146,10 +146,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 1.3721628
-  m_Height: 5
+  m_Radius: 1
+  m_Height: 4
   m_Direction: 2
-  m_Center: {x: 0, y: 0.8721628, z: 1.5}
+  m_Center: {x: 0, y: 0.5, z: 1}
 --- !u!195 &1060716201702078923
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -252,6 +252,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: -4612520378060379669, guid: 1dc772f0ffce24f43af387d546a60a1f, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6adddada6271b49488f326d09655e233, type: 2}
     - target: {fileID: -3675443430344627360, guid: 1dc772f0ffce24f43af387d546a60a1f, type: 3}
       propertyPath: m_Layer
       value: 9
