@@ -11,7 +11,7 @@ public class ResourceManager
         return instance;
     }
 
-    private int _gold = 500;
+    private int _gold = 1000;
     
     // for call method use: ResourceManager.GetInstance().Method()
     public int getCountGold () {

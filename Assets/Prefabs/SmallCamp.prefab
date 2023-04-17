@@ -140,7 +140,7 @@ MonoBehaviour:
   GoldCost: -50
   GoldMining: 0
   Unit: {fileID: 4265616324612523718, guid: fda554ef266147a48829cf2faf75e62c, type: 3}
-  UnitNumber: 3
+  UnitNumber: 4
   Enter: {fileID: 6843211014571478636}
 --- !u!65 &1163094676896449045
 BoxCollider:

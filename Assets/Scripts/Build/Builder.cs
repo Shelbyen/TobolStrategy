@@ -34,7 +34,7 @@ public class Builder : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown("f") && !BlockBuilder) SiwtchbuildMode(!BuildMode);
+        if (Input.GetKeyDown("b") && !BlockBuilder) SiwtchbuildMode(!BuildMode);
 
         if (BuildMode)
         {

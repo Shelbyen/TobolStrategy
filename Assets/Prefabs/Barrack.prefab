@@ -106,7 +106,7 @@ MonoBehaviour:
   GoldCost: 80
   GoldMining: 0
   Unit: {fileID: 2159842543124927855, guid: 8954719e03c058f418f05632515fa9b8, type: 3}
-  UnitNumber: 3
+  UnitNumber: 5
   Enter: {fileID: 81704559710495901}
 --- !u!54 &3401789082355311394
 Rigidbody:
