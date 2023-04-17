@@ -21,6 +21,8 @@ public class Human : MonoBehaviour
     public Collider AtackCollider;
     public float AtackForce;
 
+    private AudioSource audioSrc;
+
     public void Awake() 
     {
         HP = MaxHP;
@@ -32,6 +34,7 @@ public class Human : MonoBehaviour
     public void Start()
     {
         Target = gameObject.transform.position;
+        audioSrc = GetComponent<AudioSource>();
     }
 
     public void Update()
@@ -75,6 +78,7 @@ public class Human : MonoBehaviour
             {
                 Shooting = true;
                 Agent.SetDestination(transform.position);
+                audioSrc.Play();
             }
             Collider.gameObject.GetComponent<Human>().HP -= AtackForce;
         }
