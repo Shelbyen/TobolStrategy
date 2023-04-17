@@ -47,7 +47,7 @@ GameObject:
   - component: {fileID: 49828726778117174}
   m_Layer: 10
   m_Name: Camp
-  m_TagString: Untagged
+  m_TagString: EnemyHouse
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -211,6 +211,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SmallCamp 2
       objectReference: {fileID: 0}
+    - target: {fileID: 8131346178066058629, guid: 5874cb9415cb03d4290747a89bdc6af6, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5801823366956887980, guid: 5874cb9415cb03d4290747a89bdc6af6, type: 3}
     - {fileID: 7029795357666957076, guid: 5874cb9415cb03d4290747a89bdc6af6, type: 3}
@@ -277,6 +281,10 @@ PrefabInstance:
     - target: {fileID: 8131346178066058629, guid: 5874cb9415cb03d4290747a89bdc6af6, type: 3}
       propertyPath: m_Name
       value: SmallCamp 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8131346178066058629, guid: 5874cb9415cb03d4290747a89bdc6af6, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7029795357666957076, guid: 5874cb9415cb03d4290747a89bdc6af6, type: 3}
@@ -345,6 +353,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SmallCamp 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8131346178066058629, guid: 5874cb9415cb03d4290747a89bdc6af6, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5801823366956887980, guid: 5874cb9415cb03d4290747a89bdc6af6, type: 3}
     - {fileID: 7029795357666957076, guid: 5874cb9415cb03d4290747a89bdc6af6, type: 3}
@@ -411,6 +423,10 @@ PrefabInstance:
     - target: {fileID: 8131346178066058629, guid: 5874cb9415cb03d4290747a89bdc6af6, type: 3}
       propertyPath: m_Name
       value: SmallCamp 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8131346178066058629, guid: 5874cb9415cb03d4290747a89bdc6af6, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5801823366956887980, guid: 5874cb9415cb03d4290747a89bdc6af6, type: 3}

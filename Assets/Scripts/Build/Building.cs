@@ -139,6 +139,7 @@ public class Building : MonoBehaviour
 
     public IEnumerator SpawnUnits()
     {
+        KillAll();
         int z = 0;
         while (z < UnitNumber)
         {

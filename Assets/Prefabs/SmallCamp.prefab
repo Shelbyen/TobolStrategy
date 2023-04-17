@@ -81,7 +81,7 @@ GameObject:
   - component: {fileID: 6330680591327015148}
   m_Layer: 10
   m_Name: SmallCamp
-  m_TagString: Untagged
+  m_TagString: EnemyHouse
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

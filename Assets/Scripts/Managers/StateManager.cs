@@ -10,6 +10,12 @@ public class StateManager : MonoBehaviour
     private float _timeLeft;
     private bool _isRaid = false;
 
+    private Raid _raidManager;
+
+    private void Start() {
+        _raidManager = new Raid();
+    }
+
     void FixedUpdate()
     {   
         if (!_isRaid) {
@@ -19,6 +25,7 @@ public class StateManager : MonoBehaviour
         
         if (_timeLeft >= TimeBeforeRaid) {
             _isRaid = true;
+            _raidManager.StartRaid();
             _timeLeft = 0f;
             timer.fillAmount = 0;
         }
