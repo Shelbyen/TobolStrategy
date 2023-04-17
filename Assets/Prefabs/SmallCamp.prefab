@@ -137,7 +137,7 @@ MonoBehaviour:
   Built: 0
   HP: 0
   BuildProgress: 0
-  GoldCost: 50
+  GoldCost: -50
   GoldMining: 0
   Unit: {fileID: 4265616324612523718, guid: fda554ef266147a48829cf2faf75e62c, type: 3}
   UnitNumber: 3
