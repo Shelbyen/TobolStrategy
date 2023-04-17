@@ -14,8 +14,7 @@ public class StateManager : MonoBehaviour
     {   
         if (!_isRaid) {
             _timeLeft += (Time.fixedDeltaTime / TimeBeforeRaid) * 5;
-            Debug.Log(_timeLeft);
-            timer.fillAmount = _timeLeft / 5;
+            timer.fillAmount = _timeLeft / 10;
         }
         
         if (_timeLeft >= TimeBeforeRaid) {
