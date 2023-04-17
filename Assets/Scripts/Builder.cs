@@ -25,7 +25,7 @@ public class Builder : MonoBehaviour
     {
         MainCamera = Camera.main;
         GameManager = GetComponent<GameManagerScript>();
-        UIManager = GetComponent<UIManagerScript>();
+        UIManager = GameObject.Find("UIManager").GetComponent<UIManagerScript>();
         UIManager.ChangeStatusBuildMenu(false);
 
         UIManager.ChangeStatusGoldCost(false);
