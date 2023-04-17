@@ -66,6 +66,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHP: 125
   HP: 0
+  MaxView: 50
   Target: {x: 0, y: 0, z: 0}
   TargetEnemy: {fileID: 0}
   IsEnemy: 0

@@ -7,6 +7,7 @@ public class Human : MonoBehaviour
 {
     public float MaxHP;
     public float HP;
+    public float MaxView;
     public Vector3 Target;
     public GameObject TargetEnemy;
     public bool IsEnemy;
@@ -33,11 +34,23 @@ public class Human : MonoBehaviour
 
     public void Start()
     {
+        TargetEnemy = null;
         Target = gameObject.transform.position;
         audioSrc = GetComponent<AudioSource>();
     }
 
     public void Update()
+    {
+        SetTarget();
+
+        if (TargetEnemy != null && !Shooting)
+        {
+            Target = TargetEnemy.transform.position;
+        }
+        FindEnemy();
+    }
+
+    public void SetTarget()
     {
         if (SelectableScript.Selected)
         {
@@ -57,16 +70,16 @@ public class Human : MonoBehaviour
                 }
             }
         }
-
-        if (TargetEnemy != null && !Shooting)
-        {
-            Target = TargetEnemy.transform.position;
-        }
-        FindEnemy();
     }
+
     public void FixedUpdate()
-    { 
-        if (!Shooting) Agent.SetDestination(Target);
+    {
+        if (!Shooting)
+        {
+
+                Agent.SetDestination(Target);
+            
+        }
         if (HP <= 0) Destroy(gameObject);
     }
 
@@ -97,13 +110,14 @@ public class Human : MonoBehaviour
             if (EnemyList[x] != gameObject && EnemyList[x].GetComponent<Human>().IsEnemy != IsEnemy)
             { 
                 Vector3 dist = EnemyList[x].transform.position - transform.position;
-                if (Mathf.Sqrt(dist.x * dist.x + dist.z * dist.z) < Mathf.Sqrt(EnemyDistance.x * EnemyDistance.x + EnemyDistance.z * EnemyDistance.x))
+                if (Mathf.Sqrt(dist.x * dist.x + dist.z * dist.z) < Mathf.Sqrt(EnemyDistance.x * EnemyDistance.x + EnemyDistance.z * EnemyDistance.z))
                 {
                     EnemyDistance = dist;
                     Enemy = x;
+                   
                 }
             }
         }
-        if(Enemy != -1) TargetEnemy = EnemyList[Enemy].gameObject;
+        if(Enemy != -1 && Mathf.Sqrt(EnemyDistance.x * EnemyDistance.x + EnemyDistance.z * EnemyDistance.z) <= MaxView) TargetEnemy = EnemyList[Enemy].gameObject;
     }
 }

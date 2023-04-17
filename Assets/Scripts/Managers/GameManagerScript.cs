@@ -9,10 +9,13 @@ public class GameManagerScript : MonoBehaviour
     public GameObject SelectedObject;
     private Camera MainCamera;
     private RaycastHit SelectingHit;
+    private UIManagerScript UIManager;
 
     void Awake()
     {
         MainCamera = Camera.main;
+        UIManager = GameObject.Find("UIManager").GetComponent<UIManagerScript>();
+        UIManager.ChangeStatusBuildMenu(false);
     }
 
     void Update()
@@ -34,6 +37,8 @@ public class GameManagerScript : MonoBehaviour
                 SelectedObject.GetComponent<Selectable>().SelectThis();
                 Debug.Log(SelectedObject.GetComponent<Selectable>().Name + " is selected");
 
+                UIManager.ChangeTextStatusBar(SelectedObject.GetComponent<Selectable>().Name + " selected");
+
             }
         }
         if (Input.GetKeyDown("escape") && SelectedObject != null)
@@ -54,6 +59,7 @@ public class GameManagerScript : MonoBehaviour
             Debug.Log(SelectedObject.GetComponent<Selectable>().Name + " is deselected");
             SelectedObject.GetComponent<Selectable>().DeselectThis();
         }
+        UIManager.ChangeTextStatusBar("");
         SelectedObject = null;
     }
 }
