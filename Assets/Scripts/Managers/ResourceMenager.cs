@@ -31,4 +31,9 @@ public class ResourceManager
     public void addGold (int count) {
         _gold += count;
     }
+
+    public void setGold(int count)
+    {
+        _gold = count;
+    }
 }

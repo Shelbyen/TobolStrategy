@@ -34,7 +34,7 @@ public class Builder : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown("b") && !BlockBuilder) SiwtchbuildMode(!BuildMode);
+        if (Input.GetKeyDown("tab") && !BlockBuilder) SiwtchbuildMode(!BuildMode);
 
         if (BuildMode)
         {
@@ -46,7 +46,7 @@ public class Builder : MonoBehaviour
             if (ActiveBuilding != null)
             {
                 MoveBuilding();
-                if (Input.GetMouseButtonDown(1)) PlaceBuilding();
+                if (Input.GetMouseButtonDown(1) || Input.GetKeyDown("space")) PlaceBuilding();
                 if (Input.GetKeyDown("delete")) CancelBuilding();
             }
         }

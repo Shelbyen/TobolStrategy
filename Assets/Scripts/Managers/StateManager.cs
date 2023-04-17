@@ -5,8 +5,9 @@ using UnityEngine.UI;
 
 public class StateManager : MonoBehaviour
 {
+    int i = 0;
     public Image timer;
-    public float TimeBeforeRaid = 20;
+    public float TimeBeforeRaid = 120;
     private float _timeLeft;
     private bool _isRaid = false;
 
@@ -20,14 +21,19 @@ public class StateManager : MonoBehaviour
     {   
         if (!_isRaid) {
             _timeLeft += (Time.fixedDeltaTime / TimeBeforeRaid) * 5;
-            timer.fillAmount = _timeLeft / 10;
+            timer.fillAmount = _timeLeft / 5;
         }
         
-        if (_timeLeft >= TimeBeforeRaid) {
+        if (timer.fillAmount == 1) {
             _isRaid = true;
+            if (i == 0)
+                {
+                    TimeBeforeRaid = 20;
+                }
             _raidManager.StartRaid();
             _timeLeft = 0f;
             timer.fillAmount = 0;
+            i += 1;
         }
     }
     public bool getState () {

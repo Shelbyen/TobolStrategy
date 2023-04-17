@@ -18,7 +18,8 @@ public class Raid : MonoBehaviour
             Building components = build.GetComponent<Building>();
             if (components.IsEnemy) {
                 components.StartCoroutine(components.SpawnUnits());
-                reward += components.UnitNumber;
+                reward += components.UnitNumber * 10;
+                Debug.Log(components.UnitNumber);
             }
         }
     }
@@ -41,7 +42,7 @@ public class Raid : MonoBehaviour
             }
             if (enemys.Count == 0) {
                 Camera.main.gameObject.GetComponentInParent<StateManager>().setState(false);
-                ResourceManager.GetInstance().addGold(reward);
+                ResourceManager.GetInstance().addGold(200 + reward);
             }
             else if (peace_human.Count == 0){
                 Debug.Log("ТЫ - ЛУЗЕР");

@@ -50,7 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5df7fbac18364d344be19c1a9320dc77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: Human
+  Name: Melee
   Selected: 0
 --- !u!114 &-2960154302490079633
 MonoBehaviour:
