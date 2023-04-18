@@ -117,12 +117,12 @@ public class Building : MonoBehaviour
 
     public void PlaceThis()
     {
-        Obstacle.enabled = true;
         Placed = true;
         foreach (Renderer renderer in GetComponentsInChildren<Renderer>())
         {
             renderer.material = BuilderScript.GoodMaterial;
         }
+        Obstacle.enabled = true;
     }
 
     public void BuildThis()
@@ -145,6 +145,7 @@ public class Building : MonoBehaviour
         {
             BuildingsUnits[z] = Instantiate(Unit);
             BuildingsUnits[z].transform.position = Enter.transform.position;
+            BuildingsUnits[z].GetComponent<Human>().Target = Enter.transform.position;
             z += 1;
             yield return new WaitForSeconds(1);
         }
@@ -163,7 +164,7 @@ public class Building : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(5);
-            if (Camera.main.gameObject.GetComponentInParent<StateManager>().getState()) ResourceManager.GetInstance().addGold(3);
+            if (Camera.main.gameObject.GetComponentInParent<StateManager>().getState()) ResourceManager.GetInstance().addGold(GoldMining);
         }
     }
 }

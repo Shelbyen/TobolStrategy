@@ -101,8 +101,14 @@ public class Builder : MonoBehaviour
             if (GridMode) ActiveBuilding.transform.position = new Vector3 (Mathf.Round(BuilderHit.point.x), BuilderHit.point.y, Mathf.Round(BuilderHit.point.z));
             else ActiveBuilding.transform.position = BuilderHit.point;
         }
+        else if (Physics.Raycast(MainCamera.ScreenPointToRay(Input.mousePosition), out BuilderHit, 100f, 8))
+        {
+            if (GridMode) ActiveBuilding.transform.position = new Vector3(Mathf.Round(BuilderHit.point.x), BuilderHit.point.y, Mathf.Round(BuilderHit.point.z));
+            else ActiveBuilding.transform.position = BuilderHit.point;
+            ActiveBuilding.GetComponent<Building>().WrongPlace();
+        }
 
-        if(Input.GetKeyDown(KeyCode.R)) {
+        if (Input.GetKeyDown(KeyCode.R)) {
             ActiveBuilding.transform.Rotate(Vector3.up * 45);
         }
     }
@@ -140,7 +146,7 @@ public class Builder : MonoBehaviour
         
         if (!buildingComponent.IsWrongPlace)
         {
-            buildingComponent.Placed = true;
+            buildingComponent.PlaceThis();
             ResourceManager.GetInstance().checkAndBuyGold(buildingComponent.GoldCost);
             ActiveBuilding = null;
             GameManager.BlockRaycast = false;
