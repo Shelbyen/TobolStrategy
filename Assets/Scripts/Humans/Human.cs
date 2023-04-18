@@ -52,7 +52,7 @@ public class Human : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(1))
             {
-                if (Physics.Raycast(MainCamera.ScreenPointToRay(Input.mousePosition), out Hit, 100f, 512))
+                if (Physics.Raycast(MainCamera.ScreenPointToRay(Input.mousePosition), out Hit, 1000f, 512))
                 {
                     if (Hit.transform.gameObject.GetComponent<Human>())
                     {

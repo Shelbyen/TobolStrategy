@@ -96,12 +96,12 @@ public class Builder : MonoBehaviour
 
     public void MoveBuilding()
     {
-        if (Physics.Raycast(MainCamera.ScreenPointToRay(Input.mousePosition), out BuilderHit, 100f, 64))
+        if (Physics.Raycast(MainCamera.ScreenPointToRay(Input.mousePosition), out BuilderHit, 1000f, 64))
         {
             if (GridMode) ActiveBuilding.transform.position = new Vector3 (Mathf.Round(BuilderHit.point.x), BuilderHit.point.y, Mathf.Round(BuilderHit.point.z));
             else ActiveBuilding.transform.position = BuilderHit.point;
         }
-        else if (Physics.Raycast(MainCamera.ScreenPointToRay(Input.mousePosition), out BuilderHit, 100f, 8))
+        else if (Physics.Raycast(MainCamera.ScreenPointToRay(Input.mousePosition), out BuilderHit, 1000f, 8))
         {
             if (GridMode) ActiveBuilding.transform.position = new Vector3(Mathf.Round(BuilderHit.point.x), BuilderHit.point.y, Mathf.Round(BuilderHit.point.z));
             else ActiveBuilding.transform.position = BuilderHit.point;
