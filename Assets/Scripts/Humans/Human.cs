@@ -30,10 +30,6 @@ public class Human : MonoBehaviour
         Agent = GetComponent<NavMeshAgent>();
         MainCamera = Camera.main;
         SelectableScript = GetComponent<Selectable>();
-    }
-
-    public void Start()
-    {
         TargetEnemy = null;
         Target = gameObject.transform.position;
         audioSrc = GetComponent<AudioSource>();
