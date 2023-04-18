@@ -54,12 +54,12 @@ public class Human : MonoBehaviour
             {
                 if (Physics.Raycast(MainCamera.ScreenPointToRay(Input.mousePosition), out Hit, 1000f, 512))
                 {
-                    if (Hit.transform.gameObject.GetComponent<Human>())
+                    if (Hit.transform.gameObject.GetComponent<Human>().IsEnemy)
                     {
                         TargetEnemy = Hit.transform.gameObject;
                     }
                 }
-                else if (Physics.Raycast(MainCamera.ScreenPointToRay(Input.mousePosition), out Hit, 100f, 64))
+                else if (Physics.Raycast(MainCamera.ScreenPointToRay(Input.mousePosition), out Hit, 1000f, 8))
                 {
                     Target = Hit.point;
                     TargetEnemy = null;

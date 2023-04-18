@@ -11,6 +11,7 @@ public class UIManagerScript : MonoBehaviour
     public TMP_Text StatusBar;
     public TMP_Text ToggleText;
     public GameObject GoldCost;
+    public TMP_Text RaidStatus;
 
     private void Awake() {
         BuildMenu.SetActive(false);
@@ -36,6 +37,11 @@ public class UIManagerScript : MonoBehaviour
 
     public void ChangeTextToggleText(string newText = "") {
         ToggleText.text = newText;
+    }
+
+    public void ChangeTextRaidStatus(string newText)
+    {
+        RaidStatus.text = newText;
     }
 
     public void ChangeTextGoldCost(string newText) {
