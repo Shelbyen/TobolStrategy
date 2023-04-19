@@ -72,9 +72,7 @@ public class Human : MonoBehaviour
     {
         if (!Shooting)
         {
-
-                Agent.SetDestination(Target);
-            
+            Agent.SetDestination(Target); 
         }
         if (HP <= 0) Destroy(gameObject);
     }
