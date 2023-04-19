@@ -72,7 +72,7 @@ MonoBehaviour:
   HP: 0
   BuildProgress: 0
   GoldCost: 350
-  GoldMining: 3
+  GoldMining: 5
   Unit: {fileID: 0}
   UnitNumber: 0
   Enter: {fileID: 0}

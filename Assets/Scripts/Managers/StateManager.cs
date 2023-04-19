@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class StateManager : MonoBehaviour
 {
+    public AudioSource Source;
+
     int i = 0;
     public Image timer;
     public float TimeBeforeRaid = 120;
@@ -40,6 +42,7 @@ public class StateManager : MonoBehaviour
             timer.fillAmount = 0;
             i += 1;
             UIManager.ChangeTextRaidStatus("Wave " + i);
+            Source.Play();
         }
     }
     public bool getState () {
