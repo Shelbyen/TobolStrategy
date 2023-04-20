@@ -77,10 +77,10 @@ public class SelectController : MonoBehaviour
                     zScale = -zScale;
                 } else if (xScale < 0.0f)
                 {
-                    zScale = -zScale;
+                    xScale = -xScale;
                 } else if (zScale < 0.0f)
                 {
-                    xScale = -xScale;
+                    zScale = -zScale;
                 }
 
                 RaycastHit[] hits = Physics.BoxCastAll(
