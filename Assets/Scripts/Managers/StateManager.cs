@@ -12,6 +12,7 @@ public class StateManager : MonoBehaviour
     public float TimeBeforeRaid = 120;
     private float _timeLeft;
     private bool _isRaid = false;
+    private bool _startRaid = false;
 
     private UIManagerScript UIManager;
     private Raid _raidManager;
@@ -30,7 +31,8 @@ public class StateManager : MonoBehaviour
             UIManager.ChangeTextRaidStatus("Waiting");
         }
 
-        if (timer.fillAmount == 1) {
+        if (timer.fillAmount == 1 || _startRaid) {
+            _startRaid = false;
             _isRaid = true;
             if (i == 0)
                 {
@@ -51,5 +53,10 @@ public class StateManager : MonoBehaviour
 
     public void setState (bool state) {
         _isRaid = state;
+    }
+
+    public void StartRaid ()
+    {
+        _startRaid = true;
     }
 }

@@ -4,55 +4,101 @@ using UnityEngine;
 
 public class SelectController : MonoBehaviour
 {
-    public GameObject cube;
+    public bool isSelect;
     public LayerMask layer, layerMask;
     public List<GameObject> humans;
+    public Texture2D cubeTexture;
+    
+    // public GameObject cube;
+    // private GameObject _test;
+
     private Camera _cam;
-    private GameObject _cubeSelection;
+    private float selX;
+    private float selY;
+    public Rect _cubeSelection;
     private RaycastHit _hit;
+    private RaycastHit _hitDrag;
 
     private void Awake() { 
         _cam = Camera.main;
+    }
+
+    private void OnGUI()
+    {
+        if (isSelect)
+        {
+            GUI.DrawTexture(_cubeSelection, cubeTexture);
+        }
     }
 
     private void Update()
     {
         if (InputManager.GetKeyDown("Select"))
         {
+            foreach (var el in humans)
+            {
+                el.transform.GetChild(0).gameObject.SetActive(false);
+            }
+
+            humans.Clear();
+
             Ray ray = _cam.ScreenPointToRay(Input.mousePosition);
 
             if (Physics.Raycast(ray, out _hit, 1000f, layer))
             {
-                _cubeSelection = Instantiate(cube, new Vector3(_hit.point.x, 1, _hit.point.z), Quaternion.identity);
+                selX = Input.mousePosition.x;
+                selY = Input.mousePosition.y;
+                _cubeSelection = new Rect(selX, Screen.height - selY, 1, 1);
+                isSelect = true;
+
             }
         }
-
-        if (_cubeSelection)
+        
+        if (_cubeSelection != null)
         {
+            selX = Input.mousePosition.x;
+            selY = Screen.height - Input.mousePosition.y;
+            _cubeSelection.width = selX - _cubeSelection.x;
+            _cubeSelection.height = selY - _cubeSelection.y;
+        }
+
+        if (Input.GetMouseButtonUp(0) && isSelect) {
+
             Ray ray = _cam.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out RaycastHit hitDrag, 1000f, layer))
+            if (Physics.Raycast(ray, out _hitDrag, 1000f, layer))
             {
-                _cubeSelection.transform.localScale = new Vector3((_hit.point.x - hitDrag.point.x) * -1, (_hit.point.y - hitDrag.point.y), (_hit.point.z - hitDrag.point.z) * -1);
+                float xScale = (_hit.point.x - _hitDrag.point.x) * -1;
+                float zScale = _hit.point.z - _hitDrag.point.z;
+
+                if (xScale < 0.0f && zScale < 0.0f)
+                {
+                    xScale = -xScale;
+                    zScale = -zScale;
+                } else if (xScale < 0.0f)
+                {
+                    zScale = -zScale;
+                } else if (zScale < 0.0f)
+                {
+                    xScale = -xScale;
+                }
+
+                RaycastHit[] hits = Physics.BoxCastAll(
+                    _hit.point,
+                    new Vector3(xScale, 0, zScale),
+                    new Vector3(0, 100, 0),
+                    Quaternion.identity,
+                    0,
+                    layerMask);
+
+                foreach (var el in hits)
+                {
+                    humans.Add(el.transform.gameObject);
+                    el.transform.GetChild(0).gameObject.SetActive(true);
+                }
             }
-        }
 
-        if (Input.GetMouseButtonUp(0) && _cubeSelection) {
-
-            RaycastHit[] hits = Physics.BoxCastAll(
-                _cubeSelection.transform.position,
-                _cubeSelection.transform.localScale,
-                Vector3.up,
-                Quaternion.identity,
-                0,
-                layerMask);
-
-            foreach (var el in hits)
-            {
-                humans.Add(el.transform.gameObject);
-            }
-
-            Destroy(_cubeSelection);
+            isSelect = false;
         }
     }
 }
