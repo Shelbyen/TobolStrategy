@@ -50,7 +50,7 @@ public class Human : MonoBehaviour
     {
         if (SelectableScript.Selected)
         {
-            if (Input.GetMouseButtonDown(1))
+            if (InputManager.GetKeyDown("Place"))
             {
                 if (Physics.Raycast(MainCamera.ScreenPointToRay(Input.mousePosition), out Hit, 1000f, 512))
                 {

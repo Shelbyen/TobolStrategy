@@ -41,7 +41,7 @@ public class GameManagerScript : MonoBehaviour
 
             }
         }
-        if (Input.GetKeyDown("escape") && SelectedObject != null)
+        if (InputManager.GetKeyDown("Cancel") && SelectedObject != null)
         {
             DeselectObject();
         }

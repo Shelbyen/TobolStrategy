@@ -17,7 +17,7 @@ public class SelectController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (InputManager.GetKeyDown("Select"))
         {
             Ray ray = _cam.ScreenPointToRay(Input.mousePosition);
 

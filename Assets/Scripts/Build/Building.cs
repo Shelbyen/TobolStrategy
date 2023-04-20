@@ -24,7 +24,7 @@ public class Building : MonoBehaviour
     public GameObject Enter;
 
     private NavMeshObstacle Obstacle;
-    private Builder BuilderScript;
+    public Builder BuilderScript;
     private int CollisionCount;
     private Material[] BaseMaterial;
     private Renderer[] Render;
@@ -35,7 +35,7 @@ public class Building : MonoBehaviour
     {
         Obstacle = GetComponent<NavMeshObstacle>();
         Obstacle.enabled = false;
-        BuilderScript = Camera.main.transform.parent.gameObject.GetComponent<Builder>();
+        BuilderScript = GameObject.Find("Builder").GetComponent<Builder>();
         BuildingCollider = GetComponent<Collider>();
         Render = GetComponentsInChildren<Renderer>();
         BaseMaterial = new Material[Render.Length];

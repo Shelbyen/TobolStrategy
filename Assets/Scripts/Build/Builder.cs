@@ -11,6 +11,7 @@ public class Builder : MonoBehaviour
     public GameObject ActiveBuilding;
 
     private UIManagerScript UIManager;
+    private Destroyer Destroyer;
 
     public bool BlockBuilder;
     private GameManagerScript GameManager;
@@ -18,55 +19,47 @@ public class Builder : MonoBehaviour
     private RaycastHit BuilderHit;
     //Status vars
     private bool BuildMode;
-    private bool DestroyMode;
     private bool GridMode;
 
     void Awake()
     {
         MainCamera = Camera.main;
-        GameManager = GetComponent<GameManagerScript>();
+        Destroyer = GetComponent<Destroyer>();
+        GameManager = GameObject.Find("Selector").GetComponent<GameManagerScript>();
         UIManager = GameObject.Find("UIManager").GetComponent<UIManagerScript>();
         UIManager.ChangeStatusBuildMenu(false);
-
         UIManager.ChangeStatusGoldCost(false);
         UIManager.ChangeTextGoldCost("");
     }
 
     void Update()
     {
-        if (Input.GetKeyDown("tab") && !BlockBuilder) SiwtchbuildMode(!BuildMode);
+        if (InputManager.GetKeyDown("BuildMode") && !BlockBuilder) SiwtchbuildMode(!BuildMode);
 
         if (BuildMode)
         {
-            HotKeys();
-            if (DestroyMode)
-            {
-                if (Input.GetMouseButtonDown(0)) DestroyBuilding();
-            }
             if (ActiveBuilding != null)
             {
                 MoveBuilding();
-                if (Input.GetMouseButtonDown(1) || Input.GetKeyDown("space")) PlaceBuilding();
-                if (Input.GetKeyDown("delete")) CancelBuilding();
+                if (InputManager.GetKeyDown("Place") || InputManager.GetKeyDown("Accept")) PlaceBuilding();
+                if (InputManager.GetKeyDown("Cancel")) CancelBuilding();
             }
+            //Destroyer
+            if (InputManager.GetKeyDown("DestroyMode") && ActiveBuilding == null)
+            {
+                CancelBuilding();
+                Destroyer.SwitchDestroyMode();
+                if (Destroyer.DestroyMode) UIManager.ChangeTextStatusBar("Destroy mode");
+                else UIManager.ChangeTextStatusBar("");
+            }
+            //Grid
+            if (InputManager.GetKeyDown("GridMode")) SwitchGridMode();
         }
     }
 
     public void Toggle()
     {
         SiwtchbuildMode(!BuildMode);
-    }
-
-    public void BlockBuild(bool Status)
-    {
-        CancelBuilding();
-        BlockBuilder = Status;
-        SiwtchbuildMode(!Status);
-    }
-    public void HotKeys()
-    {
-        if (Input.GetKeyDown("delete") && ActiveBuilding == null) SwitchDestroyMode();
-        if (Input.GetKeyDown("g")) SwitchGridMode();
     }
 
     public void SiwtchbuildMode(bool Status)
@@ -77,15 +70,6 @@ public class Builder : MonoBehaviour
         GameManager.BlockRaycast = Status;
         if (BuildMode) UIManager.ChangeTextToggleText("View");
         else UIManager.ChangeTextToggleText("Build");
-    }
-
-    public void SwitchDestroyMode()
-    {
-        CancelBuilding();
-        DestroyMode = !DestroyMode;
-        Debug.Log("Destroy Switched");
-        if (DestroyMode) UIManager.ChangeTextStatusBar("Destroy mode");
-        else UIManager.ChangeTextStatusBar("");
     }
 
     public void SwitchGridMode()
@@ -108,36 +92,20 @@ public class Builder : MonoBehaviour
             ActiveBuilding.GetComponent<Building>().WrongPlace();
         }
 
-        if (Input.GetKeyDown(KeyCode.R)) {
+        if (InputManager.GetKeyDown("RotateBuilding")) {
             ActiveBuilding.transform.Rotate(Vector3.up * 45);
         }
     }
 
     public void StartBuilding(GameObject BuildingPrefab)
     {
-        DestroyMode = false;
+        Destroyer.DestroyMode = false;
         CancelBuilding();
         ActiveBuilding = Instantiate(BuildingPrefab);
 
         UIManager.ChangeTextStatusBar(ActiveBuilding.GetComponent<Building>().Discription);
         UIManager.ChangeStatusGoldCost(true);
         UIManager.ChangeTextGoldCost(ActiveBuilding.GetComponent<Building>().GoldCost.ToString());
-
-        Debug.Log("Building instantiated");
-    }
-
-    public void DestroyBuilding()
-    {
-        if (Physics.Raycast(MainCamera.ScreenPointToRay(Input.mousePosition), out BuilderHit, 100f, 128))
-        {
-            if (!BuilderHit.transform.gameObject.GetComponent<Building>().Built) {
-                ResourceManager.GetInstance().addGold(BuilderHit.transform.gameObject.GetComponent<Building>().GoldCost);
-            }
-            BuilderHit.transform.gameObject.GetComponent<Building>().KillAll();
-            Destroy(BuilderHit.transform.gameObject);
-
-            Debug.Log("Building erased");
-        }
     }
 
     public void PlaceBuilding()
@@ -153,8 +121,6 @@ public class Builder : MonoBehaviour
             UIManager.ChangeTextStatusBar("");
             UIManager.ChangeStatusGoldCost(false);
             UIManager.ChangeTextGoldCost("");
-
-            Debug.Log("Building placed");
         }
     }
 
@@ -164,7 +130,5 @@ public class Builder : MonoBehaviour
         UIManager.ChangeTextStatusBar("");
         UIManager.ChangeStatusGoldCost(false);
         UIManager.ChangeTextGoldCost("");
-
-        Debug.Log("Cancel building");
     }
 }
