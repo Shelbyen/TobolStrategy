@@ -38,7 +38,7 @@ public class SelectController : MonoBehaviour
             foreach (var el in humans)
             {
                 el.transform.GetChild(0).gameObject.SetActive(false);
-                el.transform.GetComponent<Selectable>().DeselectThis();
+                el.transform.GetComponent<Human>().isSelect = false;
             }
 
             humans.Clear();
@@ -47,7 +47,7 @@ public class SelectController : MonoBehaviour
 
             if (Physics.Raycast(ray, out _hit, 1000f, layer))
             {
-                // _test = Instantiate(cube, new Vector3(_hit.point.x, 1, _hit.point.z), Quaternion.identity);
+                //_test = Instantiate(cube, new Vector3(_hit.point.x, 1, _hit.point.z), Quaternion.identity);
                 selX = Input.mousePosition.x;
                 selY = Input.mousePosition.y;
                 _cubeSelection = new Rect(selX, Screen.height - selY, 1, 1);
@@ -82,14 +82,15 @@ public class SelectController : MonoBehaviour
                 } else if (zScale < 0.0f) {
                     rotate.Equals(new Vector3(180, 0, 0));
                 }
+                
 
-                //cube.Equals(rotate);
+                //cube.Equals(rotate * _cam.transform.rotation);
                 //cube.transform.localScale = new Vector3(xScale, 2, zScale);
 
                 RaycastHit[] hits = Physics.BoxCastAll(
                     new Vector3(_hit.point.x - xScale / 2, -50, _hit.point.z - zScale / 2), 
                     new Vector3(Mathf.Abs(xScale) / 2, 100, Mathf.Abs(zScale) / 2),
-                    new Vector3(0, 100, 0),
+                    Vector3.up,
                     rotate,
                     0,
                     layerMask);
@@ -98,7 +99,8 @@ public class SelectController : MonoBehaviour
                 {
                     humans.Add(el.transform.gameObject);
                     el.transform.GetChild(0).gameObject.SetActive(true);
-                    el.transform.GetComponent<Selectable>().SelectThis();
+                    el.transform.GetComponent<Human>().isSelect = true;
+
                 }
             }
 

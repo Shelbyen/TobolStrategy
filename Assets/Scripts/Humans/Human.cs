@@ -12,10 +12,10 @@ public class Human : MonoBehaviour
     public GameObject TargetEnemy;
     public bool IsEnemy;
 
-    private Selectable SelectableScript;
     private RaycastHit Hit;
     private Camera MainCamera;
     private NavMeshAgent Agent;
+    public bool isSelect;
     public bool Shooting;
 
     public bool CanShoot;
@@ -29,7 +29,6 @@ public class Human : MonoBehaviour
         HP = MaxHP;
         Agent = GetComponent<NavMeshAgent>();
         MainCamera = Camera.main;
-        SelectableScript = GetComponent<Selectable>();
         TargetEnemy = null;
         Target = gameObject.transform.position;
         audioSrc = GetComponent<AudioSource>();
@@ -48,7 +47,7 @@ public class Human : MonoBehaviour
 
     public void SetTarget()
     {
-        if (SelectableScript.Selected)
+        if (isSelect)
         {
             if (InputManager.GetKeyDown("Place"))
             {

@@ -10,7 +10,6 @@ public class Selectable : MonoBehaviour
     public bool Selected;
 
     private Building Building;
-    private Human Human;
 
     public GameObject StatusWindow;
     public Vector3 StatusWindowPosition;
@@ -18,7 +17,6 @@ public class Selectable : MonoBehaviour
     public void Awake()
     {
         Building = GetComponent<Building>();
-        Human = GetComponent<Human>();
         if (StatusWindow != null)
         {
             StatusWindow.transform.SetParent(GameObject.Find("Canvas").transform);
