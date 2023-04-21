@@ -11,9 +11,9 @@ public class SettingsChange : MonoBehaviour
     public Slider Music;
     public Toggle Hints;
     public Slider Sensitivity;
-    public Button FWT1; //FirstWaitingTime
-    public Button FWT2;
-    public Button FWT3;
+    public TMP_Text WaitingTime; //FirstWaitingTime
+    public Button WaitingTimeMinus;
+    public Button WaitingTimePlus;
 
     void Awake()
     {
@@ -22,24 +22,11 @@ public class SettingsChange : MonoBehaviour
         Hints.isOn = SettingsManager.GameplayHints;
         Sensitivity.value = SettingsManager.Sensitivity;
 
-        switch (SettingsManager.FirstWaitingTime)
-        {
-            case 60:
-                {
-                    FWT1.interactable = false;
-                    break;
-                }
-            case 90:
-                {
-                    FWT2.interactable = false;
-                    break;
-                }
-            case 120:
-                {
-                    FWT3.interactable = false;
-                    break;
-                }
-        }
+        WaitingTime.text = $"{SettingsManager.FirstWaitingTime}";
+        if (SettingsManager.FirstWaitingTime >= 120) WaitingTimePlus.interactable = false;
+        else WaitingTimePlus.interactable = true;
+        if (SettingsManager.FirstWaitingTime <= 60) WaitingTimeMinus.interactable = false;
+        else WaitingTimeMinus.interactable = true;
     }
 
     public void SetSound()
@@ -66,30 +53,13 @@ public class SettingsChange : MonoBehaviour
         Debug.Log(SettingsManager.Sensitivity);
     }
 
-    public void SetFirstWaiting(int Time)
+    public void AddTime(int Time)
     {
-        FWT1.interactable = true; 
-        FWT2.interactable = true;
-        FWT3.interactable = true;
-        switch (Time)
-        {
-            case 60:
-                {
-                    FWT1.interactable = false;
-                    break;
-                }
-            case 90:
-                {
-                    FWT2.interactable = false;
-                    break;
-                }
-            case 120:
-                {
-                    FWT3.interactable = false;
-                    break;
-                }
-        }
-        SettingsManager.FirstWaitingTime = Time;
-        Debug.Log(SettingsManager.FirstWaitingTime);
+        SettingsManager.FirstWaitingTime += Time;
+        WaitingTime.text = $"{SettingsManager.FirstWaitingTime}";
+        if (SettingsManager.FirstWaitingTime >= 120) WaitingTimePlus.interactable = false;
+        else WaitingTimePlus.interactable = true;
+        if (SettingsManager.FirstWaitingTime <= 60) WaitingTimeMinus.interactable = false;
+        else WaitingTimeMinus.interactable = true;
     }
 }
