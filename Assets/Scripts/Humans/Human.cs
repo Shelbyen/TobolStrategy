@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,7 @@ public class Human : MonoBehaviour
     public float MaxHP;
     public float HP;
     public float MaxView;
+    public float AttackRange;
     public Vector3 Target;
     public GameObject TargetEnemy;
     public bool IsEnemy;
@@ -16,11 +18,13 @@ public class Human : MonoBehaviour
     private Camera MainCamera;
     private NavMeshAgent Agent;
     public bool isSelect;
-    public bool Shooting;
+    public bool Attack = false;
 
     public bool CanShoot;
     public Collider AtackCollider;
     public float AtackForce;
+    public GameObject bullet;
+    private Coroutine _coroutine;
 
     private AudioSource audioSrc;
 
@@ -37,17 +41,23 @@ public class Human : MonoBehaviour
     public void Update()
     {
         if (HP <= 0) Destroy(gameObject);
+        UpdateHealthBar();
         SetTarget();
 
-        if (TargetEnemy != null && !Shooting)
+        FindTarget();
+        if (!Attack)
         {
-            Target = TargetEnemy.transform.position;
+            FindEnemy();
         }
-        else if (!Shooting)
-        {
-            Agent.SetDestination(Target);
-        }
-        FindEnemy();
+    }
+
+    private void UpdateHealthBar()
+    {
+        Transform healthBar = transform.GetChild(0).transform;
+        healthBar.localScale = new Vector3(
+            (healthBar.localScale.x / MaxHP) * HP,
+            healthBar.localScale.y,
+            healthBar.localScale.z);
     }
 
     public void SetTarget()
@@ -72,24 +82,57 @@ public class Human : MonoBehaviour
         }
     }
 
-    public void OnTriggerStay(Collider Collider)
+    private void FindTarget()
     {
-        if (Collider.gameObject == TargetEnemy && Collider.isTrigger)
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, AttackRange);
+        int enemyCount = 0;
+
+        if (hitColliders.Length != 0 && !Attack)
         {
-            if (CanShoot)
-            {
-                Shooting = true;
-                Agent.SetDestination(transform.position);
-                audioSrc.Play();
-            }
-            Collider.gameObject.GetComponent<Human>().HP -= AtackForce;
+            Attack = true;
         }
-        Shooting = false;
+
+
+        if (_coroutine != null)
+        {
+            StopCoroutine(_coroutine);
+            _coroutine = null;
+        }
+        else if (hitColliders.Length == 0)
+        {
+            StopCoroutine(_coroutine);
+            _coroutine = null;
+            Attack = false;
+        }
+
+        foreach (var el in hitColliders)
+        {
+            if ((gameObject.CompareTag("Human") && el.gameObject.CompareTag("Enemy")) ||
+                (gameObject.CompareTag("Enemy") && el.gameObject.CompareTag("Human")))
+            {
+                enemyCount += 1;
+                Debug.Log(transform.position.x - el.transform.position.x);
+                if (_coroutine == null)
+                {
+                    _coroutine = StartCoroutine(StartAttack(el));
+                }
+            }
+        }
+        if (enemyCount > 0 && !Attack)
+        {
+            Attack = true;
+            GetComponent<NavMeshAgent>().SetDestination(transform.position);
+        }
+        else if (enemyCount == 0)
+        {
+
+        }
     }
 
     public void FindEnemy()
     {
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, MaxView);
+        
         foreach (var el in hitColliders)
         {
             if ((gameObject.CompareTag("Human") && el.gameObject.CompareTag("Enemy"))||
@@ -118,5 +161,14 @@ public class Human : MonoBehaviour
         }
         if(Enemy != -1 && Mathf.Sqrt(EnemyDistance.x * EnemyDistance.x + EnemyDistance.z * EnemyDistance.z) <= MaxView) TargetEnemy = EnemyList[Enemy].gameObject;
         */
+    }
+
+    IEnumerator StartAttack(Collider enemy)
+    {
+        GameObject obj = Instantiate(bullet, transform.GetChild(1).position, Quaternion.identity);
+        obj.GetComponent<BulletController>().position = enemy.transform.position;
+        yield return new WaitForSeconds(1f);
+        StopCoroutine(_coroutine);
+        _coroutine = null;
     }
 }

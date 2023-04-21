@@ -37,8 +37,11 @@ public class SelectController : MonoBehaviour
         {
             foreach (var el in humans)
             {
-                el.transform.GetChild(0).gameObject.SetActive(false);
-                el.transform.GetComponent<Human>().isSelect = false;
+                if (el != null)
+                {
+                    el.transform.GetChild(0).gameObject.SetActive(false);
+                    el.transform.GetComponent<Human>().isSelect = false;
+                }
             }
 
             humans.Clear();

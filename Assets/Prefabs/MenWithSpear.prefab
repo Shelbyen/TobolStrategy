@@ -773,14 +773,16 @@ MonoBehaviour:
   MaxHP: 110
   HP: 0
   MaxView: 1000
+  AttackRange: 3
   Target: {x: 0, y: 0, z: 0}
   TargetEnemy: {fileID: 0}
   IsEnemy: 0
   isSelect: 0
-  Shooting: 0
+  Attack: 0
   CanShoot: 0
   AtackCollider: {fileID: 0}
   AtackForce: 1.25
+  bullet: {fileID: 0}
 --- !u!65 &-4121405898841497015
 BoxCollider:
   m_ObjectHideFlags: 0
