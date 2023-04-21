@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Analytics;
 using UnityEngine.SceneManagement;
 
 public class Raid : MonoBehaviour
 {
     int reward;
     public GameObject[] Humans;
+    public GameObject[] Enemys;
     public void StartRaid()
     {
         reward = 0;
@@ -26,25 +28,15 @@ public class Raid : MonoBehaviour
 
     void Update()
     {
-        if (Camera.main.gameObject.GetComponentInParent<StateManager>().getState()) { 
+        if (Camera.main.gameObject.GetComponentInParent<StateManager>().getState()) {
             Humans = GameObject.FindGameObjectsWithTag("Human");
-            var enemys = new ArrayList();
-            var peace_human = new ArrayList();
+            Enemys = GameObject.FindGameObjectsWithTag("Enemy");
 
-            foreach (GameObject human in Humans)
-            {
-                if (human.GetComponent<Human>().IsEnemy) {
-                    enemys.Add(human);
-                }
-                else {
-                    peace_human.Add(human);
-                }
-            }
-            if (enemys.Count == 0) {
+            if (Enemys.Length == 0) {
                 Camera.main.gameObject.GetComponentInParent<StateManager>().setState(false);
                 ResourceManager.GetInstance().addGold(200 + reward);
             }
-            else if (peace_human.Count == 0){
+            else if (Humans.Length == 0){
                 Debug.Log("ТЫ - ЛУЗЕР");
                 SceneManager.LoadScene("Menu");
             }

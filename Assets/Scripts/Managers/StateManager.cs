@@ -24,7 +24,7 @@ public class StateManager : MonoBehaviour
     }
 
     void FixedUpdate()
-    {   
+    {
         if (!_isRaid) {
             _timeLeft += (Time.fixedDeltaTime / TimeBeforeRaid) * 5;
             timer.fillAmount = _timeLeft / 5;
@@ -32,7 +32,9 @@ public class StateManager : MonoBehaviour
         }
 
         if (timer.fillAmount == 1 || _startRaid) {
-            _startRaid = false;
+            Debug.Log("WAVE");
+            _timeLeft = 0f;
+            timer.fillAmount = 0;
             _isRaid = true;
             if (i == 0)
                 {
@@ -40,11 +42,10 @@ public class StateManager : MonoBehaviour
                 }
             _raidManager.StartRaid();
 
-            _timeLeft = 0f;
-            timer.fillAmount = 0;
             i += 1;
             UIManager.ChangeTextRaidStatus("Wave " + i);
             Source.Play();
+            _startRaid = false;
         }
     }
     public bool getState () {

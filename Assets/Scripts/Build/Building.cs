@@ -7,7 +7,7 @@ public class Building : MonoBehaviour
 {
     public string Discription;
 
-    public bool IsEnemy;
+    public bool IsEnemy; 
     public bool BuildOnStart;
 
     public bool IsWrongPlace;
@@ -140,14 +140,19 @@ public class Building : MonoBehaviour
     public IEnumerator SpawnUnits()
     {
         KillAll();
-        int z = 0;
-        while (z < UnitNumber)
+        for (int i = 0; i < UnitNumber; i += 1)
         {
-            BuildingsUnits[z] = Instantiate(Unit);
-            BuildingsUnits[z].transform.position = Enter.transform.position;
-            BuildingsUnits[z].GetComponent<Human>().Target = Enter.transform.position;
-            z += 1;
-            yield return new WaitForSeconds(1);
+            BuildingsUnits[i] = Instantiate(Unit);
+            BuildingsUnits[i].transform.position = Enter.transform.position;
+            BuildingsUnits[i].GetComponent<Human>().Target = Enter.transform.position;
+            if (IsEnemy)
+            {
+                BuildingsUnits[i].tag = "Enemy";
+            } else
+            {
+                BuildingsUnits[i].tag = "Human";
+            }
+            yield return new WaitForSeconds(0.5f);
         }
     }
 
