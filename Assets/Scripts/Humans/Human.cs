@@ -36,11 +36,16 @@ public class Human : MonoBehaviour
 
     public void Update()
     {
+        if (HP <= 0) Destroy(gameObject);
         SetTarget();
 
         if (TargetEnemy != null && !Shooting)
         {
             Target = TargetEnemy.transform.position;
+        }
+        else if (!Shooting)
+        {
+            Agent.SetDestination(Target);
         }
         FindEnemy();
     }
@@ -53,7 +58,7 @@ public class Human : MonoBehaviour
             {
                 if (Physics.Raycast(MainCamera.ScreenPointToRay(Input.mousePosition), out Hit, 1000f, 512))
                 {
-                    if (Hit.transform.gameObject.GetComponent<Human>().IsEnemy)
+                    if (Hit.transform.gameObject.tag == "Enemy")
                     {
                         TargetEnemy = Hit.transform.gameObject;
                     }
@@ -65,15 +70,6 @@ public class Human : MonoBehaviour
                 }
             }
         }
-    }
-
-    public void FixedUpdate()
-    {
-        if (!Shooting)
-        {
-            Agent.SetDestination(Target); 
-        }
-        if (HP <= 0) Destroy(gameObject);
     }
 
     public void OnTriggerStay(Collider Collider)
@@ -93,8 +89,17 @@ public class Human : MonoBehaviour
 
     public void FindEnemy()
     {
-        GameObject[] EnemyList = GameObject.FindGameObjectsWithTag("Human");
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, MaxView);
+        foreach (var el in hitColliders)
+        {
+            if ((gameObject.CompareTag("Human") && el.gameObject.CompareTag("Enemy"))||
+                (gameObject.CompareTag("Enemy") && el.gameObject.CompareTag("Human")))
+            {
+                GetComponent<NavMeshAgent>().SetDestination(el.transform.position);
+            }
+        }
 
+        /*
         Vector3 EnemyDistance = new Vector3(10000, 10000, 10000);
         int Enemy = -1;
 
@@ -112,5 +117,6 @@ public class Human : MonoBehaviour
             }
         }
         if(Enemy != -1 && Mathf.Sqrt(EnemyDistance.x * EnemyDistance.x + EnemyDistance.z * EnemyDistance.z) <= MaxView) TargetEnemy = EnemyList[Enemy].gameObject;
+        */
     }
 }

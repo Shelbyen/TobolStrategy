@@ -117,6 +117,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: SmallCamp
   Selected: 0
+  StatusWindow: {fileID: 0}
+  StatusWindowPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &7029795357666957076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -139,9 +141,10 @@ MonoBehaviour:
   BuildProgress: 0
   GoldCost: -50
   GoldMining: 0
-  Unit: {fileID: 4265616324612523718, guid: fda554ef266147a48829cf2faf75e62c, type: 3}
+  Unit: {fileID: 3909269889597461387, guid: 0babeff56251cdf4abcd5dffe1e1090b, type: 3}
   UnitNumber: 4
   Enter: {fileID: 6843211014571478636}
+  BuilderScript: {fileID: 0}
 --- !u!65 &1163094676896449045
 BoxCollider:
   m_ObjectHideFlags: 0
