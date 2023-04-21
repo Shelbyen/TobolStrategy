@@ -10,6 +10,7 @@ public class MainMenu : MonoBehaviour
         ResourceManager.GetInstance().setGold(1000);
     }
     public void ExitGame () {
+        Debug.Log(SettingsManager.SoundVolume);
         Debug.Log("Quit Game");
         Application.Quit();
     }

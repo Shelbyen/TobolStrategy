@@ -14,7 +14,6 @@ public class CameraControl : MonoBehaviour
     public float RotationSpeed;
     public float ZoomSpeed;
     public float TiltSpeed;
-    public float Sensitivity;
 
     void Awake()
     {
@@ -47,7 +46,7 @@ public class CameraControl : MonoBehaviour
     private void CameraRotation()
     {
         float Rotation = 0;
-        if (InputManager.GetKey("CameraRotationControl")) Rotation = Input.GetAxis("Mouse X") * Sensitivity;
+        if (InputManager.GetKey("CameraRotationControl")) Rotation = Input.GetAxis("Mouse X") * SettingsManager.Sensitivity;
         else if (InputManager.GetKey("RotateLeft")) Rotation = 1;
         else if (InputManager.GetKey("RotateRight")) Rotation = -1;
         if (InputManager.GetKeyDown("CameraRotationControl")) Cursor.lockState = CursorLockMode.Locked;
@@ -67,7 +66,7 @@ public class CameraControl : MonoBehaviour
     {
         float Tilt = 0;
         if (InputManager.GetKey("CameraRotationControl")) Tilt = Input.GetAxis("Mouse Y");
-        CameraRotator.transform.Rotate(Vector3.left * Tilt * TiltSpeed * Sensitivity * Time.deltaTime);
+        CameraRotator.transform.Rotate(Vector3.left * Tilt * TiltSpeed * SettingsManager.Sensitivity * Time.deltaTime);
         CameraRotator.transform.localEulerAngles = new Vector3(Mathf.Clamp(CameraRotator.transform.localEulerAngles.x, 20f, 60f), 0, 0);
         MainCamera.transform.localPosition = new Vector3(0, 0, -CameraRotator.transform.localEulerAngles.x / 9f);
     }
