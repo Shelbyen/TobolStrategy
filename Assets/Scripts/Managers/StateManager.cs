@@ -22,6 +22,11 @@ public class StateManager : MonoBehaviour
         UIManager.ChangeTextRaidStatus("Waiting");
         _raidManager = new Raid();
     }
+    
+    void Start()
+    {
+        TimeBeforeRaid = SettingsManager.FirstWaitingTime;
+    }
 
     void FixedUpdate()
     {

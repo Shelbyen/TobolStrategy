@@ -14,9 +14,6 @@ public class SettingsChange : MonoBehaviour
     public Button FWT1; //FirstWaitingTime
     public Button FWT2;
     public Button FWT3;
-    public Button WT1; //WaitingTime
-    public Button WT2;
-    public Button WT3;
 
     void Awake()
     {
@@ -24,17 +21,36 @@ public class SettingsChange : MonoBehaviour
         Music.value = SettingsManager.MusicVolume;
         Hints.isOn = SettingsManager.GameplayHints;
         Sensitivity.value = SettingsManager.Sensitivity;
+
+        switch (SettingsManager.FirstWaitingTime)
+        {
+            case 60:
+                {
+                    FWT1.interactable = false;
+                    break;
+                }
+            case 90:
+                {
+                    FWT2.interactable = false;
+                    break;
+                }
+            case 120:
+                {
+                    FWT3.interactable = false;
+                    break;
+                }
+        }
     }
 
     public void SetSound()
     {
-        SettingsManager.SoundVolume = (int)Mathf.Round(Sound.value * 100);
+        SettingsManager.SoundVolume = Sound.value;
         Debug.Log(SettingsManager.SoundVolume);
     }
 
     public void SetMusic()
     {
-        SettingsManager.MusicVolume = (int)Mathf.Round(Music.value * 100);
+        SettingsManager.MusicVolume = Music.value;
         Debug.Log(SettingsManager.MusicVolume);
     }
 
@@ -48,5 +64,32 @@ public class SettingsChange : MonoBehaviour
     {
         SettingsManager.Sensitivity = Sensitivity.value;
         Debug.Log(SettingsManager.Sensitivity);
+    }
+
+    public void SetFirstWaiting(int Time)
+    {
+        FWT1.interactable = true; 
+        FWT2.interactable = true;
+        FWT3.interactable = true;
+        switch (Time)
+        {
+            case 60:
+                {
+                    FWT1.interactable = false;
+                    break;
+                }
+            case 90:
+                {
+                    FWT2.interactable = false;
+                    break;
+                }
+            case 120:
+                {
+                    FWT3.interactable = false;
+                    break;
+                }
+        }
+        SettingsManager.FirstWaitingTime = Time;
+        Debug.Log(SettingsManager.FirstWaitingTime);
     }
 }
