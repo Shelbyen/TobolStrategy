@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UIElements;
 
 public class Human : MonoBehaviour
 {
@@ -11,18 +13,21 @@ public class Human : MonoBehaviour
     public float MaxView;
     public float AttackRange;
     public Vector3 Target;
-    public GameObject TargetEnemy;
+    
     public LayerMask layer;
 
     private RaycastHit Hit;
     private Camera MainCamera;
     public bool isSelect;
     public bool Attack = false;
+    public GameObject _priorityEnemy = null;
 
     public bool CanShoot;
     public float meleeDamage;
     public GameObject bullet;
     private Coroutine _coroutine = null;
+
+    private float _maxHealthBarScale;
 
     private AudioSource audioSrc;
 
@@ -30,9 +35,10 @@ public class Human : MonoBehaviour
     {
         HP = MaxHP;
         MainCamera = Camera.main;
-        TargetEnemy = null;
         Target = gameObject.transform.position;
         audioSrc = GetComponent<AudioSource>();
+
+        if (transform.tag == "Human") _maxHealthBarScale = transform.GetChild(0).transform.localScale.x;
     }
 
     public void Update()
@@ -41,18 +47,20 @@ public class Human : MonoBehaviour
         if (transform.tag == "Human") UpdateHealthBar();
         SetTarget();
 
-        FindTarget();
-        if (!Attack)
+        FindPriorityEnemy();
+        
+        if (!Attack && _priorityEnemy != null)
         {
-            FindEnemy();
+            GetComponent<NavMeshAgent>().SetDestination(_priorityEnemy.transform.position);
         }
+        AttackTarget();
     }
 
     private void UpdateHealthBar()
     {
         Transform healthBar = transform.GetChild(0).transform;
         healthBar.localScale = new Vector3(
-            (healthBar.localScale.x / MaxHP) * HP,
+            _maxHealthBarScale * HP / MaxHP,
             healthBar.localScale.y,
             healthBar.localScale.z);
     }
@@ -64,37 +72,36 @@ public class Human : MonoBehaviour
             if (InputManager.GetKeyDown("Place"))
             {
                 Ray ray = MainCamera.ScreenPointToRay(Input.mousePosition);
-                Debug.Log(ray);
-                /*S
+                
                 if (Physics.Raycast(ray, out Hit, 1000f, 512))
                 {
                     if (Hit.transform.gameObject.tag == "Enemy")
                     {
-                        TargetEnemy = Hit.transform.gameObject;
+                        // _selectedEnemy = Hit.transform.gameObject;
+                        // _selectedPosition = Vector3.zero;
+                        // _priorityEnemy = _selectedEnemy;
                     }
                 }
-                */
-                if (Physics.Raycast(ray, out Hit, 1000f, layer))
+                else if (Physics.Raycast(ray, out Hit, 1000f, layer))
                 {
                     GetComponent<NavMeshAgent>().SetDestination(Hit.point);
-                    Debug.Log(Hit.point);
+                    // _selectedPosition = Hit.point;
+                    // _selectedEnemy = null;
                 }
             }
         }
     }
 
-    private void FindTarget()
+    private void AttackTarget()
     {
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, AttackRange);
-        int enemyCount = 0;
+        bool goalExist = false;
 
         foreach (var el in hitColliders)
         {
-            if ((gameObject.CompareTag("Human") && el.gameObject.CompareTag("Enemy")) ||
-                (gameObject.CompareTag("Enemy") && el.gameObject.CompareTag("Human")))
+            if (el.gameObject == _priorityEnemy.gameObject)
             {
-                enemyCount += 1;
-
+                goalExist = true;
                 if (!Attack)
                 {
                     Attack = true;
@@ -107,7 +114,7 @@ public class Human : MonoBehaviour
                 }
             }
         }
-        if (enemyCount == 0 && _coroutine != null)
+        if (!goalExist && _coroutine != null)
         {
             Attack = false;
             StopCoroutine(_coroutine);
@@ -115,38 +122,32 @@ public class Human : MonoBehaviour
         }
     }
 
-    public void FindEnemy()
+    public void FindPriorityEnemy()
     {
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, MaxView);
-        
+        float minCost = Mathf.Infinity;
+
         foreach (var el in hitColliders)
         {
-            if ((gameObject.CompareTag("Human") && el.gameObject.CompareTag("Enemy"))||
+            if ((gameObject.CompareTag("Human") && el.gameObject.CompareTag("Enemy")) ||
                 (gameObject.CompareTag("Enemy") && el.gameObject.CompareTag("Human")))
             {
-                GetComponent<NavMeshAgent>().SetDestination(el.transform.position);
-            }
-        }
-
-        /*
-        Vector3 EnemyDistance = new Vector3(10000, 10000, 10000);
-        int Enemy = -1;
-
-        for (int x = 0; x < EnemyList.Length; x += 1)
-        {
-            if (EnemyList[x] != gameObject && EnemyList[x].GetComponent<Human>().IsEnemy != IsEnemy)
-            { 
-                Vector3 dist = EnemyList[x].transform.position - transform.position;
-                if (Mathf.Sqrt(dist.x * dist.x + dist.z * dist.z) < Mathf.Sqrt(EnemyDistance.x * EnemyDistance.x + EnemyDistance.z * EnemyDistance.z))
+                float cost = FindCost(el);
+                if (cost < minCost)
                 {
-                    EnemyDistance = dist;
-                    Enemy = x;
-                   
+                    minCost = cost;
+                    _priorityEnemy = el.gameObject;
                 }
             }
         }
-        if(Enemy != -1 && Mathf.Sqrt(EnemyDistance.x * EnemyDistance.x + EnemyDistance.z * EnemyDistance.z) <= MaxView) TargetEnemy = EnemyList[Enemy].gameObject;
-        */
+    }
+
+    private float FindCost(Collider enemy)
+    {
+        Vector3 diff = enemy.transform.position - transform.position;
+        float cost = diff.sqrMagnitude * diff.sqrMagnitude * enemy.GetComponent<Human>().HP;
+
+        return cost;
     }
 
     IEnumerator StartAttack(Collider enemy)
