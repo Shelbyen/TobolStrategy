@@ -8,6 +8,8 @@ public class BulletController : MonoBehaviour
 {
     [NonSerialized]
     public Vector3 position;
+    [NonSerialized]
+    public bool isEnemy;
     public float speed = 30f;
     public int damage = 10;
 
@@ -15,7 +17,7 @@ public class BulletController : MonoBehaviour
     {
         float step = speed * Time.deltaTime;
         transform.position = Vector3.MoveTowards(transform.position, position, step);
-        transform.localRotation = Quaternion.FromToRotation(transform.position, position);
+        transform.rotation = Quaternion.LookRotation(position - transform.position, Vector3.up);
 
         if (transform.position == position)
         {
@@ -25,7 +27,8 @@ public class BulletController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy") || other.CompareTag("Human"))
+        if ((other.CompareTag("Human") && isEnemy) ||
+            (other.CompareTag("Enemy") && !isEnemy))
         {
             Human human = other.GetComponent<Human>();
             human.HP -= damage;

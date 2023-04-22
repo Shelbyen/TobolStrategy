@@ -27,6 +27,9 @@ public class Human : MonoBehaviour
     public GameObject bullet;
     private Coroutine _coroutine = null;
 
+    private Animator animator;
+    private NavMeshAgent agent;
+
     private float _maxHealthBarScale;
 
     private AudioSource audioSrc;
@@ -37,6 +40,9 @@ public class Human : MonoBehaviour
         MainCamera = Camera.main;
         Target = gameObject.transform.position;
         audioSrc = GetComponent<AudioSource>();
+        animator = GetComponent<Animator>();
+        agent = GetComponent<NavMeshAgent>();
+        
 
         if (transform.tag == "Human") _maxHealthBarScale = transform.GetChild(0).transform.localScale.x;
     }
@@ -51,8 +57,19 @@ public class Human : MonoBehaviour
 
         if (!Attack && _priorityEnemy.gameObject != null)
         {
-            GetComponent<NavMeshAgent>().SetDestination(_priorityEnemy.transform.position);
-        }   
+            agent.SetDestination(_priorityEnemy.transform.position);
+        }
+        else if (!Attack)
+        {
+            if (agent.velocity != Vector3.zero)
+            {
+                animator.SetBool("isWalking", true);
+            }
+            else
+            {
+                animator.SetBool("isWalking", false);
+            }
+        }
         AttackTarget();
     }
 
@@ -105,7 +122,9 @@ public class Human : MonoBehaviour
                 if (!Attack)
                 {
                     Attack = true;
-                    GetComponent<NavMeshAgent>().SetDestination(transform.position);
+                    animator.SetBool("isWalking", false);
+                    animator.SetBool("shoot", true);
+                    agent.SetDestination(transform.position);
                 }
                 
                 if (_coroutine == null)
@@ -117,6 +136,7 @@ public class Human : MonoBehaviour
         if (!goalExist && _coroutine != null)
         {
             Attack = false;
+            animator.SetBool("shoot", false);
             StopCoroutine(_coroutine);
             _coroutine = null;
         }
@@ -156,6 +176,8 @@ public class Human : MonoBehaviour
         {
             GameObject obj = Instantiate(bullet, transform.GetChild(1).position, Quaternion.FromToRotation(transform.GetChild(1).position, enemy.transform.position));
             obj.GetComponent<BulletController>().position = enemy.transform.position;
+            if (transform.gameObject.tag == "Enemy") obj.GetComponent<BulletController>().isEnemy = true;
+            else obj.GetComponent<BulletController>().isEnemy = false;
             audioSrc.Play();
         }
         else
