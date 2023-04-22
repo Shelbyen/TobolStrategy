@@ -48,11 +48,11 @@ public class Human : MonoBehaviour
         SetTarget();
 
         FindPriorityEnemy();
-        
-        if (!Attack && _priorityEnemy != null)
+
+        if (!Attack && _priorityEnemy.gameObject != null)
         {
             GetComponent<NavMeshAgent>().SetDestination(_priorityEnemy.transform.position);
-        }
+        }   
         AttackTarget();
     }
 
@@ -154,14 +154,15 @@ public class Human : MonoBehaviour
     {
         if (CanShoot)
         {
-            GameObject obj = Instantiate(bullet, transform.GetChild(1).position, Quaternion.identity);
+            GameObject obj = Instantiate(bullet, transform.GetChild(1).position, Quaternion.FromToRotation(transform.GetChild(1).position, enemy.transform.position));
             obj.GetComponent<BulletController>().position = enemy.transform.position;
+            audioSrc.Play();
         }
         else
         {
             enemy.GetComponent<Human>().HP -= meleeDamage;
         }
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.6f);
         StopCoroutine(_coroutine);
         _coroutine = null;
     }

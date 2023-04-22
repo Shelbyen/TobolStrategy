@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class BulletController : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class BulletController : MonoBehaviour
     {
         float step = speed * Time.deltaTime;
         transform.position = Vector3.MoveTowards(transform.position, position, step);
+        transform.localRotation = Quaternion.FromToRotation(transform.position, position);
 
         if (transform.position == position)
         {
