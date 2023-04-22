@@ -130,16 +130,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHP: 100
   HP: 0
-  MaxView: 50
-  AttackRange: 10
+  MaxView: 70
+  AttackRange: 50
   Target: {x: 0, y: 0, z: 0}
   TargetEnemy: {fileID: 0}
-  IsEnemy: 0
+  layer:
+    serializedVersion: 2
+    m_Bits: 72
   isSelect: 0
   Attack: 0
-  CanShoot: 0
-  AtackCollider: {fileID: 3214961313850212903}
-  AtackForce: -1
+  CanShoot: 1
+  meleeDamage: 5
   bullet: {fileID: 2987437680357331929, guid: 37eed21b90847124e961a7fab41422af, type: 3}
 --- !u!65 &3214961313850212903
 BoxCollider:

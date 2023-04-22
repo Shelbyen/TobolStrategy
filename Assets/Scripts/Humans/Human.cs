@@ -12,26 +12,23 @@ public class Human : MonoBehaviour
     public float AttackRange;
     public Vector3 Target;
     public GameObject TargetEnemy;
-    public bool IsEnemy;
+    public LayerMask layer;
 
     private RaycastHit Hit;
     private Camera MainCamera;
-    private NavMeshAgent Agent;
     public bool isSelect;
     public bool Attack = false;
 
     public bool CanShoot;
-    public Collider AtackCollider;
-    public float AtackForce;
+    public float meleeDamage;
     public GameObject bullet;
-    private Coroutine _coroutine;
+    private Coroutine _coroutine = null;
 
     private AudioSource audioSrc;
 
     public void Awake() 
     {
         HP = MaxHP;
-        Agent = GetComponent<NavMeshAgent>();
         MainCamera = Camera.main;
         TargetEnemy = null;
         Target = gameObject.transform.position;
@@ -41,7 +38,7 @@ public class Human : MonoBehaviour
     public void Update()
     {
         if (HP <= 0) Destroy(gameObject);
-        UpdateHealthBar();
+        if (transform.tag == "Human") UpdateHealthBar();
         SetTarget();
 
         FindTarget();
@@ -66,17 +63,21 @@ public class Human : MonoBehaviour
         {
             if (InputManager.GetKeyDown("Place"))
             {
-                if (Physics.Raycast(MainCamera.ScreenPointToRay(Input.mousePosition), out Hit, 1000f, 512))
+                Ray ray = MainCamera.ScreenPointToRay(Input.mousePosition);
+                Debug.Log(ray);
+                /*S
+                if (Physics.Raycast(ray, out Hit, 1000f, 512))
                 {
                     if (Hit.transform.gameObject.tag == "Enemy")
                     {
                         TargetEnemy = Hit.transform.gameObject;
                     }
                 }
-                else if (Physics.Raycast(MainCamera.ScreenPointToRay(Input.mousePosition), out Hit, 1000f, 8))
+                */
+                if (Physics.Raycast(ray, out Hit, 1000f, layer))
                 {
-                    Target = Hit.point;
-                    TargetEnemy = null;
+                    GetComponent<NavMeshAgent>().SetDestination(Hit.point);
+                    Debug.Log(Hit.point);
                 }
             }
         }
@@ -87,45 +88,30 @@ public class Human : MonoBehaviour
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, AttackRange);
         int enemyCount = 0;
 
-        if (hitColliders.Length != 0 && !Attack)
-        {
-            Attack = true;
-        }
-
-
-        if (_coroutine != null)
-        {
-            StopCoroutine(_coroutine);
-            _coroutine = null;
-        }
-        else if (hitColliders.Length == 0)
-        {
-            StopCoroutine(_coroutine);
-            _coroutine = null;
-            Attack = false;
-        }
-
         foreach (var el in hitColliders)
         {
             if ((gameObject.CompareTag("Human") && el.gameObject.CompareTag("Enemy")) ||
                 (gameObject.CompareTag("Enemy") && el.gameObject.CompareTag("Human")))
             {
                 enemyCount += 1;
-                Debug.Log(transform.position.x - el.transform.position.x);
+
+                if (!Attack)
+                {
+                    Attack = true;
+                    GetComponent<NavMeshAgent>().SetDestination(transform.position);
+                }
+                
                 if (_coroutine == null)
                 {
                     _coroutine = StartCoroutine(StartAttack(el));
                 }
             }
         }
-        if (enemyCount > 0 && !Attack)
+        if (enemyCount == 0 && _coroutine != null)
         {
-            Attack = true;
-            GetComponent<NavMeshAgent>().SetDestination(transform.position);
-        }
-        else if (enemyCount == 0)
-        {
-
+            Attack = false;
+            StopCoroutine(_coroutine);
+            _coroutine = null;
         }
     }
 
@@ -165,8 +151,15 @@ public class Human : MonoBehaviour
 
     IEnumerator StartAttack(Collider enemy)
     {
-        GameObject obj = Instantiate(bullet, transform.GetChild(1).position, Quaternion.identity);
-        obj.GetComponent<BulletController>().position = enemy.transform.position;
+        if (CanShoot)
+        {
+            GameObject obj = Instantiate(bullet, transform.GetChild(1).position, Quaternion.identity);
+            obj.GetComponent<BulletController>().position = enemy.transform.position;
+        }
+        else
+        {
+            enemy.GetComponent<Human>().HP -= meleeDamage;
+        }
         yield return new WaitForSeconds(1f);
         StopCoroutine(_coroutine);
         _coroutine = null;

@@ -776,12 +776,13 @@ MonoBehaviour:
   AttackRange: 3
   Target: {x: 0, y: 0, z: 0}
   TargetEnemy: {fileID: 0}
-  IsEnemy: 0
+  layer:
+    serializedVersion: 2
+    m_Bits: 0
   isSelect: 0
   Attack: 0
   CanShoot: 0
-  AtackCollider: {fileID: 0}
-  AtackForce: 1.25
+  meleeDamage: 25
   bullet: {fileID: 0}
 --- !u!65 &-4121405898841497015
 BoxCollider:

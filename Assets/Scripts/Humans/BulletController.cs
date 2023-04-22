@@ -28,5 +28,6 @@ public class BulletController : MonoBehaviour
             Human human = other.GetComponent<Human>();
             human.HP -= damage;
         }
+        Destroy(gameObject);
     }
 }

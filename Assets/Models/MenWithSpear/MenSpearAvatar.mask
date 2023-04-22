@@ -8,4 +8,78 @@ AvatarMask:
   m_PrefabAsset: {fileID: 0}
   m_Name: MenSpearAvatar
   m_Mask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-  m_Elements: []
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: Armature.001
+    m_Weight: 1
+  - m_Path: Armature.001/Bone
+    m_Weight: 1
+  - m_Path: Armature.001/Bone/Bone.001
+    m_Weight: 1
+  - m_Path: Armature.001/Bone/Bone.001/Bone.002
+    m_Weight: 1
+  - m_Path: Armature.001/Bone/Bone.001/Bone.002/Bone.004
+    m_Weight: 1
+  - m_Path: Armature.001/Bone/Bone.001/Bone.002/Bone.004/Bone.005
+    m_Weight: 1
+  - m_Path: Armature.001/Bone/Bone.001/Bone.002/Bone.004/Bone.005/Bone.006
+    m_Weight: 1
+  - m_Path: Armature.001/Bone/Bone.001/Bone.002/Bone.004/Bone.005/Bone.006/Bone.006_end
+    m_Weight: 1
+  - m_Path: Armature.001/Bone/Bone.001/Bone.002/Bone.011
+    m_Weight: 1
+  - m_Path: Armature.001/Bone/Bone.001/Bone.002/Bone.011/Bone.012
+    m_Weight: 1
+  - m_Path: Armature.001/Bone/Bone.001/Bone.002/Bone.011/Bone.012/Bone.013
+    m_Weight: 1
+  - m_Path: Armature.001/Bone/Bone.001/Bone.002/Bone.011/Bone.012/Bone.013/Bone.013_end
+    m_Weight: 1
+  - m_Path: Armature.001/Bone/Bone.001/Bone.002/Bone.014
+    m_Weight: 1
+  - m_Path: Armature.001/Bone/Bone.001/Bone.002/Bone.014/Bone.014_end
+    m_Weight: 1
+  - m_Path: Armature.001/Bone/Bone.003
+    m_Weight: 1
+  - m_Path: Armature.001/Bone/Bone.003/Bone.003_end
+    m_Weight: 1
+  - m_Path: Armature.001/Bone/Bone.007
+    m_Weight: 1
+  - m_Path: Armature.001/Bone/Bone.007/Bone.008
+    m_Weight: 1
+  - m_Path: Armature.001/Bone/Bone.007/Bone.008/Bone.009
+    m_Weight: 1
+  - m_Path: Armature.001/Bone/Bone.007/Bone.008/Bone.009/Bone.010
+    m_Weight: 1
+  - m_Path: Armature.001/Bone/Bone.007/Bone.008/Bone.009/Bone.010/Bone.010_end
+    m_Weight: 1
+  - m_Path: Armature.001/Bone/Bone.015
+    m_Weight: 1
+  - m_Path: Armature.001/Bone/Bone.015/Bone.016
+    m_Weight: 1
+  - m_Path: Armature.001/Bone/Bone.015/Bone.016/Bone.017
+    m_Weight: 1
+  - m_Path: Armature.001/Bone/Bone.015/Bone.016/Bone.017/Bone.018
+    m_Weight: 1
+  - m_Path: Armature.001/Bone/Bone.015/Bone.016/Bone.017/Bone.018/Bone.018_end
+    m_Weight: 1
+  - m_Path: Armature.002
+    m_Weight: 0
+  - m_Path: Armature.002/Bone
+    m_Weight: 1
+  - m_Path: Armature.002/Bone/Bone_end
+    m_Weight: 1
+  - m_Path: Armature.010
+    m_Weight: 0
+  - m_Path: Armature.010/Bone
+    m_Weight: 1
+  - m_Path: Armature.010/Bone/Bone_end
+    m_Weight: 1
+  - m_Path: Cube.001
+    m_Weight: 1
+  - m_Path: Cube.002
+    m_Weight: 0
+  - m_Path: Cylinder
+    m_Weight: 0
+  - m_Path: Torus
+    m_Weight: 0
