@@ -410,8 +410,6 @@ MonoBehaviour:
   Unit: {fileID: 0}
   UnitNumber: 0
   Enter: {fileID: 5991176881945048208}
-  StatusWindow: {fileID: 8909517593760158768}
-  StatusWindowPosition: {x: 0, y: 10, z: 0}
 --- !u!65 &6939840709922449051
 BoxCollider:
   m_ObjectHideFlags: 0

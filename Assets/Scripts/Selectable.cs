@@ -16,12 +16,12 @@ public class Selectable : MonoBehaviour
     public void SelectThis()
     {
         Selected = true;
-        Building.SetWindowStatus(true);
+        //Building.SetWindowStatus(true);
     }
 
     public void DeselectThis()
     {
         Selected = false;
-        Building.SetWindowStatus(false);
+        //Building.SetWindowStatus(false);
     }
 }

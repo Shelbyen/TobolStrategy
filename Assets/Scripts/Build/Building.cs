@@ -24,8 +24,8 @@ public class Building : MonoBehaviour
     public int UnitNumber;
     public GameObject Enter;
 
-    public GameObject StatusWindow;
-    public Vector3 StatusWindowPosition;
+    //public GameObject StatusWindow;
+    //public Vector3 StatusWindowPosition;
 
     private NavMeshObstacle Obstacle;
     private Builder BuilderScript;
@@ -34,6 +34,8 @@ public class Building : MonoBehaviour
     private Renderer[] Render;
     private Collider BuildingCollider;
     private GameObject[] BuildingsUnits;
+
+    private bool SpawningUnitsNow;
 
     void Awake()
     {
@@ -59,9 +61,9 @@ public class Building : MonoBehaviour
                 foreach (Renderer renderer in GetComponentsInChildren<Renderer>()) renderer.material = BuilderScript.GoodMaterial;
             }
         }
-        StatusWindow.transform.SetParent(GameObject.Find("Worldspace Canvas").transform);
-        StatusWindow.SetActive(false);
-        StatusWindow.GetComponentInChildren<TMP_Text>().text = $"{GetComponent<Selectable>().Name + " Lv1"}";
+        //StatusWindow.transform.SetParent(GameObject.Find("Worldspace Canvas").transform);
+        //StatusWindow.SetActive(false);
+        //StatusWindow.GetComponentInChildren<TMP_Text>().text = $"{GetComponent<Selectable>().Name + " Lv1"}";
     }
 
     void FixedUpdate()
@@ -82,12 +84,6 @@ public class Building : MonoBehaviour
     {
         if (!Built) ResourceManager.GetInstance().addGold(GoldCost);
         KillAll();
-        Destroy(StatusWindow);
-    }
-
-    public void SetWindowStatus(bool Status)
-    {
-        if (Placed) StatusWindow.SetActive(Status);
     }
 
     private void OnTriggerEnter(Collider Collider)
@@ -118,7 +114,7 @@ public class Building : MonoBehaviour
         Placed = true;
         foreach (Renderer renderer in GetComponentsInChildren<Renderer>()) renderer.material = BuilderScript.GoodMaterial;
         Obstacle.enabled = true;
-        StatusWindow.transform.position = transform.position + StatusWindowPosition;
+        //StatusWindow.transform.position = transform.position + StatusWindowPosition;
     }
 
     public void BuildThis()
@@ -139,20 +135,26 @@ public class Building : MonoBehaviour
 
     public IEnumerator SpawnUnits()
     {
-        KillAll();
-        for (int i = 0; i < UnitNumber; i += 1)
+        if (!SpawningUnitsNow)
         {
-            BuildingsUnits[i] = Instantiate(Unit);
-            BuildingsUnits[i].transform.position = Enter.transform.position;
-            BuildingsUnits[i].GetComponent<Human>().Target = Enter.transform.position;
-            if (IsEnemy)
+            SpawningUnitsNow = true;
+            KillAll();
+            for (int i = 0; i < UnitNumber; i += 1)
             {
-                BuildingsUnits[i].tag = "Enemy";
-            } else
-            {
-                BuildingsUnits[i].tag = "Human";
+                BuildingsUnits[i] = Instantiate(Unit);
+                BuildingsUnits[i].transform.position = Enter.transform.position;
+                BuildingsUnits[i].GetComponent<Human>().Target = Enter.transform.position;
+                if (IsEnemy)
+                {
+                    BuildingsUnits[i].tag = "Enemy";
+                }
+                else
+                {
+                    BuildingsUnits[i].tag = "Human";
+                }
+                yield return new WaitForSeconds(0.5f);
             }
-            yield return new WaitForSeconds(0.5f);
+            SpawningUnitsNow = false;
         }
     }
 
