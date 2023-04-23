@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 8585691299987549760}
   - component: {fileID: 3549638441556535243}
   m_Layer: 5
-  m_Name: Image
+  m_Name: StatusWindow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -175,9 +175,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Barrack
   Selected: 0
-  StatusWindow: {fileID: 4940437172940068592}
-  StatusWindowPosition: {x: 0, y: 10, z: 0}
-  AudioSource: {fileID: 0}
 --- !u!114 &6015287561992413119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -190,20 +187,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f8a287c3358d1f49b02d3e5a6c92ee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Name: Barrack
   Discription: Barracks spawns a squad of melee villagers
   IsEnemy: 0
   BuildOnStart: 0
   IsWrongPlace: 0
   Placed: 0
   Built: 0
-  HP: 0
   BuildProgress: 0
   GoldCost: 80
   GoldMining: 0
   Unit: {fileID: 2159842543124927855, guid: 8954719e03c058f418f05632515fa9b8, type: 3}
   UnitNumber: 5
   Enter: {fileID: 81704559710495901}
-  BuilderScript: {fileID: 0}
+  StatusWindow: {fileID: 4940437172940068592}
+  StatusWindowPosition: {x: 0, y: 10, z: 0}
 --- !u!65 &2610639959890536086
 BoxCollider:
   m_ObjectHideFlags: 0

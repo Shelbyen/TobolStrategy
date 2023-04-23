@@ -6,6 +6,12 @@ public class Destroyer : MonoBehaviour
 {
     private RaycastHit Hit;
     public bool DestroyMode;
+    public LayerMask Layer;
+
+    void Update()
+    {
+        if (InputManager.GetKeyDown("Select") && DestroyMode) DestroyBuilding();
+    }
 
     public void SwitchDestroyMode()
     {
@@ -21,13 +27,8 @@ public class Destroyer : MonoBehaviour
 
     public void DestroyBuilding()
     {
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out Hit, 1000f, 128))
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out Hit, 1000f, Layer))
         {
-            if (!Hit.transform.gameObject.GetComponent<Building>().Built)
-            {
-                ResourceManager.GetInstance().addGold(Hit.transform.gameObject.GetComponent<Building>().GoldCost);
-            }
-            Hit.transform.gameObject.GetComponent<Building>().KillAll();
             Destroy(Hit.transform.gameObject);
         }
     }

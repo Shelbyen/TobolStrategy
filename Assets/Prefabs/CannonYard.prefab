@@ -51,10 +51,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5df7fbac18364d344be19c1a9320dc77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: Armory
+  Name: Artillery
   Selected: 0
-  StatusWindow: {fileID: 7199673976076237846}
-  StatusWindowPosition: {x: 0, y: 10, z: 0}
 --- !u!114 &2018517557869566742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73,14 +71,14 @@ MonoBehaviour:
   IsWrongPlace: 0
   Placed: 0
   Built: 0
-  HP: 0
   BuildProgress: 0
   GoldCost: 250
   GoldMining: 0
   Unit: {fileID: 7902621650251694834, guid: c4996da12293f9041a57c501596076cf, type: 3}
   UnitNumber: 2
   Enter: {fileID: 6206412277924778024}
-  BuilderScript: {fileID: 0}
+  StatusWindow: {fileID: 7199673976076237846}
+  StatusWindowPosition: {x: 0, y: 10, z: 0}
 --- !u!65 &379957360094237935
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -305,7 +303,7 @@ GameObject:
   - component: {fileID: 2307141226713168911}
   - component: {fileID: 1238760299222498150}
   m_Layer: 5
-  m_Name: Image
+  m_Name: StatusWindow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

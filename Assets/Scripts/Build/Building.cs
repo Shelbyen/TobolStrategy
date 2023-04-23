@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
+using TMPro;
 
 public class Building : MonoBehaviour
 {
@@ -14,7 +16,6 @@ public class Building : MonoBehaviour
     public bool Placed;
     public bool Built;
 
-    public float HP;
     public float BuildProgress;
     public int GoldCost;
     public int GoldMining;
@@ -23,15 +24,18 @@ public class Building : MonoBehaviour
     public int UnitNumber;
     public GameObject Enter;
 
+    public GameObject StatusWindow;
+    public Vector3 StatusWindowPosition;
+
     private NavMeshObstacle Obstacle;
-    public Builder BuilderScript;
+    private Builder BuilderScript;
     private int CollisionCount;
     private Material[] BaseMaterial;
     private Renderer[] Render;
     private Collider BuildingCollider;
     private GameObject[] BuildingsUnits;
 
-    public void Awake()
+    void Awake()
     {
         Obstacle = GetComponent<NavMeshObstacle>();
         Obstacle.enabled = false;
@@ -44,13 +48,7 @@ public class Building : MonoBehaviour
         {
             BaseMaterial[i] = Render[i].material;
         }
-
-        if (BuildOnStart)
-        {
-            Obstacle.enabled = true;
-            Placed = true;
-            BuildThis();
-        }
+        if (BuildOnStart) BuildThis();
         else
         {
             if (GoldCost <= ResourceManager.GetInstance().getCountGold() && CollisionCount <= 0) GoodPlace();
@@ -58,15 +56,15 @@ public class Building : MonoBehaviour
 
             if (!Placed)
             {
-                foreach (Renderer renderer in GetComponentsInChildren<Renderer>())
-                {
-                    renderer.material = BuilderScript.GoodMaterial;
-                }
+                foreach (Renderer renderer in GetComponentsInChildren<Renderer>()) renderer.material = BuilderScript.GoodMaterial;
             }
         }
+        StatusWindow.transform.SetParent(GameObject.Find("Worldspace Canvas").transform);
+        StatusWindow.SetActive(false);
+        StatusWindow.GetComponentInChildren<TMP_Text>().text = $"{GetComponent<Selectable>().Name + " Lv1"}";
     }
 
-    public void FixedUpdate()
+    void FixedUpdate()
     {
         if (!Built)
         {
@@ -80,61 +78,63 @@ public class Building : MonoBehaviour
         }
     }
 
-    public void OnTriggerEnter(Collider Collider)
+    void OnDestroy()
     {
-        if (!Placed)
-        {
-            CollisionCount += 1;
-        }
+        if (!Built) ResourceManager.GetInstance().addGold(GoldCost);
+        KillAll();
+        Destroy(StatusWindow);
     }
-    public void OnTriggerExit(Collider Collider)
+
+    public void SetWindowStatus(bool Status)
     {
-        if (!Placed)
-        {
-            CollisionCount -= 1;
-        }
+        if (Placed) StatusWindow.SetActive(Status);
+    }
+
+    private void OnTriggerEnter(Collider Collider)
+    {
+        if (!Placed) CollisionCount += 1;
+    }
+    private void OnTriggerExit(Collider Collider)
+    {
+        if (!Placed) CollisionCount -= 1;
     }
 
     public void WrongPlace()
     {
         Debug.Log("Good place or No money");
         IsWrongPlace = true;
-        foreach (Renderer renderer in GetComponentsInChildren<Renderer>())
-        {
-            renderer.material = BuilderScript.WrongMaterial;
-        }
+        foreach (Renderer renderer in GetComponentsInChildren<Renderer>()) renderer.material = BuilderScript.WrongMaterial;
     }
 
     public void GoodPlace()
     {
         Debug.Log("All is good");
         IsWrongPlace = false;
-        foreach (Renderer renderer in GetComponentsInChildren<Renderer>())
-        {
-            renderer.material = BuilderScript.GoodMaterial;
-        }
+        foreach (Renderer renderer in GetComponentsInChildren<Renderer>()) renderer.material = BuilderScript.GoodMaterial;
     }
 
     public void PlaceThis()
     {
         Placed = true;
-        foreach (Renderer renderer in GetComponentsInChildren<Renderer>())
-        {
-            renderer.material = BuilderScript.GoodMaterial;
-        }
+        foreach (Renderer renderer in GetComponentsInChildren<Renderer>()) renderer.material = BuilderScript.GoodMaterial;
         Obstacle.enabled = true;
+        StatusWindow.transform.position = transform.position + StatusWindowPosition;
     }
 
     public void BuildThis()
     {
+        Obstacle.enabled = true;
+        Placed = true;
         Built = true;
-        for (int i = 0; i < Render.Length; i += 1)
-        {
-            Render[i].material = BaseMaterial[i];
-        }
+        for (int i = 0; i < Render.Length; i += 1) Render[i].material = BaseMaterial[i];
         if (GoldMining != 0) StartCoroutine(GoldMine());
         if (UnitNumber != 0 && !IsEnemy) StartCoroutine(SpawnUnits());
         if (GetComponent<HealBuilding>()) GetComponent<HealBuilding>().StartHeal();
+    }
+
+    public void DestroyThis()
+    {
+        Destroy(gameObject);
     }
 
     public IEnumerator SpawnUnits()
@@ -158,10 +158,7 @@ public class Building : MonoBehaviour
 
     public void KillAll()
     {
-        foreach(GameObject UnitForKill in BuildingsUnits)
-        {
-            Destroy(UnitForKill);
-        }
+        foreach(GameObject UnitForKill in BuildingsUnits) Destroy(UnitForKill);
     }
 
     public IEnumerator GoldMine()

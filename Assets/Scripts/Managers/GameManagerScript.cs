@@ -1,15 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.AI;
 using UnityEngine;
 
 public class GameManagerScript : MonoBehaviour
 {
     public bool BlockRaycast;
     public GameObject SelectedObject;
+    public LayerMask Mask;
+    public LayerMask UIMask;
     private Camera MainCamera;
     private RaycastHit SelectingHit;
     private UIManagerScript UIManager;
+
+    private Ray Ray;
 
     void Awake()
     {
@@ -22,34 +25,28 @@ public class GameManagerScript : MonoBehaviour
     {
         if (!BlockRaycast)
         {
+            Ray = MainCamera.ScreenPointToRay(Input.mousePosition);
             SelectObject();
         }
     }
 
     public void SelectObject()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (InputManager.GetKeyDown("Select"))
         {
-            DeselectObject();
-            if (Physics.Raycast(MainCamera.ScreenPointToRay(Input.mousePosition), out SelectingHit) && SelectingHit.transform.gameObject.GetComponent<Selectable>())
-            {   
+            if (Physics.Raycast(Ray, out SelectingHit, 1000f, Mask))
+            {
+                DeselectObject();
                 SelectedObject = SelectingHit.transform.gameObject;
                 SelectedObject.GetComponent<Selectable>().SelectThis();
                 Debug.Log(SelectedObject.GetComponent<Selectable>().Name + " is selected");
-
                 UIManager.ChangeTextStatusBar(SelectedObject.GetComponent<Selectable>().Name + " selected");
-
             }
         }
         if (InputManager.GetKeyDown("Cancel") && SelectedObject != null)
         {
             DeselectObject();
         }
-    }
-    
-    public void HotKeys()
-    {
-
     }
 
     public void DeselectObject()
