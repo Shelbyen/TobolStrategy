@@ -156,7 +156,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f8a287c3358d1f49b02d3e5a6c92ee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: Armory
   Discription: Armory creates a squad of ranged soldiers
   IsEnemy: 0
   BuildOnStart: 0
@@ -166,11 +165,9 @@ MonoBehaviour:
   BuildProgress: 0
   GoldCost: 150
   GoldMining: 0
-  Unit: {fileID: 141847358912457476, guid: 17b5b21f39598f9478d0a0d27fc3e405, type: 3}
+  Unit: {fileID: 440588380187811796, guid: cdaf9aa54e92ca842ac7f36253d48790, type: 3}
   UnitNumber: 4
   Enter: {fileID: 5161196462523661161}
-  StatusWindow: {fileID: 794634907206859844}
-  StatusWindowPosition: {x: 0, y: 10, z: 0}
 --- !u!65 &-7726986225414062162
 BoxCollider:
   m_ObjectHideFlags: 0

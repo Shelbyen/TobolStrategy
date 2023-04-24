@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.UI;
-using TMPro;
 
 public class Building : MonoBehaviour
 {
@@ -23,9 +21,6 @@ public class Building : MonoBehaviour
     public GameObject Unit;
     public int UnitNumber;
     public GameObject Enter;
-
-    //public GameObject StatusWindow;
-    //public Vector3 StatusWindowPosition;
 
     private NavMeshObstacle Obstacle;
     private Builder BuilderScript;
@@ -61,9 +56,6 @@ public class Building : MonoBehaviour
                 foreach (Renderer renderer in GetComponentsInChildren<Renderer>()) renderer.material = BuilderScript.GoodMaterial;
             }
         }
-        //StatusWindow.transform.SetParent(GameObject.Find("Worldspace Canvas").transform);
-        //StatusWindow.SetActive(false);
-        //StatusWindow.GetComponentInChildren<TMP_Text>().text = $"{GetComponent<Selectable>().Name + " Lv1"}";
     }
 
     void FixedUpdate()
@@ -82,7 +74,7 @@ public class Building : MonoBehaviour
 
     void OnDestroy()
     {
-        if (!Built) ResourceManager.GetInstance().addGold(GoldCost);
+        if (!Built && Placed) ResourceManager.GetInstance().addGold(GoldCost);
         KillAll();
     }
 
@@ -114,7 +106,6 @@ public class Building : MonoBehaviour
         Placed = true;
         foreach (Renderer renderer in GetComponentsInChildren<Renderer>()) renderer.material = BuilderScript.GoodMaterial;
         Obstacle.enabled = true;
-        //StatusWindow.transform.position = transform.position + StatusWindowPosition;
     }
 
     public void BuildThis()

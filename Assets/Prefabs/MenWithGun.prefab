@@ -131,7 +131,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHP: 100
   HP: 0
-  MaxView: 70
+  MaxView: 10
   AttackRange: 50
   Target: {x: 0, y: 0, z: 0}
   layer:
