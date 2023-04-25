@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,21 +7,22 @@ using UnityEngine.AI;
 public class Building : MonoBehaviour
 {
     public string Discription;
-
     public bool IsEnemy; 
     public bool BuildOnStart;
+    public int Level;
 
-    public bool IsWrongPlace;
-    public bool Placed;
-    public bool Built;
+    [NonSerialized] public bool IsWrongPlace;
+    [NonSerialized] public bool Placed;
+    [NonSerialized] public bool Built;
+    [NonSerialized] public float BuildProgress;
 
-    public float BuildProgress;
     public int GoldCost;
     public int GoldMining;
+    public bool AnotherWorkMode;
 
     public GameObject Unit;
     public int UnitNumber;
-    public GameObject Enter;
+    public GameObject Enter; //В Вектор3
 
     private NavMeshObstacle Obstacle;
     private Builder BuilderScript;
@@ -29,7 +31,6 @@ public class Building : MonoBehaviour
     private Renderer[] Render;
     private Collider BuildingCollider;
     private GameObject[] BuildingsUnits;
-
     private bool SpawningUnitsNow;
 
     void Awake()
@@ -46,29 +47,19 @@ public class Building : MonoBehaviour
             BaseMaterial[i] = Render[i].material;
         }
         if (BuildOnStart) BuildThis();
-        else
-        {
-            if (GoldCost <= ResourceManager.GetInstance().getCountGold() && CollisionCount <= 0) GoodPlace();
-            else WrongPlace();
-
-            if (!Placed)
-            {
-                foreach (Renderer renderer in GetComponentsInChildren<Renderer>()) renderer.material = BuilderScript.GoodMaterial;
-            }
-        }
+        else CheckPlace();
     }
 
-    void FixedUpdate()
+    void Update()
     {
         if (!Built)
         {
-            if (Placed) BuildProgress += 10 * Time.fixedDeltaTime;
+            if (Placed) BuildProgress += 10 * Time.deltaTime;
             if (BuildProgress >= 100) BuildThis();
         }
         if (!Placed)
         {
-            if (GoldCost <= ResourceManager.GetInstance().getCountGold() && CollisionCount <= 0) GoodPlace();
-            else WrongPlace();
+            CheckPlace();
         }
     }
 
@@ -87,16 +78,35 @@ public class Building : MonoBehaviour
         if (!Placed) CollisionCount -= 1;
     }
 
+    public void CheckPlace()
+    {
+        if (CollisionCount <= 0)
+        {
+            if (GoldCost <= ResourceManager.GetInstance().getCountGold())
+            {
+                GoodPlace();
+            }
+            else
+            {
+                Debug.Log("No money");
+                WrongPlace();
+            }
+        }
+        else
+        {
+            Debug.Log("Wrong place");
+            WrongPlace();
+        }
+    }
+
     public void WrongPlace()
     {
-        Debug.Log("Good place or No money");
         IsWrongPlace = true;
         foreach (Renderer renderer in GetComponentsInChildren<Renderer>()) renderer.material = BuilderScript.WrongMaterial;
     }
 
     public void GoodPlace()
     {
-        Debug.Log("All is good");
         IsWrongPlace = false;
         foreach (Renderer renderer in GetComponentsInChildren<Renderer>()) renderer.material = BuilderScript.GoodMaterial;
     }

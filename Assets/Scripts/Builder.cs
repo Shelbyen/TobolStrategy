@@ -6,17 +6,19 @@ using TMPro;
 
 public class Builder : MonoBehaviour
 {
+    public int GridStep = 1;
+    public LayerMask Ground;
     public Material WrongMaterial;
     public Material GoodMaterial;
     public GameObject ActiveBuilding;
 
     private UIManagerScript UIManager;
     private Destroyer Destroyer;
+    private Ray Ray;
 
-    public bool BlockBuilder;
     private GameManagerScript GameManager;
     private Camera MainCamera;
-    private RaycastHit BuilderHit;
+    private RaycastHit Hit;
     //Status vars
     private bool BuildMode;
     private bool GridMode;
@@ -34,7 +36,8 @@ public class Builder : MonoBehaviour
 
     void Update()
     {
-        if (InputManager.GetKeyDown("BuildMode") && !BlockBuilder) SiwtchbuildMode(!BuildMode);
+        Ray = MainCamera.ScreenPointToRay(Input.mousePosition);
+        if (InputManager.GetKeyDown("BuildMode")) SiwtchbuildMode(!BuildMode);
 
         if (BuildMode)
         {
@@ -80,19 +83,16 @@ public class Builder : MonoBehaviour
 
     public void MoveBuilding()
     {
-        if (Physics.Raycast(MainCamera.ScreenPointToRay(Input.mousePosition), out BuilderHit, 1000f, 64))
-        {
-            if (GridMode) ActiveBuilding.transform.position = new Vector3 (Mathf.Round(BuilderHit.point.x), BuilderHit.point.y, Mathf.Round(BuilderHit.point.z));
-            else ActiveBuilding.transform.position = BuilderHit.point;
-        }
-        else if (Physics.Raycast(MainCamera.ScreenPointToRay(Input.mousePosition), out BuilderHit, 1000f, 8))
-        {
-            if (GridMode) ActiveBuilding.transform.position = new Vector3(Mathf.Round(BuilderHit.point.x), BuilderHit.point.y, Mathf.Round(BuilderHit.point.z));
-            else ActiveBuilding.transform.position = BuilderHit.point;
-            ActiveBuilding.GetComponent<Building>().WrongPlace();
-        }
+        Physics.Raycast(Ray, out Hit, 1000f, Ground);
+        if (GridMode) ActiveBuilding.transform.position = new Vector3(
+            Mathf.Round(Hit.point.x / GridStep) * GridStep,
+            Hit.point.y, 
+            Mathf.Round(Hit.point.z / GridStep) * GridStep);
+        else ActiveBuilding.transform.position = Hit.point;
+        if (Hit.transform.gameObject.layer != LayerMask.NameToLayer("FortressGround")) ActiveBuilding.GetComponent<Building>().WrongPlace();
 
-        if (InputManager.GetKeyDown("RotateBuilding")) {
+        if (InputManager.GetKeyDown("RotateBuilding"))
+        {
             ActiveBuilding.transform.Rotate(Vector3.up * 45);
         }
     }
