@@ -18,10 +18,11 @@ public class Raid : MonoBehaviour
         foreach (GameObject build in Buildings)
         {
             Building components = build.GetComponent<Building>();
+            SummonBuilding Summon = build.GetComponent<SummonBuilding>();
             if (components.IsEnemy) {
-                components.StartCoroutine(components.SpawnUnits());
-                reward += components.UnitNumber * 10;
-                Debug.Log(components.UnitNumber);
+                components.StartCoroutine(Summon.RespawnUnits());
+                reward += Summon.UnitNumber * 10;
+                Debug.Log(Summon.UnitNumber);
             }
         }
     }

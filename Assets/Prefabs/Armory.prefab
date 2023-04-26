@@ -102,6 +102,7 @@ GameObject:
   - component: {fileID: 7588463820766649906}
   - component: {fileID: 9141946500609422394}
   - component: {fileID: 973600801095790679}
+  - component: {fileID: 143077649187747528}
   - component: {fileID: -7726986225414062162}
   - component: {fileID: -7715733638047591644}
   - component: {fileID: 3654170606109367719}
@@ -159,12 +160,23 @@ MonoBehaviour:
   Discription: Armory creates a squad of ranged soldiers
   IsEnemy: 0
   BuildOnStart: 0
-  IsWrongPlace: 0
-  Placed: 0
-  Built: 0
-  BuildProgress: 0
+  Level: 0
   GoldCost: 150
-  GoldMining: 0
+  AnotherWorkMode: 0
+  TikTimer: 20
+  TimeLeft: 0
+--- !u!114 &143077649187747528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1114430890793227329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d1ab583268b62647ac2807e9856fe16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   Unit: {fileID: 440588380187811796, guid: cdaf9aa54e92ca842ac7f36253d48790, type: 3}
   UnitNumber: 4
   Enter: {fileID: 5161196462523661161}

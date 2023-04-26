@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8705027486357845363}
   - component: {fileID: 8025251966825193339}
   - component: {fileID: 2018517557869566742}
+  - component: {fileID: 2662128084132916276}
   - component: {fileID: 379957360094237935}
   - component: {fileID: 391231396498765925}
   - component: {fileID: 2537746560729446118}
@@ -68,17 +69,26 @@ MonoBehaviour:
   Discription: Cannon yard provides a detachment of cannons
   IsEnemy: 0
   BuildOnStart: 0
-  IsWrongPlace: 0
-  Placed: 0
-  Built: 0
-  BuildProgress: 0
+  Level: 0
   GoldCost: 250
-  GoldMining: 0
+  AnotherWorkMode: 0
+  TikTimer: 20
+  TimeLeft: 0
+--- !u!114 &2662128084132916276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2231141358341340928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d1ab583268b62647ac2807e9856fe16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   Unit: {fileID: 7902621650251694834, guid: c4996da12293f9041a57c501596076cf, type: 3}
   UnitNumber: 2
   Enter: {fileID: 6206412277924778024}
-  StatusWindow: {fileID: 7199673976076237846}
-  StatusWindowPosition: {x: 0, y: 10, z: 0}
 --- !u!65 &379957360094237935
 BoxCollider:
   m_ObjectHideFlags: 0

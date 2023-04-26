@@ -17,12 +17,13 @@ public class Building : MonoBehaviour
     [NonSerialized] public float BuildProgress;
 
     public int GoldCost;
-    public int GoldMining;
     public bool AnotherWorkMode;
+    public float TikTimer;
+    public float TimeLeft;
 
-    public GameObject Unit;
-    public int UnitNumber;
-    public GameObject Enter; //В Вектор3
+    private SummonBuilding Summon;
+    private HealBuilding Heal;
+    private MoneyBuilding Miner;
 
     private NavMeshObstacle Obstacle;
     private Builder BuilderScript;
@@ -30,18 +31,19 @@ public class Building : MonoBehaviour
     private Material[] BaseMaterial;
     private Renderer[] Render;
     private Collider BuildingCollider;
-    private GameObject[] BuildingsUnits;
-    private bool SpawningUnitsNow;
 
     void Awake()
     {
+        Summon = GetComponent<SummonBuilding>();
+        Heal = GetComponent<HealBuilding>();
+        Miner = GetComponent<MoneyBuilding>();
+
         Obstacle = GetComponent<NavMeshObstacle>();
         Obstacle.enabled = false;
         BuilderScript = GameObject.Find("Builder").GetComponent<Builder>();
         BuildingCollider = GetComponent<Collider>();
         Render = GetComponentsInChildren<Renderer>();
         BaseMaterial = new Material[Render.Length];
-        BuildingsUnits = new GameObject[UnitNumber];
         for (int i = 0; i < Render.Length; i += 1)
         {
             BaseMaterial[i] = Render[i].material;
@@ -57,6 +59,10 @@ public class Building : MonoBehaviour
             if (Placed) BuildProgress += 10 * Time.deltaTime;
             if (BuildProgress >= 100) BuildThis();
         }
+        else
+        {
+            if (!IsEnemy) Timer();
+        }
         if (!Placed)
         {
             CheckPlace();
@@ -66,7 +72,6 @@ public class Building : MonoBehaviour
     void OnDestroy()
     {
         if (!Built && Placed) ResourceManager.GetInstance().addGold(GoldCost);
-        KillAll();
     }
 
     private void OnTriggerEnter(Collider Collider)
@@ -124,9 +129,7 @@ public class Building : MonoBehaviour
         Placed = true;
         Built = true;
         for (int i = 0; i < Render.Length; i += 1) Render[i].material = BaseMaterial[i];
-        if (GoldMining != 0) StartCoroutine(GoldMine());
-        if (UnitNumber != 0 && !IsEnemy) StartCoroutine(SpawnUnits());
-        if (GetComponent<HealBuilding>()) GetComponent<HealBuilding>().StartHeal();
+        if (Summon != null && !IsEnemy) StartCoroutine(Summon.RespawnUnits());
     }
 
     public void DestroyThis()
@@ -134,42 +137,20 @@ public class Building : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public IEnumerator SpawnUnits()
+    public void Timer()
     {
-        if (!SpawningUnitsNow)
+        TimeLeft += Time.deltaTime;
+        if (TimeLeft >= TikTimer)
         {
-            SpawningUnitsNow = true;
-            KillAll();
-            for (int i = 0; i < UnitNumber; i += 1)
-            {
-                BuildingsUnits[i] = Instantiate(Unit);
-                BuildingsUnits[i].transform.position = Enter.transform.position;
-                BuildingsUnits[i].GetComponent<Human>().Target = Enter.transform.position;
-                if (IsEnemy)
-                {
-                    BuildingsUnits[i].tag = "Enemy";
-                }
-                else
-                {
-                    BuildingsUnits[i].tag = "Human";
-                }
-                yield return new WaitForSeconds(0.5f);
-            }
-            SpawningUnitsNow = false;
+            if (Heal != null) Heal.Heal(Level);
+            if (Miner != null) Miner.GoldMine(Level);
+            if (Summon != null) StartCoroutine(Summon.RespawnUnits());
+            TimeLeft = 0;
         }
     }
 
-    public void KillAll()
+    public void Upgrade()
     {
-        foreach(GameObject UnitForKill in BuildingsUnits) Destroy(UnitForKill);
-    }
-
-    public IEnumerator GoldMine()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(5);
-            if (Camera.main.gameObject.GetComponentInParent<StateManager>().getState()) ResourceManager.GetInstance().addGold(GoldMining);
-        }
+        if (Level < 2) Level += 1;
     }
 }

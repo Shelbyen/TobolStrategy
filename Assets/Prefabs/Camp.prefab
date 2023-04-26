@@ -268,6 +268,7 @@ GameObject:
   - component: {fileID: 2322295845252029199}
   - component: {fileID: 4481047183100718452}
   - component: {fileID: 1273470499462689589}
+  - component: {fileID: 3691056831938593109}
   - component: {fileID: 5837266736464606322}
   - component: {fileID: 2109802550234087099}
   - component: {fileID: 49828726778117174}
@@ -328,12 +329,23 @@ MonoBehaviour:
   Discription: Camp of jungars
   IsEnemy: 1
   BuildOnStart: 1
-  IsWrongPlace: 0
-  Placed: 0
-  Built: 0
-  BuildProgress: 0
+  Level: 0
   GoldCost: -200
-  GoldMining: 0
+  AnotherWorkMode: 0
+  TikTimer: 0
+  TimeLeft: 0
+--- !u!114 &3691056831938593109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7892151021606929112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d1ab583268b62647ac2807e9856fe16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   Unit: {fileID: 3909269889597461387, guid: 0babeff56251cdf4abcd5dffe1e1090b, type: 3}
   UnitNumber: 12
   Enter: {fileID: 2805518828868700482}

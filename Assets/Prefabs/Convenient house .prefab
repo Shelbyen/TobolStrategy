@@ -343,6 +343,7 @@ GameObject:
   - component: {fileID: 5881898609540063106}
   - component: {fileID: 2894735811343950248}
   - component: {fileID: 9055141555156619452}
+  - component: {fileID: 2119043739115802899}
   - component: {fileID: 6939840709922449051}
   - component: {fileID: 2041605308221767339}
   - component: {fileID: 8622052130722555907}
@@ -401,15 +402,24 @@ MonoBehaviour:
   Discription: ' Comfortable house is provided by a detachment of melee soldiers'
   IsEnemy: 0
   BuildOnStart: 0
-  IsWrongPlace: 0
-  Placed: 0
-  Built: 0
-  BuildProgress: 0
+  Level: 0
   GoldCost: 200
-  GoldMining: 5
-  Unit: {fileID: 0}
-  UnitNumber: 0
-  Enter: {fileID: 5991176881945048208}
+  AnotherWorkMode: 0
+  TikTimer: 20
+  TimeLeft: 0
+--- !u!114 &2119043739115802899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5213287167272845630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 142c4e0fac7e88043830774af482b75b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GoldMining: 030000000600000009000000
 --- !u!65 &6939840709922449051
 BoxCollider:
   m_ObjectHideFlags: 0
