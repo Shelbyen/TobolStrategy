@@ -13927,10 +13927,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 596f60f3156c15443bb5fcea2c0d5f67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GridStep: 3
+  Ground:
+    serializedVersion: 2
+    m_Bits: 88
   WrongMaterial: {fileID: 2100000, guid: b4e076f02a49fd546a21e1e21a7a65bc, type: 2}
   GoodMaterial: {fileID: 2100000, guid: 1906937684a09694c86960df614369ba, type: 2}
   ActiveBuilding: {fileID: 0}
-  BlockBuilder: 0
 --- !u!114 &1945794042
 MonoBehaviour:
   m_ObjectHideFlags: 0
