@@ -404,6 +404,7 @@ MonoBehaviour:
   BuildOnStart: 0
   Level: 0
   GoldCost: 200
+  UpgradeCost: 0000000000000000
   AnotherWorkMode: 0
   TikTimer: 20
   TimeLeft: 0

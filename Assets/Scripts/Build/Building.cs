@@ -17,6 +17,7 @@ public class Building : MonoBehaviour
     [NonSerialized] public float BuildProgress;
 
     public int GoldCost;
+    public int[] UpgradeCost;
     public bool AnotherWorkMode;
     public float TikTimer;
     public float TimeLeft;

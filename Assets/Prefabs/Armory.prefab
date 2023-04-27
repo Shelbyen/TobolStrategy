@@ -162,6 +162,7 @@ MonoBehaviour:
   BuildOnStart: 0
   Level: 0
   GoldCost: 150
+  UpgradeCost: 3200000096000000
   AnotherWorkMode: 0
   TikTimer: 20
   TimeLeft: 0
