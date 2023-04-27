@@ -9,9 +9,12 @@ public class UIManagerScript : MonoBehaviour
     public TMP_Text GoldCount;
     public GameObject BuildMenu;
     public TMP_Text StatusBar;
-    public TMP_Text ToggleText;
+    public Image ToggleImage;
     public GameObject GoldCost;
     public TMP_Text RaidStatus;
+
+    public Sprite BuildSprite;
+    public Sprite ViewSprite;
 
     private void Awake() {
         BuildMenu.SetActive(false);
@@ -35,8 +38,9 @@ public class UIManagerScript : MonoBehaviour
         StatusBar.text = newText;
     }
 
-    public void ChangeTextToggleText(string newText = "") {
-        ToggleText.text = newText;
+    public void ChangeBuildToggleImage(bool Status) {
+        if (Status) ToggleImage.sprite = BuildSprite;
+        else ToggleImage.sprite = ViewSprite;
     }
 
     public void ChangeTextRaidStatus(string newText)

@@ -71,8 +71,8 @@ public class Builder : MonoBehaviour
         BuildMode = Status;
         UIManager.ChangeStatusBuildMenu(Status);
         GameManager.BlockRaycast = Status;
-        if (BuildMode) UIManager.ChangeTextToggleText("View");
-        else UIManager.ChangeTextToggleText("Build");
+        if (BuildMode) UIManager.ChangeBuildToggleImage(false);
+        else UIManager.ChangeBuildToggleImage(true);
     }
 
     public void SwitchGridMode()
