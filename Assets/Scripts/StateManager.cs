@@ -31,15 +31,15 @@ public class StateManager : MonoBehaviour
     void FixedUpdate()
     {
         if (!_isRaid) {
-            _timeLeft += (Time.fixedDeltaTime / TimeBeforeRaid) * 5;
-            timer.fillAmount = _timeLeft / 5;
+            _timeLeft += Time.fixedDeltaTime;
+            timer.fillAmount = (TimeBeforeRaid - _timeLeft) / TimeBeforeRaid;
             UIManager.ChangeTextRaidStatus("Waiting");
         }
 
-        if (timer.fillAmount == 1 || _startRaid) {
+        if (timer.fillAmount == 0 || _startRaid) {
             Debug.Log("WAVE");
             _timeLeft = 0f;
-            timer.fillAmount = 0;
+            timer.fillAmount = 1;
             _isRaid = true;
             if (i == 0)
                 {
