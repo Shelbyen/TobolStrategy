@@ -52,8 +52,8 @@ public class Builder : MonoBehaviour
             {
                 CancelBuilding();
                 Destroyer.SwitchDestroyMode();
-                if (Destroyer.DestroyMode) UIManager.ChangeTextStatusBar("Destroy mode");
-                else UIManager.ChangeTextStatusBar("");
+                if (Destroyer.DestroyMode) UIManager.ChangeDestroyImage(true);
+                else UIManager.ChangeDestroyImage(false);
             }
             //Grid
             if (InputManager.GetKeyDown("GridMode")) SwitchGridMode();
@@ -73,12 +73,17 @@ public class Builder : MonoBehaviour
         GameManager.BlockRaycast = Status;
         if (BuildMode) UIManager.ChangeBuildToggleImage(false);
         else UIManager.ChangeBuildToggleImage(true);
+
+        GameManager.BlockRaycast = Status;
+        Destroyer.SetDestroyMode(false);
     }
 
     public void SwitchGridMode()
     {
         GridMode = !GridMode;
         Debug.Log("Grid Switched");
+        if (GridMode) UIManager.ChangeGridImage(true);
+        else UIManager.ChangeGridImage(false);
     }
 
     public void MoveBuilding()
@@ -117,7 +122,6 @@ public class Builder : MonoBehaviour
             buildingComponent.PlaceThis();
             ResourceManager.GetInstance().checkAndBuyGold(buildingComponent.GoldCost);
             ActiveBuilding = null;
-            GameManager.BlockRaycast = false;
             UIManager.ChangeTextStatusBar("");
             UIManager.ChangeStatusGoldCost(false);
             UIManager.ChangeTextGoldCost("");

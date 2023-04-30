@@ -10,11 +10,19 @@ public class UIManagerScript : MonoBehaviour
     public GameObject BuildMenu;
     public TMP_Text StatusBar;
     public Image ToggleImage;
+    public Image GridImage;
+    public Image DestroyImage;
     public GameObject GoldCost;
     public TMP_Text RaidStatus;
 
     public Sprite BuildSprite;
     public Sprite ViewSprite;
+
+    public Sprite GridDefault;
+    public Sprite GridPressed;
+
+    public Sprite DestroyDefault;
+    public Sprite DestroyPressed;
 
     private void Awake() {
         BuildMenu.SetActive(false);
@@ -23,7 +31,8 @@ public class UIManagerScript : MonoBehaviour
     }
     
     private void Update() {
-        GoldCount.text = ResourceManager.GetInstance().getCountGold().ToString();
+        if (ResourceManager.GetInstance().getCountGold() <= 9999) GoldCount.text = ResourceManager.GetInstance().getCountGold().ToString();
+        else GoldCount.text = "9999+";
     }
 
     public void ChangeStatusGoldCost (bool State) {
@@ -41,6 +50,18 @@ public class UIManagerScript : MonoBehaviour
     public void ChangeBuildToggleImage(bool Status) {
         if (Status) ToggleImage.sprite = BuildSprite;
         else ToggleImage.sprite = ViewSprite;
+    }
+
+    public void ChangeGridImage(bool Status)
+    {
+        if (Status) GridImage.sprite = GridPressed;
+        else GridImage.sprite = GridDefault;
+    }
+
+    public void ChangeDestroyImage(bool Status)
+    {
+        if (Status) DestroyImage.sprite = DestroyPressed;
+        else DestroyImage.sprite = DestroyDefault;
     }
 
     public void ChangeTextRaidStatus(string newText)
