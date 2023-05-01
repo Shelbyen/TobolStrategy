@@ -20,9 +20,9 @@ public class Raid : MonoBehaviour
             Building components = build.GetComponent<Building>();
             SummonBuilding Summon = build.GetComponent<SummonBuilding>();
             if (components.IsEnemy) {
-                components.StartCoroutine(Summon.RespawnUnits());
-                reward += Summon.UnitNumber * 10;
-                Debug.Log(Summon.UnitNumber);
+                //components.StartCoroutine(Summon.RespawnUnits());
+                reward += Summon.MaxUnitNumber[0] * 10;
+                Debug.Log(Summon.MaxUnitNumber[0]);
             }
         }
     }

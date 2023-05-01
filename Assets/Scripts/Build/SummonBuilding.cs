@@ -1,18 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class SummonBuilding : MonoBehaviour
 {
+    private Building Building;
+
     public GameObject Unit;
-    public int UnitNumber;
+    public int[] MaxUnitNumber;
     public GameObject Enter; //В Вектор3
 
-    private GameObject[] BuildingsUnits;
+    public int[] UnitCost;
+
+    public float[] UnitDamage;
+    public float[] UnitMaxHP;
+    public float[] UnitSpeed;
+    public int[] BulletDamage;
+    public GameObject UnitBullet;
+
+    public List<GameObject> BuildingsUnits;
 
     void Awake()
     {
-        BuildingsUnits = new GameObject[UnitNumber];
+        Building = GetComponent<Building>();
+        if (UnitBullet != null) UnitBullet.GetComponent<BulletController>().damage = BulletDamage[Building.Level];
     }
 
     void OnDestroy()
@@ -20,26 +32,24 @@ public class SummonBuilding : MonoBehaviour
         KillAll();
     }
 
-    public IEnumerator RespawnUnits()
+    public void Upgrade()
     {
-        for (int i = 0; i < UnitNumber; i += 1)
+        if (UnitBullet != null) UnitBullet.GetComponent<BulletController>().damage = BulletDamage[Building.Level];
+        foreach (GameObject Unit in BuildingsUnits)
         {
-            if (BuildingsUnits[i] == null)
-            {
-                BuildingsUnits[i] = Instantiate(Unit);
-                BuildingsUnits[i].transform.position = Enter.transform.position;
-                BuildingsUnits[i].GetComponent<Human>().Target = Enter.transform.position;
-                /*if (IsEnemy)
-                {
-                    BuildingsUnits[i].tag = "Enemy";
-                }
-                else
-                {
-                    BuildingsUnits[i].tag = "Human";
-                }*/
-                yield return new WaitForSeconds(0.5f);
-            }
+            Unit.GetComponent<Human>().UpdateLevelData(Building.Level);
         }
+    }
+
+    public void BuyUnit()
+    {
+        ResourceManager.GetInstance().checkAndBuyGold(UnitCost[Building.Level]);
+        BuildingsUnits.Add(Instantiate(Unit));
+        BuildingsUnits.Last().transform.position = Enter.transform.position;
+        BuildingsUnits.Last().GetComponent<Human>().Target = Enter.transform.position;
+        BuildingsUnits.Last().GetComponent<Human>().Summon = GetComponent<SummonBuilding>();
+        BuildingsUnits.Last().GetComponent<Human>().UpdateLevelData(Building.Level);
+        BuildingsUnits.Last().GetComponent<Human>().HP = UnitMaxHP[Building.Level];
     }
 
     public void KillAll()

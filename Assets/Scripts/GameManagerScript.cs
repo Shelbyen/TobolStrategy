@@ -17,16 +17,18 @@ public class GameManagerScript : MonoBehaviour
     public Image FunctionIcon;
     public TMP_Text FunctionStats;
     public Image TikTimer;
-    public TMP_Text TikTimerInfo;
     public TMP_Text UpgradeCost;
+    public TMP_Text UnitCost;
 
     public Button Upgrade;
+    public Button BuyUnit;
 
     public GameObject UnitInfo;
     public TMP_Text UnitType;
     public TMP_Text Health;
     public TMP_Text Damage;
     public TMP_Text Speed;
+    public TMP_Text Bullet;
 
     public bool BlockRaycast;
     public GameObject SelectedObject;
@@ -60,17 +62,30 @@ public class GameManagerScript : MonoBehaviour
         {
             Healthbar.fillAmount = Building.BuildProgress / 100;
             TikTimer.fillAmount = Building.TimeLeft / Building.TikTimer;
-            TikTimerInfo.text = $"{"Next effect: " + Mathf.Round(Building.TikTimer - Building.TimeLeft) + "s"}";
 
             if (Building.Level < 2)
             {
-                if (ResourceManager.GetInstance().getCountGold() >= Building.UpgradeCost[Building.Level])
+                if (ResourceManager.GetInstance().getCountGold() >= Building.UpgradeCost[Building.Level] && Building.Built)
                 {
                     Upgrade.interactable = true;
                 }
                 else
                 {
                     Upgrade.interactable = false;
+                }
+            }
+
+
+            if (Building.GetComponent<SummonBuilding>())
+            {
+                SummonBuilding Summon = Building.GetComponent<SummonBuilding>();
+                if (ResourceManager.GetInstance().getCountGold() >= Summon.UnitCost[Building.Level] && Building.Built && Summon.MaxUnitNumber[Building.Level] > Summon.BuildingsUnits.Count)
+                {
+                    BuyUnit.interactable = true;
+                }
+                else
+                {
+                    BuyUnit.interactable = false;
                 }
             }
         }
@@ -84,12 +99,12 @@ public class GameManagerScript : MonoBehaviour
 
         if (Building.Level < 2)
         {
-            Upgrade.gameObject.SetActive(true);
             UpgradeCost.text = $"{Building.UpgradeCost[Building.Level]}";
         }
         else
         {
-            Upgrade.gameObject.SetActive(false);
+            UpgradeCost.text = $"{"---"}";
+            Upgrade.interactable = false;
         }
         
 
@@ -101,15 +116,20 @@ public class GameManagerScript : MonoBehaviour
         {
             UnitInfo.SetActive(true);
             SummonBuilding Summon = SelectedObject.GetComponent<SummonBuilding>();
-            FunctionStats.text = $"{"Units: " + Summon.UnitNumber}";
+            FunctionStats.text = $"{"Units: " + Summon.MaxUnitNumber[Building.Level]}";
             UnitType.text = Summon.Unit.name;
-            Health.text = $"{"Health: " + Summon.Unit.GetComponent<Human>().MaxHP}";
-            Speed.text = $"{"Speed: " + Summon.Unit.GetComponent<NavMeshAgent>().speed}";
-            if (Summon.Unit.GetComponent<Human>().CanShoot)
-                Damage.text = $"{"Damage: " + Summon.Unit.GetComponent<Human>().bullet.GetComponent<BulletController>().damage}";
-            else
-                Damage.text = $"{"Damage: " + Summon.Unit.GetComponent<Human>().meleeDamage}";
+            Health.text = $"{"Health: " + Summon.UnitMaxHP[Building.Level]}";
+            Speed.text = $"{"Speed: " + Summon.UnitSpeed[Building.Level]}";
+            Damage.text = $"{"Damage: " + Summon.UnitDamage[Building.Level]}";
+            Bullet.text = $"{"Bullet: " + Summon.BulletDamage[Building.Level]}";
+            UnitCost.text = $"{Summon.UnitCost[Building.Level]}";
         }
+        Window.SetActive(true);
+    }
+
+    public void BuyNewUnit()
+    {
+        Building.GetComponent<SummonBuilding>().BuyUnit();
     }
 
     public void UpgradeSelected()
@@ -136,7 +156,6 @@ public class GameManagerScript : MonoBehaviour
                 SelectedObject = SelectingHit.transform.gameObject;
                 SelectedObject.GetComponent<Selectable>().SelectThis();
                 Building = SelectedObject.GetComponent<Building>();
-                Window.SetActive(true);
                 WindowAwake();
             }
         }

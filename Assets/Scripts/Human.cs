@@ -29,10 +29,10 @@ public class Human : MonoBehaviour
 
     private Animator animator;
     private NavMeshAgent agent;
-
     private float _maxHealthBarScale;
-
     private AudioSource audioSrc;
+
+    public SummonBuilding Summon;
 
     public void Awake() 
     {
@@ -42,9 +42,15 @@ public class Human : MonoBehaviour
         audioSrc = GetComponent<AudioSource>();
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
-        
 
         if (transform.tag == "Human") _maxHealthBarScale = transform.GetChild(0).transform.localScale.x;
+    }
+
+    public void UpdateLevelData(int Lv)
+    {
+        MaxHP = Summon.UnitMaxHP[Lv];
+        meleeDamage = Summon.UnitDamage[Lv];
+        agent.speed = Summon.UnitSpeed[Lv];
     }
 
     public void Update()

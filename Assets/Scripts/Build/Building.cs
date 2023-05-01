@@ -7,7 +7,7 @@ using UnityEngine.AI;
 public class Building : MonoBehaviour
 {
     public string Discription;
-    public bool IsEnemy; 
+    public bool IsEnemy;
     public bool BuildOnStart;
     public int Level;
 
@@ -130,7 +130,6 @@ public class Building : MonoBehaviour
         Placed = true;
         Built = true;
         for (int i = 0; i < Render.Length; i += 1) Render[i].material = BaseMaterial[i];
-        if (Summon != null && !IsEnemy) StartCoroutine(Summon.RespawnUnits());
     }
 
     public void DestroyThis()
@@ -145,13 +144,16 @@ public class Building : MonoBehaviour
         {
             if (Heal != null) Heal.Heal(Level);
             if (Miner != null) Miner.GoldMine(Level);
-            if (Summon != null) StartCoroutine(Summon.RespawnUnits());
             TimeLeft = 0;
         }
     }
 
     public void Upgrade()
     {
-        if (Level < 2) Level += 1;
+        if (Level < 2)
+        {
+            Level += 1;
+            if (Summon != null) Summon.Upgrade();
+        }
     }
 }

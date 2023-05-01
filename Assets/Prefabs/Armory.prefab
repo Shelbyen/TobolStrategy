@@ -182,8 +182,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Unit: {fileID: 440588380187811796, guid: cdaf9aa54e92ca842ac7f36253d48790, type: 3}
-  UnitNumber: 4
+  MaxUnitNumber: 04000000080000000c000000
   Enter: {fileID: 5161196462523661161}
+  UnitCost: 14000000190000001e000000
+  UnitDamage:
+  - 3
+  - 5
+  - 10
+  UnitMaxHP:
+  - 75
+  - 100
+  - 125
+  UnitSpeed:
+  - 3.5
+  - 3.2
+  - 3
+  BulletDamage: 140000001e00000028000000
+  UnitBullet: {fileID: 5126664398243706012, guid: fe6775b52f75a7c4c89e12bad89b9c05, type: 3}
+  BuildingsUnits: []
 --- !u!65 &-7726986225414062162
 BoxCollider:
   m_ObjectHideFlags: 0
