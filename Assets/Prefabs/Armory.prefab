@@ -157,7 +157,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f8a287c3358d1f49b02d3e5a6c92ee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Discription: Armory creates a squad of ranged soldiers
+  Discription: "\u0410\u0440\u0441\u0435\u043D\u0430\u043B \u043F\u0440\u0435\u0434\u043E\u0441\u0442\u0430\u0432\u043B\u044F\u0435\u0442
+    \u043E\u0442\u0440\u044F\u0434 \u0441\u043E\u043B\u0434\u0430\u0442, \u0441\u043D\u0430\u0440\u044F\u0436\u0451\u043D\u043D\u044B\u0445
+    \u0440\u0443\u0436\u044C\u044F\u043C\u0438 \u0434\u043B\u044F \u0441\u0440\u0430\u0436\u0435\u043D\u0438\u044F
+    \u043D\u0430 \u0440\u0430\u0441\u0441\u0442\u043E\u044F\u043D\u0438\u0438"
   IsEnemy: 0
   BuildOnStart: 0
   Level: 0
