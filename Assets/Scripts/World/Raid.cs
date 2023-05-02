@@ -9,7 +9,7 @@ public class Raid : MonoBehaviour
     int reward;
     public GameObject[] Humans;
     public GameObject[] Enemys;
-    public void StartRaid()
+    public void StartRaid(int Wave)
     {
         reward = 0;
         GameObject[] Buildings = GameObject.FindGameObjectsWithTag("EnemyHouse");
@@ -17,13 +17,10 @@ public class Raid : MonoBehaviour
 
         foreach (GameObject build in Buildings)
         {
-            Building components = build.GetComponent<Building>();
-            SummonBuilding Summon = build.GetComponent<SummonBuilding>();
-            if (components.IsEnemy) {
-                //components.StartCoroutine(Summon.RespawnUnits());
-                reward += Summon.MaxUnitNumber[0] * 10;
-                Debug.Log(Summon.MaxUnitNumber[0]);
-            }
+            EnemySpawner Summon = build.GetComponent<EnemySpawner>();
+            Summon.StartCoroutine(Summon.SpawnEnemys(Wave));
+            reward += Summon.BaseEnemyCount * 10 + Summon.EnemyPerWave * Wave * 10;
+            Debug.Log(Summon.BaseEnemyCount);
         }
     }
 

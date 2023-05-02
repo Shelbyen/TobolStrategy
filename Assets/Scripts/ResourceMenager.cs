@@ -12,6 +12,8 @@ public class ResourceManager
     }
 
     private int _gold = 1000;
+    private int MaxHumans = 5;
+    private int HumansUsed;
     
     // for call method use: ResourceManager.GetInstance().Method()
     public int getCountGold () {
@@ -35,5 +37,30 @@ public class ResourceManager
     public void setGold(int count)
     {
         _gold = count;
+    }
+
+    public void setMaxHumansCount(int count)
+    {
+        MaxHumans = count;
+    }
+
+    public int usedHumansCount()
+    {
+        return HumansUsed;
+    }
+
+    public int maxHumansCount()
+    {
+        return MaxHumans;
+    }
+
+    public void addMaxHumans(int count)
+    {
+        MaxHumans += count;
+    }
+
+    public void useHuman(int count)
+    {
+        HumansUsed += count;
     }
 }

@@ -7,6 +7,7 @@ using TMPro;
 public class UIManagerScript : MonoBehaviour
 {
     public TMP_Text GoldCount;
+    public TMP_Text Population;
     public GameObject BuildMenu;
     public TMP_Text StatusBar;
     public Image ToggleImage;
@@ -33,6 +34,8 @@ public class UIManagerScript : MonoBehaviour
     private void Update() {
         if (ResourceManager.GetInstance().getCountGold() <= 9999) GoldCount.text = ResourceManager.GetInstance().getCountGold().ToString();
         else GoldCount.text = "9999+";
+
+        Population.text = $"{(ResourceManager.GetInstance().maxHumansCount() - ResourceManager.GetInstance().usedHumansCount()) + "/" + ResourceManager.GetInstance().maxHumansCount()}";
     }
 
     public void ChangeStatusGoldCost (bool State) {

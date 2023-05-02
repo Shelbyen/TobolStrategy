@@ -141,7 +141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5df7fbac18364d344be19c1a9320dc77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: Hospital
+  Name: "\u0413\u043E\u0441\u043F\u0438\u0442\u0430\u043B\u044C"
   Selected: 0
 --- !u!114 &9042080528419248171
 MonoBehaviour:
@@ -155,6 +155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f8a287c3358d1f49b02d3e5a6c92ee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BuildingTypeImage: {fileID: 21300000, guid: 6a1a7214b86b2014397518eb22da6c2a, type: 3}
   Discription: "\u0413\u043E\u0441\u043F\u0438\u0442\u0430\u043B\u044C \u0432\u043E\u0441\u0441\u0442\u0430\u043D\u0430\u0432\u043B\u0438\u0432\u0430\u0435\u0442
     \u0437\u0434\u043E\u0440\u043E\u0432\u044C\u0435 \u0432\u043E\u0439\u0441\u043A,
     \u043D\u043E \u043D\u0435 \u0431\u043E\u043B\u0435\u0435 75% \u043E\u0442 \u043C\u043A\u0441\u0438\u043C\u0430\u043B\u044C\u043D\u0433\u043E"
@@ -162,7 +163,7 @@ MonoBehaviour:
   BuildOnStart: 0
   Level: 0
   GoldCost: 300
-  UpgradeCost: 0000000000000000
+  UpgradeCost: 78000000b4000000
   AnotherWorkMode: 0
   TikTimer: 20
   TimeLeft: 0

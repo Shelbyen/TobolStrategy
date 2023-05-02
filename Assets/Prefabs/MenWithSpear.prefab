@@ -710,7 +710,7 @@ GameObject:
   - component: {fileID: 2408648038628075075}
   m_Layer: 9
   m_Name: MenWithSpear
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -770,20 +770,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38f134ddcaefe094e8f7d227f75c1950, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHP: 110
+  MaxHP: 100
   HP: 0
   MaxView: 1000
   AttackRange: 3
   Target: {x: 0, y: 0, z: 0}
-  TargetEnemy: {fileID: 0}
   layer:
     serializedVersion: 2
     m_Bits: 0
   isSelect: 0
   Attack: 0
+  _priorityEnemy: {fileID: 0}
   CanShoot: 0
   meleeDamage: 25
   bullet: {fileID: 0}
+  Summon: {fileID: 0}
 --- !u!65 &-4121405898841497015
 BoxCollider:
   m_ObjectHideFlags: 0

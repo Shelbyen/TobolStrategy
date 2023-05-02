@@ -59,7 +59,7 @@ public class CameraControl : MonoBehaviour
     {
         float Scroll = Input.GetAxis("Mouse ScrollWheel");
         CameraZoomer.transform.localPosition += new Vector3(0, 0, Scroll * ZoomSpeed * Time.deltaTime);
-        CameraZoomer.transform.localPosition = new Vector3(0, 0, Mathf.Clamp(CameraZoomer.transform.localPosition.z, -50, 0));
+        CameraZoomer.transform.localPosition = new Vector3(0, 0, Mathf.Clamp(CameraZoomer.transform.localPosition.z, -170, 0));
     }
 
     private void CameraTilt()

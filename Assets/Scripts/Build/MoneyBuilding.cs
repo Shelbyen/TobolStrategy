@@ -8,6 +8,6 @@ public class MoneyBuilding : MonoBehaviour
     
     public void GoldMine(int Lv)
     {
-        ResourceManager.GetInstance().addGold(GoldMining[Lv]);
+        ResourceManager.GetInstance().addGold((ResourceManager.GetInstance().maxHumansCount() - ResourceManager.GetInstance().usedHumansCount()) * GoldMining[Lv]);
     }
 }

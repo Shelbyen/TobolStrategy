@@ -16,15 +16,12 @@ public class SummonBuilding : MonoBehaviour
     public float[] UnitDamage;
     public float[] UnitMaxHP;
     public float[] UnitSpeed;
-    public int[] BulletDamage;
-    public GameObject UnitBullet;
 
     public List<GameObject> BuildingsUnits;
 
     void Awake()
     {
         Building = GetComponent<Building>();
-        if (UnitBullet != null) UnitBullet.GetComponent<BulletController>().damage = BulletDamage[Building.Level];
     }
 
     void OnDestroy()
@@ -34,7 +31,6 @@ public class SummonBuilding : MonoBehaviour
 
     public void Upgrade()
     {
-        if (UnitBullet != null) UnitBullet.GetComponent<BulletController>().damage = BulletDamage[Building.Level];
         foreach (GameObject Unit in BuildingsUnits)
         {
             Unit.GetComponent<Human>().UpdateLevelData(Building.Level);
@@ -43,13 +39,20 @@ public class SummonBuilding : MonoBehaviour
 
     public void BuyUnit()
     {
+        ResourceManager.GetInstance().useHuman(1);
         ResourceManager.GetInstance().checkAndBuyGold(UnitCost[Building.Level]);
-        BuildingsUnits.Add(Instantiate(Unit));
-        BuildingsUnits.Last().transform.position = Enter.transform.position;
+        BuildingsUnits.Add(Instantiate(Unit, Enter.transform.position, Quaternion.identity));
+        //BuildingsUnits.Last().transform.position = Enter.transform.position;
         BuildingsUnits.Last().GetComponent<Human>().Target = Enter.transform.position;
         BuildingsUnits.Last().GetComponent<Human>().Summon = GetComponent<SummonBuilding>();
         BuildingsUnits.Last().GetComponent<Human>().UpdateLevelData(Building.Level);
         BuildingsUnits.Last().GetComponent<Human>().HP = UnitMaxHP[Building.Level];
+    }
+    public void DeleteUnit()
+    {
+        Destroy(BuildingsUnits.Last());
+        BuildingsUnits.RemoveAt(BuildingsUnits.Count - 1);
+        ResourceManager.GetInstance().useHuman(-1);
     }
 
     public void KillAll()

@@ -6,10 +6,12 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
     public int StartGold = 1000;
+    public int StartPopulation = 5;
 
     public void PlayGame () {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         ResourceManager.GetInstance().setGold(StartGold);
+        ResourceManager.GetInstance().setMaxHumansCount(StartPopulation);
     }
     public void ExitGame () {
         Debug.Log(SettingsManager.SoundVolume);

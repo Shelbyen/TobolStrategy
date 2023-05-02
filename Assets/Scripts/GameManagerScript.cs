@@ -20,8 +20,10 @@ public class GameManagerScript : MonoBehaviour
     public TMP_Text UpgradeCost;
     public TMP_Text UnitCost;
 
+    public GameObject UnitControl;
     public Button Upgrade;
     public Button BuyUnit;
+    public Button FireUnit;
 
     public GameObject UnitInfo;
     public TMP_Text UnitType;
@@ -29,6 +31,10 @@ public class GameManagerScript : MonoBehaviour
     public TMP_Text Damage;
     public TMP_Text Speed;
     public TMP_Text Bullet;
+
+    public Sprite Units_Icon;
+    public Sprite Heal_Icon;
+    public Sprite Money_Icon;
 
     public bool BlockRaycast;
     public GameObject SelectedObject;
@@ -79,7 +85,9 @@ public class GameManagerScript : MonoBehaviour
             if (Building.GetComponent<SummonBuilding>())
             {
                 SummonBuilding Summon = Building.GetComponent<SummonBuilding>();
-                if (ResourceManager.GetInstance().getCountGold() >= Summon.UnitCost[Building.Level] && Building.Built && Summon.MaxUnitNumber[Building.Level] > Summon.BuildingsUnits.Count)
+                FunctionIcon.sprite = Units_Icon;
+                FunctionStats.text = $"{"Воины: " + Summon.BuildingsUnits.Count + "/" + Summon.MaxUnitNumber[Building.Level]}";
+                if (ResourceManager.GetInstance().getCountGold() >= Summon.UnitCost[Building.Level] && Building.Built && Summon.MaxUnitNumber[Building.Level] > Summon.BuildingsUnits.Count && ResourceManager.GetInstance().maxHumansCount() > ResourceManager.GetInstance().usedHumansCount())
                 {
                     BuyUnit.interactable = true;
                 }
@@ -87,15 +95,26 @@ public class GameManagerScript : MonoBehaviour
                 {
                     BuyUnit.interactable = false;
                 }
+
+                if (Building.Built && Summon.BuildingsUnits.Count > 0)
+                {
+                    FireUnit.interactable = true;
+                }
+                else
+                {
+                    FireUnit.interactable = false;
+                }
             }
         }
     }
 
     public void WindowAwake()
     {
+        BuildingIcon.sprite = Building.BuildingTypeImage;
         BuildingType.text = SelectedObject.GetComponent<Selectable>().Name;
-        Level.text = $"{"Level " + (Building.Level + 1)}";
+        Level.text = $"{"Уровень: " + (Building.Level + 1)}";
         UnitInfo.SetActive(false);
+        UnitControl.SetActive(false);
 
         if (Building.Level < 2)
         {
@@ -106,22 +125,32 @@ public class GameManagerScript : MonoBehaviour
             UpgradeCost.text = $"{"---"}";
             Upgrade.interactable = false;
         }
-        
+
 
         if (SelectedObject.GetComponent<HealBuilding>())
-            FunctionStats.text = $"{"Healing: " + SelectedObject.GetComponent<HealBuilding>().HealthPerHeal[Building.Level]}";
+        {
+            FunctionStats.text = $"{"Лечение: " + SelectedObject.GetComponent<HealBuilding>().HealthPerHeal[Building.Level]}";
+            FunctionIcon.sprite = Heal_Icon;
+        }
         else if (SelectedObject.GetComponent<MoneyBuilding>())
-            FunctionStats.text = $"{"Mining: " + SelectedObject.GetComponent<MoneyBuilding>().GoldMining[Building.Level]}";
+        {
+            FunctionStats.text = $"{"Доход: " + SelectedObject.GetComponent<MoneyBuilding>().GoldMining[Building.Level]}";
+            FunctionIcon.sprite = Money_Icon;
+        }
+        else if (SelectedObject.GetComponent<House>())
+        {
+            FunctionStats.text = $"{"Жители: " + SelectedObject.GetComponent<House>().ResidentsCount[Building.Level]}";
+            FunctionIcon.sprite = Units_Icon;
+        }
         else if (SelectedObject.GetComponent<SummonBuilding>())
         {
+            UnitControl.SetActive(true);
             UnitInfo.SetActive(true);
             SummonBuilding Summon = SelectedObject.GetComponent<SummonBuilding>();
-            FunctionStats.text = $"{"Units: " + Summon.MaxUnitNumber[Building.Level]}";
             UnitType.text = Summon.Unit.name;
-            Health.text = $"{"Health: " + Summon.UnitMaxHP[Building.Level]}";
-            Speed.text = $"{"Speed: " + Summon.UnitSpeed[Building.Level]}";
-            Damage.text = $"{"Damage: " + Summon.UnitDamage[Building.Level]}";
-            Bullet.text = $"{"Bullet: " + Summon.BulletDamage[Building.Level]}";
+            Health.text = $"{"Здоровье: " + Summon.UnitMaxHP[Building.Level]}";
+            Speed.text = $"{"Скорость: " + Summon.UnitSpeed[Building.Level]}";
+            Damage.text = $"{"Урон: " + Summon.UnitDamage[Building.Level]}";
             UnitCost.text = $"{Summon.UnitCost[Building.Level]}";
         }
         Window.SetActive(true);
@@ -130,6 +159,10 @@ public class GameManagerScript : MonoBehaviour
     public void BuyNewUnit()
     {
         Building.GetComponent<SummonBuilding>().BuyUnit();
+    }
+    public void DeleteUnit()
+    {
+        Building.GetComponent<SummonBuilding>().DeleteUnit();
     }
 
     public void UpgradeSelected()

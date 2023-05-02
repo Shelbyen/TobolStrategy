@@ -143,7 +143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5df7fbac18364d344be19c1a9320dc77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: Armory
+  Name: "\u0410\u0440\u0441\u0435\u043D\u0430\u043B"
   Selected: 0
 --- !u!114 &973600801095790679
 MonoBehaviour:
@@ -157,6 +157,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f8a287c3358d1f49b02d3e5a6c92ee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BuildingTypeImage: {fileID: 21300000, guid: fb6da7b7c565f714c8a319469fd469e4, type: 3}
   Discription: "\u0410\u0440\u0441\u0435\u043D\u0430\u043B \u043F\u0440\u0435\u0434\u043E\u0441\u0442\u0430\u0432\u043B\u044F\u0435\u0442
     \u043E\u0442\u0440\u044F\u0434 \u0441\u043E\u043B\u0434\u0430\u0442, \u0441\u043D\u0430\u0440\u044F\u0436\u0451\u043D\u043D\u044B\u0445
     \u0440\u0443\u0436\u044C\u044F\u043C\u0438 \u0434\u043B\u044F \u0441\u0440\u0430\u0436\u0435\u043D\u0438\u044F
@@ -165,7 +166,7 @@ MonoBehaviour:
   BuildOnStart: 0
   Level: 0
   GoldCost: 150
-  UpgradeCost: 3200000096000000
+  UpgradeCost: 6400000096000000
   AnotherWorkMode: 0
   TikTimer: 20
   TimeLeft: 0
@@ -184,7 +185,7 @@ MonoBehaviour:
   Unit: {fileID: 440588380187811796, guid: cdaf9aa54e92ca842ac7f36253d48790, type: 3}
   MaxUnitNumber: 04000000080000000c000000
   Enter: {fileID: 5161196462523661161}
-  UnitCost: 14000000190000001e000000
+  UnitCost: 0f0000001400000019000000
   UnitDamage:
   - 3
   - 5
@@ -197,8 +198,6 @@ MonoBehaviour:
   - 3.5
   - 3.2
   - 3
-  BulletDamage: 140000001e00000028000000
-  UnitBullet: {fileID: 5126664398243706012, guid: fe6775b52f75a7c4c89e12bad89b9c05, type: 3}
   BuildingsUnits: []
 --- !u!65 &-7726986225414062162
 BoxCollider:

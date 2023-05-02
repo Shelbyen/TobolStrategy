@@ -131,7 +131,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHP: 100
   HP: 0
-  MaxView: 10
+  MaxView: 75
   AttackRange: 50
   Target: {x: 0, y: 0, z: 0}
   layer:
@@ -143,6 +143,7 @@ MonoBehaviour:
   CanShoot: 1
   meleeDamage: 5
   bullet: {fileID: 5126664398243706012, guid: fe6775b52f75a7c4c89e12bad89b9c05, type: 3}
+  Summon: {fileID: 0}
 --- !u!65 &3214961313850212903
 BoxCollider:
   m_ObjectHideFlags: 0

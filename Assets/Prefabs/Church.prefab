@@ -186,7 +186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5df7fbac18364d344be19c1a9320dc77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: Church
+  Name: "\u0426\u0435\u0440\u043A\u043E\u0432\u044C"
   Selected: 0
 --- !u!114 &-2391064427850470955
 MonoBehaviour:
@@ -200,6 +200,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f8a287c3358d1f49b02d3e5a6c92ee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BuildingTypeImage: {fileID: 21300000, guid: fbbd412884f8a2445bb70bc0ab28da09, type: 3}
   Discription: "\u0426\u0435\u0440\u043A\u043E\u0432\u044C \u0441\u043E\u0431\u0438\u0440\u0430\u0435\u0442
     \u043F\u043E\u0436\u0435\u0440\u0442\u0432\u043E\u0432\u0430\u043D\u0438\u044F
     \u0441 \u043D\u0430\u0440\u043E\u0434\u0430 \u0438 \u043F\u043E\u043F\u043E\u043B\u043D\u044F\u0435\u0442
@@ -207,8 +208,8 @@ MonoBehaviour:
   IsEnemy: 0
   BuildOnStart: 0
   Level: 0
-  GoldCost: 350
-  UpgradeCost: 0000000000000000
+  GoldCost: 270
+  UpgradeCost: 64000000c8000000
   AnotherWorkMode: 0
   TikTimer: 10
   TimeLeft: 0
@@ -224,7 +225,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 142c4e0fac7e88043830774af482b75b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GoldMining: 050000000f00000019000000
+  GoldMining: 010000000200000003000000
 --- !u!65 &2481300152804536466
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -64,16 +64,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38f134ddcaefe094e8f7d227f75c1950, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHP: 110
+  MaxHP: 100
   HP: 0
   MaxView: 1000
+  AttackRange: 0
   Target: {x: 0, y: 0, z: 0}
-  TargetEnemy: {fileID: 0}
-  IsEnemy: 1
-  Shooting: 0
+  layer:
+    serializedVersion: 2
+    m_Bits: 0
+  isSelect: 0
+  Attack: 0
+  _priorityEnemy: {fileID: 0}
   CanShoot: 0
-  AtackCollider: {fileID: 1702415502020931729}
-  AtackForce: 1.25
+  meleeDamage: 0
+  bullet: {fileID: 0}
+  Summon: {fileID: 0}
 --- !u!195 &6125346177206398884
 NavMeshAgent:
   m_ObjectHideFlags: 0

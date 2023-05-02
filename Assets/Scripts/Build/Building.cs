@@ -6,6 +6,7 @@ using UnityEngine.AI;
 
 public class Building : MonoBehaviour
 {
+    public Sprite BuildingTypeImage;
     public string Discription;
     public bool IsEnemy;
     public bool BuildOnStart;
@@ -25,6 +26,7 @@ public class Building : MonoBehaviour
     private SummonBuilding Summon;
     private HealBuilding Heal;
     private MoneyBuilding Miner;
+    private House House;
 
     private NavMeshObstacle Obstacle;
     private Builder BuilderScript;
@@ -38,6 +40,7 @@ public class Building : MonoBehaviour
         Summon = GetComponent<SummonBuilding>();
         Heal = GetComponent<HealBuilding>();
         Miner = GetComponent<MoneyBuilding>();
+        House = GetComponent<House>();
 
         Obstacle = GetComponent<NavMeshObstacle>();
         Obstacle.enabled = false;
@@ -73,6 +76,7 @@ public class Building : MonoBehaviour
     void OnDestroy()
     {
         if (!Built && Placed) ResourceManager.GetInstance().addGold(GoldCost);
+        if (Built && House != null) House.DeleteResidents(Level);
     }
 
     private void OnTriggerEnter(Collider Collider)
@@ -130,6 +134,8 @@ public class Building : MonoBehaviour
         Placed = true;
         Built = true;
         for (int i = 0; i < Render.Length; i += 1) Render[i].material = BaseMaterial[i];
+
+        if (House != null) House.AddResidents(Level);
     }
 
     public void DestroyThis()
@@ -150,10 +156,19 @@ public class Building : MonoBehaviour
 
     public void Upgrade()
     {
+
         if (Level < 2)
         {
             Level += 1;
-            if (Summon != null) Summon.Upgrade();
+            if (Summon != null)
+            {
+                Summon.Upgrade();
+            }
+            if (House != null)
+            {
+                House.DeleteResidents(Level - 1);
+                House.AddResidents(Level);
+            }
         }
     }
 }
