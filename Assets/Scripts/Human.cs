@@ -34,7 +34,7 @@ public class Human : MonoBehaviour
 
     public SummonBuilding Summon;
 
-    public void Awake() 
+    void Awake() 
     {
         HP = MaxHP;
         MainCamera = Camera.main;
@@ -46,6 +46,12 @@ public class Human : MonoBehaviour
         if (transform.tag == "Human") _maxHealthBarScale = transform.GetChild(0).transform.localScale.x;
     }
 
+    void OnDestroy()
+    {
+        Summon.CheckUnits(gameObject);
+        ResourceManager.GetInstance().useHuman(-1);
+    }
+
     public void UpdateLevelData(int Lv)
     {
         MaxHP = Summon.UnitMaxHP[Lv];
@@ -55,8 +61,11 @@ public class Human : MonoBehaviour
 
     public void Update()
     {
-        if (HP <= 0) Destroy(gameObject);
-        if (transform.tag == "Human") UpdateHealthBar();
+        if (HP <= 0)
+        {
+            Destroy(gameObject);
+        }
+            if (transform.tag == "Human") UpdateHealthBar();
         SetTarget();
 
         FindPriorityEnemy();

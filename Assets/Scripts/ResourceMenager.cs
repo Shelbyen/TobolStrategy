@@ -30,6 +30,18 @@ public class ResourceManager
         }
     }
 
+    public bool checkGold (int cost)
+    {
+        if (_gold >= cost)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     public void addGold (int count) {
         _gold += count;
     }

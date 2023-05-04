@@ -8,18 +8,15 @@ public class Building : MonoBehaviour
 {
     public Sprite BuildingTypeImage;
     public string Discription;
-    public bool IsEnemy;
-    public bool BuildOnStart;
     public int Level;
 
-    [NonSerialized] public bool IsWrongPlace;
+    //[NonSerialized] public bool IsWrongPlace;
     [NonSerialized] public bool Placed;
     [NonSerialized] public bool Built;
     [NonSerialized] public float BuildProgress;
 
     public int GoldCost;
     public int[] UpgradeCost;
-    public bool AnotherWorkMode;
     public float TikTimer;
     public float TimeLeft;
 
@@ -52,8 +49,7 @@ public class Building : MonoBehaviour
         {
             BaseMaterial[i] = Render[i].material;
         }
-        if (BuildOnStart) BuildThis();
-        else CheckPlace();
+        CheckPlace();
     }
 
     void Update()
@@ -65,11 +61,7 @@ public class Building : MonoBehaviour
         }
         else
         {
-            if (!IsEnemy) Timer();
-        }
-        if (!Placed)
-        {
-            CheckPlace();
+            if (TikTimer != 0) Timer();
         }
     }
 
@@ -79,52 +71,37 @@ public class Building : MonoBehaviour
         if (Built && House != null) House.DeleteResidents(Level);
     }
 
-    private void OnTriggerEnter(Collider Collider)
+    private void OnTriggerEnter()
     {
         if (!Placed) CollisionCount += 1;
     }
-    private void OnTriggerExit(Collider Collider)
+    private void OnTriggerExit()
     {
         if (!Placed) CollisionCount -= 1;
     }
 
-    public void CheckPlace()
+    public bool CheckPlace()
     {
-        if (CollisionCount <= 0)
+        if (CollisionCount == 0)
         {
-            if (GoldCost <= ResourceManager.GetInstance().getCountGold())
-            {
-                GoodPlace();
-            }
-            else
-            {
-                Debug.Log("No money");
-                WrongPlace();
-            }
+            return true;
         }
         else
         {
-            Debug.Log("Wrong place");
-            WrongPlace();
+            return false;
         }
     }
 
-    public void WrongPlace()
+    public void SetMaterial(Material material)
     {
-        IsWrongPlace = true;
-        foreach (Renderer renderer in GetComponentsInChildren<Renderer>()) renderer.material = BuilderScript.WrongMaterial;
-    }
-
-    public void GoodPlace()
-    {
-        IsWrongPlace = false;
-        foreach (Renderer renderer in GetComponentsInChildren<Renderer>()) renderer.material = BuilderScript.GoodMaterial;
+        foreach (Renderer renderer in GetComponentsInChildren<Renderer>()) renderer.material = material;
     }
 
     public void PlaceThis()
     {
         Placed = true;
         foreach (Renderer renderer in GetComponentsInChildren<Renderer>()) renderer.material = BuilderScript.GoodMaterial;
+        ResourceManager.GetInstance().checkAndBuyGold(GoldCost);
         Obstacle.enabled = true;
     }
 

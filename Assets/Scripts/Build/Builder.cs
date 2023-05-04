@@ -19,9 +19,11 @@ public class Builder : MonoBehaviour
     private GameManagerScript GameManager;
     private Camera MainCamera;
     private RaycastHit Hit;
-    //Status vars
+    private int BuildingCost;
+
     private bool BuildMode;
     private bool GridMode;
+    private bool GoodPlace;
 
     void Awake()
     {
@@ -44,6 +46,7 @@ public class Builder : MonoBehaviour
             if (ActiveBuilding != null)
             {
                 MoveBuilding();
+                CheckBuildingFactors();
                 if (InputManager.GetKeyDown("Place") || InputManager.GetKeyDown("Accept")) PlaceBuilding();
                 if (InputManager.GetKeyDown("Cancel")) CancelBuilding();
             }
@@ -94,11 +97,37 @@ public class Builder : MonoBehaviour
             Hit.point.y, 
             Mathf.Round(Hit.point.z / GridStep) * GridStep);
         else ActiveBuilding.transform.position = Hit.point;
-        if (Hit.transform.gameObject.layer != LayerMask.NameToLayer("FortressGround")) ActiveBuilding.GetComponent<Building>().WrongPlace();
 
         if (InputManager.GetKeyDown("RotateBuilding"))
         {
             ActiveBuilding.transform.Rotate(Vector3.up * 45);
+        }
+    }
+
+    public void CheckBuildingFactors()
+    {
+        Building buildingComponent = ActiveBuilding.GetComponent<Building>();
+
+        GoodPlace = buildingComponent.CheckPlace();
+        if (Hit.transform.gameObject.layer != LayerMask.NameToLayer("FortressGround"))
+        {
+            Debug.Log("Wrong place");
+            GoodPlace = false;
+        }
+        else if (!ResourceManager.GetInstance().checkGold(BuildingCost))
+        {
+            Debug.Log("No Money");
+            Debug.Log(BuildingCost);
+            GoodPlace = false;
+        }
+
+        if (GoodPlace)
+        {
+            buildingComponent.SetMaterial(GoodMaterial);
+        }
+        else
+        {
+            buildingComponent.SetMaterial(WrongMaterial);
         }
     }
 
@@ -107,22 +136,19 @@ public class Builder : MonoBehaviour
         Destroyer.DestroyMode = false;
         CancelBuilding();
         ActiveBuilding = Instantiate(BuildingPrefab);
+        BuildingCost = ActiveBuilding.GetComponent<Building>().GoldCost;
 
         UIManager.ChangeTextStatusBar(ActiveBuilding.GetComponent<Building>().Discription);
         UIManager.ChangeStatusGoldCost(true);
-        UIManager.ChangeTextGoldCost(ActiveBuilding.GetComponent<Building>().GoldCost.ToString());
+        UIManager.ChangeTextGoldCost(BuildingCost.ToString());
     }
 
     public void PlaceBuilding()
     {
-        Building buildingComponent = ActiveBuilding.GetComponent<Building>();
-        
-        if (!buildingComponent.IsWrongPlace)
+        if (GoodPlace)
         {
-            buildingComponent.PlaceThis();
-            ResourceManager.GetInstance().checkAndBuyGold(buildingComponent.GoldCost);
+            ActiveBuilding.GetComponent<Building>().PlaceThis();
             ActiveBuilding = null;
-            UIManager.ChangeTextStatusBar("");
             UIManager.ChangeStatusGoldCost(false);
             UIManager.ChangeTextGoldCost("");
         }
@@ -131,7 +157,6 @@ public class Builder : MonoBehaviour
     public void CancelBuilding()
     {
         Destroy(ActiveBuilding);
-        UIManager.ChangeTextStatusBar("");
         UIManager.ChangeStatusGoldCost(false);
         UIManager.ChangeTextGoldCost("");
     }
