@@ -9,14 +9,12 @@ public class SummonBuilding : MonoBehaviour
 
     public GameObject Unit;
     public int[] MaxUnitNumber;
-    public GameObject Enter; //В Вектор3
+    public GameObject Enter; //Вектор3
 
     public int[] UnitCost;
-
     public float[] UnitDamage;
     public float[] UnitMaxHP;
     public float[] UnitSpeed;
-
     public List<GameObject> BuildingsUnits;
 
     void Awake()
@@ -29,7 +27,7 @@ public class SummonBuilding : MonoBehaviour
         KillAll();
     }
 
-    public void Upgrade()
+    public void UpgradeUnits()
     {
         foreach (GameObject Unit in BuildingsUnits)
         {

@@ -168,7 +168,7 @@ public class GameManagerScript : MonoBehaviour
     public void UpgradeSelected()
     {
         ResourceManager.GetInstance().checkAndBuyGold(Building.UpgradeCost[Building.Level]);
-        Building.Upgrade();
+        Building.UpgradeThis();
         WindowAwake();
     }
 

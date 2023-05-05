@@ -11,11 +11,11 @@ public class Building : MonoBehaviour
     public int Level;
 
     //[NonSerialized] public bool IsWrongPlace;
+    public bool FreeBuild;
     [NonSerialized] public bool Placed;
     [NonSerialized] public bool Built;
     [NonSerialized] public float BuildProgress;
 
-    public int GoldCost;
     public int[] UpgradeCost;
     public float TikTimer;
     public float TimeLeft;
@@ -25,12 +25,14 @@ public class Building : MonoBehaviour
     private MoneyBuilding Miner;
     private House House;
 
+    private int GoldCost;
     private NavMeshObstacle Obstacle;
     private Builder BuilderScript;
     private int CollisionCount;
     private Material[] BaseMaterial;
     private Renderer[] Render;
     private Collider BuildingCollider;
+    //private BuildingButton BuildingButton;
 
     void Awake()
     {
@@ -131,7 +133,7 @@ public class Building : MonoBehaviour
         }
     }
 
-    public void Upgrade()
+    public void UpgradeThis()
     {
 
         if (Level < 2)
@@ -139,7 +141,7 @@ public class Building : MonoBehaviour
             Level += 1;
             if (Summon != null)
             {
-                Summon.Upgrade();
+                Summon.UpgradeUnits();
             }
             if (House != null)
             {
@@ -147,5 +149,10 @@ public class Building : MonoBehaviour
                 House.AddResidents(Level);
             }
         }
+    }
+
+    public void SetCost(int Cost)
+    {
+        GoldCost = Cost;
     }
 }

@@ -16,6 +16,8 @@ public class UIManagerScript : MonoBehaviour
     public GameObject GoldCost;
     public TMP_Text RaidStatus;
 
+    public GameObject Discription;
+
     public Sprite BuildSprite;
     public Sprite ViewSprite;
 
@@ -65,6 +67,24 @@ public class UIManagerScript : MonoBehaviour
     {
         if (Status) DestroyImage.sprite = DestroyPressed;
         else DestroyImage.sprite = DestroyDefault;
+    }
+
+    public void SetDiscription(string Disc)
+    {
+        if (Disc == "")
+        {
+            Discription.GetComponentInChildren<TMP_Text>().text = Disc;
+            Discription.SetActive(false);
+            ToggleImage.gameObject.SetActive(true);
+            //GridDefault.gameObject.SetActive(true);
+        }
+        else
+        {
+            Discription.SetActive(true);
+            Discription.GetComponentInChildren<TMP_Text>().text = Disc;
+            ToggleImage.gameObject.SetActive(false);
+            //GridDefault.gameObject.SetActive(false);
+        }
     }
 
     public void ChangeTextRaidStatus(string newText)
