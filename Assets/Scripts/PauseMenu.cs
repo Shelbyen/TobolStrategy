@@ -7,10 +7,17 @@ public class PauseMenu : MonoBehaviour
 {
     public bool PauseGame;
     public GameObject pauseGameMenu;
+    public GameObject[] ConflictWindows;
 
     void Update()
     {
-        if (InputManager.GetKeyDown("Cancel")) {
+        bool CanPause = true;
+        foreach (GameObject Window in ConflictWindows)
+        {
+            if (Window.activeSelf) CanPause = false;
+        }
+
+        if (InputManager.GetKeyDown("Cancel") && CanPause) {
             if (PauseGame) {
                 Resume();
             } else {

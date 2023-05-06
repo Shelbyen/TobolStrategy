@@ -38,18 +38,20 @@ public class Human : MonoBehaviour
     {
         HP = MaxHP;
         MainCamera = Camera.main;
-        Target = gameObject.transform.position;
         audioSrc = GetComponent<AudioSource>();
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
+        agent.SetDestination(Target);
 
         if (transform.tag == "Human") _maxHealthBarScale = transform.GetChild(0).transform.localScale.x;
     }
 
     void OnDestroy()
     {
-        Summon.CheckUnits(gameObject);
-        ResourceManager.GetInstance().useHuman(-1);
+        if (transform.tag == "Human")
+        {
+            ResourceManager.GetInstance().useHuman(-1);
+        }
     }
 
     public void UpdateLevelData(int Lv)
@@ -61,10 +63,6 @@ public class Human : MonoBehaviour
 
     public void Update()
     {
-        if (HP <= 0)
-        {
-            Destroy(gameObject);
-        }
             if (transform.tag == "Human") UpdateHealthBar();
         SetTarget();
 
@@ -86,6 +84,11 @@ public class Human : MonoBehaviour
             }
         }
         AttackTarget();
+
+        if (HP <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void UpdateHealthBar()
@@ -190,7 +193,7 @@ public class Human : MonoBehaviour
         if (CanShoot)
         {
             GameObject obj = Instantiate(bullet, transform.GetChild(1).position, Quaternion.FromToRotation(transform.GetChild(1).position, enemy.transform.position));
-            obj.GetComponent<BulletController>().position = enemy.transform.position;
+            obj.GetComponent<BulletController>().position = enemy.transform.position + new Vector3 (0, 1, 0);
             if (transform.gameObject.tag == "Enemy") obj.GetComponent<BulletController>().isEnemy = true;
             else obj.GetComponent<BulletController>().isEnemy = false;
             audioSrc.Play();

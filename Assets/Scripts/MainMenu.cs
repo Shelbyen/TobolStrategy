@@ -9,6 +9,7 @@ public class MainMenu : MonoBehaviour
     public int StartPopulation = 5;
 
     public void PlayGame () {
+        Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         ResourceManager.GetInstance().setGold(StartGold);
         ResourceManager.GetInstance().setMaxHumansCount(StartPopulation);

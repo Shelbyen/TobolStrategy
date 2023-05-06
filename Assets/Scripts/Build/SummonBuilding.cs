@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.AI;
 using UnityEngine;
 using System.Linq;
 
@@ -27,11 +28,18 @@ public class SummonBuilding : MonoBehaviour
         KillAll();
     }
 
+    void FixedUpdate()
+    {
+        CheckUnits();
+    }
+
     public void UpgradeUnits()
     {
         foreach (GameObject Unit in BuildingsUnits)
         {
-            Unit.GetComponent<Human>().UpdateLevelData(Building.Level);
+            Unit.GetComponent<Human>().MaxHP = UnitMaxHP[Building.Level];
+            Unit.GetComponent<Human>().meleeDamage = UnitDamage[Building.Level];
+            Unit.GetComponent<NavMeshAgent>().speed = UnitSpeed[Building.Level];
         }
     }
 
@@ -52,11 +60,11 @@ public class SummonBuilding : MonoBehaviour
         BuildingsUnits.RemoveAt(BuildingsUnits.Count - 1);
     }
 
-    public void CheckUnits(GameObject Unit)
+    public void CheckUnits()
     {
         for (int i = 0; i < BuildingsUnits.Count; i += 1)
         {
-            if (BuildingsUnits[i] == Unit)
+            if (BuildingsUnits[i] == null)
             {
                 BuildingsUnits.RemoveAt(i);
             }

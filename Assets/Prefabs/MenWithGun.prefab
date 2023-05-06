@@ -133,7 +133,7 @@ MonoBehaviour:
   HP: 0
   MaxView: 75
   AttackRange: 50
-  Target: {x: 0, y: 0, z: 0}
+  Target: {x: 125, y: 3, z: 165}
   layer:
     serializedVersion: 2
     m_Bits: 72

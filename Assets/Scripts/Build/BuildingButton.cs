@@ -10,7 +10,7 @@ public class BuildingButton : MonoBehaviour
     public int Cost;
     public int FreeBuildCount;
     public int MaxCount;
-    private int Count;
+    public List<GameObject> PlacedBuildings;
     private GameObject FreeBuild;
     private TMP_Text FreeBuildText;
 
@@ -27,24 +27,37 @@ public class BuildingButton : MonoBehaviour
         FreeBuildText.text = $"{"x" + FreeBuildCount}";
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        
+        for (int i = 0; i < PlacedBuildings.Count; i += 1)
+        {
+            if (PlacedBuildings[i] == null)
+            {
+                PlacedBuildings.RemoveAt(i);
+                if (PlacedBuildings.Count < MaxCount) GetComponent<Button>().interactable = true;
+            }
+        }
     }
 
-    public void StructureBuilt()
+    public void StructureBuilt(GameObject Placed)
     {
-        FreeBuildCount -= 1;
-        Count += 1;
-        if (FreeBuildCount > 0) FreeBuild.SetActive(true);
-        else FreeBuild.SetActive(false);
+        PlacedBuildings.Add(Placed);
+        if (FreeBuildCount > 0)
+        {
+            FreeBuildCount -= 1;
+            FreeBuild.SetActive(true);
+        }
+        if (FreeBuildCount <= 0)  FreeBuild.SetActive(false);
         FreeBuildText.text = $"{"x" + FreeBuildCount}";
-        if (Count >= MaxCount) GetComponent<Button>().interactable = false;
+        if (PlacedBuildings.Count >= MaxCount) GetComponent<Button>().interactable = false;
     }
 
     public void SpawnBuilding()
     {
-        if (FreeBuildCount > 0) Builder.StartBuilding(Building, 0, GetComponent<BuildingButton>());
-        else Builder.StartBuilding(Building, Cost, GetComponent<BuildingButton>());
+        if (PlacedBuildings.Count < MaxCount)
+        {
+            if (FreeBuildCount > 0) Builder.StartBuilding(Building, 0, GetComponent<BuildingButton>());
+            else Builder.StartBuilding(Building, Cost, GetComponent<BuildingButton>());
+        }
     }
 }

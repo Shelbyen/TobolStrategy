@@ -152,12 +152,20 @@ public class Builder : MonoBehaviour
     {
         if (GoodPlace)
         {
-            BuildingButton.StructureBuilt();
+            BuildingButton.StructureBuilt(ActiveBuilding);
             ActiveBuilding.GetComponent<Building>().PlaceThis();
             ActiveBuilding = null;
+
             UIManager.ChangeStatusGoldCost(false);
             UIManager.ChangeTextGoldCost("");
             UIManager.SetDiscription("");
+
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                BuildingButton.SpawnBuilding();
+            }
+
+
         }
     }
 

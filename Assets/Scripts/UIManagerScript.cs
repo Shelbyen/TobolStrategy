@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine;
 using TMPro;
 
 public class UIManagerScript : MonoBehaviour
 {
+    public GameObject DefeatScreen;
+    public TMP_Text MessageText;
+
     public TMP_Text GoldCount;
     public TMP_Text Population;
     public GameObject BuildMenu;
@@ -76,6 +80,7 @@ public class UIManagerScript : MonoBehaviour
             Discription.GetComponentInChildren<TMP_Text>().text = Disc;
             Discription.SetActive(false);
             ToggleImage.gameObject.SetActive(true);
+            DestroyImage.gameObject.SetActive(true);
             //GridDefault.gameObject.SetActive(true);
         }
         else
@@ -83,6 +88,7 @@ public class UIManagerScript : MonoBehaviour
             Discription.SetActive(true);
             Discription.GetComponentInChildren<TMP_Text>().text = Disc;
             ToggleImage.gameObject.SetActive(false);
+            DestroyImage.gameObject.SetActive(false);
             //GridDefault.gameObject.SetActive(false);
         }
     }
@@ -94,5 +100,17 @@ public class UIManagerScript : MonoBehaviour
 
     public void ChangeTextGoldCost(string newText) {
         GoldCost.GetComponentsInChildren<TMP_Text>()[0].text = newText;
+    }
+
+    public void OpenDefeatScreen(bool Status, string Message)
+    {
+        Time.timeScale = 0f;
+        MessageText.text = Message;
+        DefeatScreen.SetActive(Status);
+    }
+
+    public void ChangeScene(string Name)
+    {
+        SceneManager.LoadScene(Name);
     }
 }
