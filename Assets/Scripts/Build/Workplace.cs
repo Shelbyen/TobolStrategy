@@ -4,15 +4,35 @@ using UnityEngine;
 
 public class Workplace : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    protected Building Building;
+    public int[] MaxWorkers;
+    public int WorkersCount;
+
+    void Awake()
     {
-        
+        Building = GetComponent<Building>();
     }
 
-    // Update is called once per frame
-    void Update()
+    void OnDestroy()
     {
-        
+        ResourceManager.GetInstance().useHuman(-WorkersCount);
+    }
+
+    public void HireWorker()
+    {
+        if (WorkersCount < MaxWorkers[Building.Level])
+        {
+            ResourceManager.GetInstance().useHuman(1);
+            WorkersCount += 1;
+        }
+    }
+
+    public void FireWorker()
+    {
+        if (WorkersCount > 0)
+        {
+            ResourceManager.GetInstance().useHuman(-1);
+            WorkersCount -= 1;
+        }
     }
 }

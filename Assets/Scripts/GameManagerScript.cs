@@ -30,7 +30,10 @@ public class GameManagerScript : MonoBehaviour
     public TMP_Text Health;
     public TMP_Text Damage;
     public TMP_Text Speed;
-    public TMP_Text Bullet;
+
+    public GameObject HealInfo;
+    public TMP_Text MaxHeal;
+    public TMP_Text HealPerTik;
 
     public Sprite Units_Icon;
     public Sprite Heal_Icon;
@@ -85,7 +88,6 @@ public class GameManagerScript : MonoBehaviour
             if (Building.GetComponent<SummonBuilding>())
             {
                 SummonBuilding Summon = Building.GetComponent<SummonBuilding>();
-                FunctionIcon.sprite = Units_Icon;
                 FunctionStats.text = $"{"Воины: " + Summon.BuildingsUnits.Count + "/" + Summon.MaxUnitNumber[Building.Level]}";
                 if (ResourceManager.GetInstance().getCountGold() >= Summon.UnitCost[Building.Level] && Building.Built && Summon.MaxUnitNumber[Building.Level] > Summon.BuildingsUnits.Count && ResourceManager.GetInstance().maxHumansCount() > ResourceManager.GetInstance().usedHumansCount())
                 {
@@ -105,6 +107,27 @@ public class GameManagerScript : MonoBehaviour
                     FireUnit.interactable = false;
                 }
             }
+            else if (Building.GetComponent<HealBuilding>())
+            {
+                HealBuilding Heal = Building.GetComponent<HealBuilding>();
+                if (Building.Built && Heal.MaxWorkers[Building.Level] > Heal.WorkersCount && ResourceManager.GetInstance().maxHumansCount() > ResourceManager.GetInstance().usedHumansCount())
+                {
+                    BuyUnit.interactable = true;
+                }
+                else
+                {
+                    BuyUnit.interactable = false;
+                }
+
+                if (Building.Built && Heal.WorkersCount > 0)
+                {
+                    FireUnit.interactable = true;
+                }
+                else
+                {
+                    FireUnit.interactable = false;
+                }
+            }
         }
     }
 
@@ -113,6 +136,7 @@ public class GameManagerScript : MonoBehaviour
         BuildingIcon.sprite = Building.BuildingTypeImage;
         BuildingType.text = SelectedObject.GetComponent<Selectable>().Name;
         Level.text = $"{"Уровень: " + (Building.Level + 1)}";
+        HealInfo.SetActive(false);
         UnitInfo.SetActive(false);
         UnitControl.SetActive(false);
 
@@ -127,10 +151,20 @@ public class GameManagerScript : MonoBehaviour
         }
 
 
+
         if (SelectedObject.GetComponent<HealBuilding>())
         {
-            FunctionStats.text = $"{"Лечение: " + SelectedObject.GetComponent<HealBuilding>().HealthPerHeal[Building.Level]}";
-            FunctionIcon.sprite = Heal_Icon;
+            FunctionIcon.sprite = Units_Icon;
+            HealBuilding Heal = SelectedObject.GetComponent<HealBuilding>();
+
+            FunctionStats.text = $"{"Работают: " + Heal.WorkersCount + "/" + Heal.MaxWorkers[Building.Level]}";
+            UnitCost.text = "";
+
+            MaxHeal.text = $"{"Макс: " + (Heal.MaxHeal[Building.Level] * 100)}";
+            HealPerTik.text = $"{"Лечение: " + Heal.ReturnHealPower()}";
+
+            HealInfo.SetActive(true);
+            UnitControl.SetActive(true);
         }
         else if (SelectedObject.GetComponent<MoneyBuilding>())
         {
@@ -144,31 +178,44 @@ public class GameManagerScript : MonoBehaviour
         }
         else if (SelectedObject.GetComponent<SummonBuilding>())
         {
-            UnitControl.SetActive(true);
-            UnitInfo.SetActive(true);
+            FunctionIcon.sprite = Units_Icon;
             SummonBuilding Summon = SelectedObject.GetComponent<SummonBuilding>();
+
             UnitType.text = Summon.Unit.name;
             Health.text = $"{"Здоровье: " + Summon.UnitMaxHP[Building.Level]}";
             Speed.text = $"{"Скорость: " + Summon.UnitSpeed[Building.Level]}";
             Damage.text = $"{"Урон: " + Summon.UnitDamage[Building.Level]}";
             UnitCost.text = $"{Summon.UnitCost[Building.Level]}";
+
+            UnitControl.SetActive(true);
+            UnitInfo.SetActive(true);
         }
+
+
+
         Window.SetActive(true);
     }
 
     public void BuyNewUnit()
     {
-        Building.GetComponent<SummonBuilding>().BuyUnit();
+        if (Building.GetComponent<SummonBuilding>()) Building.GetComponent<SummonBuilding>().BuyUnit();
+        else Building.GetComponent<HealBuilding>().HireWorker();
+
+        WindowAwake();
     }
     public void DeleteUnit()
     {
-        Building.GetComponent<SummonBuilding>().DeleteUnit();
+        if (Building.GetComponent<SummonBuilding>()) Building.GetComponent<SummonBuilding>().DeleteUnit();
+        else Building.GetComponent<HealBuilding>().FireWorker();
+
+        WindowAwake();
     }
 
     public void UpgradeSelected()
     {
         ResourceManager.GetInstance().checkAndBuyGold(Building.UpgradeCost[Building.Level]);
         Building.UpgradeThis();
+
         WindowAwake();
     }
 

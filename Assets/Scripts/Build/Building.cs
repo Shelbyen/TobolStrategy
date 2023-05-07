@@ -127,7 +127,7 @@ public class Building : MonoBehaviour
         TimeLeft += Time.deltaTime;
         if (TimeLeft >= TikTimer)
         {
-            if (Heal != null) Heal.Heal(Level);
+            if (Heal != null) Heal.Heal();
             if (Miner != null) Miner.GoldMine(Level);
             TimeLeft = 0;
         }

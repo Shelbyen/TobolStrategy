@@ -770,7 +770,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38f134ddcaefe094e8f7d227f75c1950, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHP: 100
+  MaxHP: 175
   HP: 0
   MaxView: 1000
   AttackRange: 3

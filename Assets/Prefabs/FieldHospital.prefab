@@ -164,7 +164,7 @@ MonoBehaviour:
   Level: 0
   FreeBuild: 0
   UpgradeCost: 78000000b4000000
-  TikTimer: 20
+  TikTimer: 35
   TimeLeft: 0
 --- !u!114 &499858238644196898
 MonoBehaviour:
@@ -178,10 +178,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48aa3c8587b047c47ad23fe36467c316, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HealthPerHeal:
-  - 10
+  MaxWorkers: 010000000200000003000000
+  WorkersCount: 0
+  HealPerWorker:
+  - 15
   - 15
   - 20
+  MaxHeal:
+  - 0.75
+  - 1
+  - 1.25
 --- !u!65 &5930050200318339551
 BoxCollider:
   m_ObjectHideFlags: 0
