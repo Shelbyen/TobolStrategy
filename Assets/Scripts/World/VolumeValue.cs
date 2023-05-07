@@ -10,7 +10,7 @@ public class VolumeValue : MonoBehaviour
     public AudioClip MenuMusic;
     public AudioClip DefeatMusic;
 
-    void Start()
+    void Awake()
     {
         audioSrc = GetComponent<AudioSource>();
     }

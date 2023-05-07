@@ -14,10 +14,12 @@ public class StateManager : MonoBehaviour
     private bool _isRaid = false;
     private bool _startRaid = false;
 
+    private VolumeValue Music;
     private UIManagerScript UIManager;
     private Raid _raidManager;
 
     private void Awake() {
+        Music = GameObject.Find("MusicPlayer").GetComponent<VolumeValue>();
         UIManager = GameObject.Find("UIManager").GetComponent<UIManagerScript>();
         UIManager.ChangeTextRaidStatus("Затишье");
         _raidManager = new Raid();
