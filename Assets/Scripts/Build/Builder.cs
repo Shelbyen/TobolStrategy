@@ -111,7 +111,7 @@ public class Builder : MonoBehaviour
         GoodPlace = buildingComponent.CheckPlace();
         if (Physics.Raycast(Ray, 1000f, Ground))
         {
-            if (Hit.transform.gameObject.layer != LayerMask.NameToLayer("FortressGround"))
+            if (    !(Hit.transform.gameObject.layer == LayerMask.NameToLayer("FortressGround") || ActiveBuilding.GetComponent<Flagstaff>())  )
             {
                 Debug.Log("Wrong place");
                 GoodPlace = false;
@@ -125,14 +125,8 @@ public class Builder : MonoBehaviour
         }
         else GoodPlace = false;
 
-        if (GoodPlace)
-        {
-            buildingComponent.SetMaterial(GoodMaterial);
-        }
-        else
-        {
-            buildingComponent.SetMaterial(WrongMaterial);
-        }
+        if (GoodPlace) buildingComponent.SetMaterial(GoodMaterial);
+        else buildingComponent.SetMaterial(WrongMaterial);
     }
 
     public void StartBuilding(GameObject BuildingPrefab, int Cost, BuildingButton Spawner)
@@ -145,7 +139,6 @@ public class Builder : MonoBehaviour
 
         UIManager.ChangeStatusGoldCost(true);
         UIManager.ChangeTextGoldCost(Cost.ToString());
-        UIManager.SetDiscription(ActiveBuilding.GetComponent<Building>().Discription);
     }
 
     public void PlaceBuilding()
@@ -158,14 +151,10 @@ public class Builder : MonoBehaviour
 
             UIManager.ChangeStatusGoldCost(false);
             UIManager.ChangeTextGoldCost("");
-            UIManager.SetDiscription("");
-
             if (Input.GetKey(KeyCode.LeftShift))
             {
                 BuildingButton.SpawnBuilding();
             }
-
-
         }
     }
 
@@ -174,6 +163,5 @@ public class Builder : MonoBehaviour
         Destroy(ActiveBuilding);
         UIManager.ChangeStatusGoldCost(false);
         UIManager.ChangeTextGoldCost("");
-        UIManager.SetDiscription("");
     }
 }

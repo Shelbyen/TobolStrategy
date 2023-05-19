@@ -8,6 +8,9 @@ TagManager:
   - Human
   - EnemyHouse
   - Enemy
+  - Building
+  - Flag
+  - Remezov
   layers:
   - Default
   - TransparentFX

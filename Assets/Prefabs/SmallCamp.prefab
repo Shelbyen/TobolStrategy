@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7571324693662215845}
   - component: {fileID: 2504665330411297984}
   - component: {fileID: 8715877922928630135}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: StatusWindow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,7 +100,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7782633578464101231}
-  m_Layer: 10
+  m_Layer: 7
   m_Name: Enter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -131,7 +131,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6486039283157223201}
-  m_Layer: 10
+  m_Layer: 7
   m_Name: CampModels
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -166,14 +166,13 @@ GameObject:
   m_Component:
   - component: {fileID: 6195333282795375077}
   - component: {fileID: 5801823366956887980}
-  - component: {fileID: 7029795357666957076}
-  - component: {fileID: 968141055429925064}
+  - component: {fileID: -3602270121383381929}
   - component: {fileID: 1163094676896449045}
   - component: {fileID: 8244583346990033011}
   - component: {fileID: 6330680591327015148}
-  m_Layer: 10
+  m_Layer: 7
   m_Name: SmallCamp
-  m_TagString: EnemyHouse
+  m_TagString: Building
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -208,9 +207,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5df7fbac18364d344be19c1a9320dc77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: SmallCamp
+  Name: "\u0428\u0430\u043C\u0430\u043D"
   Selected: 0
---- !u!114 &7029795357666957076
+--- !u!114 &-3602270121383381929
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -219,34 +218,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 8131346178066058629}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f8a287c3358d1f49b02d3e5a6c92ee4, type: 3}
+  m_Script: {fileID: 11500000, guid: 5e8c3e37b2049d446846fe215145c275, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Discription: "\u041C\u0430\u043B\u044B\u0439 \u043B\u0430\u0433\u0435\u0440\u044C
-    \u0434\u0436\u0443\u0433\u0430\u0440\u043E\u0432"
-  IsEnemy: 1
-  BuildOnStart: 1
+  BuildingTypeImage: {fileID: 21300000, guid: de0d2889780759547a0e0eedc123d5a2, type: 3}
+  Discription: 
   Level: 0
-  GoldCost: -50
   UpgradeCost: 
-  AnotherWorkMode: 0
-  TikTimer: 0
+  TikTimer: 20
   TimeLeft: 0
---- !u!114 &968141055429925064
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8131346178066058629}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d1ab583268b62647ac2807e9856fe16, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Unit: {fileID: 3909269889597461387, guid: 0babeff56251cdf4abcd5dffe1e1090b, type: 3}
-  UnitNumber: 3
-  Enter: {fileID: 6843211014571478636}
+  FaithPerHuman: 01000000
 --- !u!65 &1163094676896449045
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -303,7 +284,7 @@ GameObject:
   - component: {fileID: 2290593143558504444}
   - component: {fileID: 5406239967312612403}
   - component: {fileID: 556783808711710968}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Some Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -496,11 +477,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8391222552659086748, guid: 167e06d4b1fac2949bfdabcc7345f628, type: 3}
       propertyPath: m_Layer
-      value: 10
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: -5568371526223589888, guid: 167e06d4b1fac2949bfdabcc7345f628, type: 3}
       propertyPath: m_Layer
-      value: 10
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 167e06d4b1fac2949bfdabcc7345f628, type: 3}
       propertyPath: m_Name
@@ -508,7 +489,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 167e06d4b1fac2949bfdabcc7345f628, type: 3}
       propertyPath: m_Layer
-      value: 10
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 167e06d4b1fac2949bfdabcc7345f628, type: 3}
@@ -586,11 +567,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8391222552659086748, guid: 167e06d4b1fac2949bfdabcc7345f628, type: 3}
       propertyPath: m_Layer
-      value: 10
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: -5568371526223589888, guid: 167e06d4b1fac2949bfdabcc7345f628, type: 3}
       propertyPath: m_Layer
-      value: 10
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 167e06d4b1fac2949bfdabcc7345f628, type: 3}
       propertyPath: m_Name
@@ -598,7 +579,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 167e06d4b1fac2949bfdabcc7345f628, type: 3}
       propertyPath: m_Layer
-      value: 10
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 167e06d4b1fac2949bfdabcc7345f628, type: 3}
@@ -676,11 +657,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8391222552659086748, guid: 167e06d4b1fac2949bfdabcc7345f628, type: 3}
       propertyPath: m_Layer
-      value: 10
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: -5568371526223589888, guid: 167e06d4b1fac2949bfdabcc7345f628, type: 3}
       propertyPath: m_Layer
-      value: 10
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 167e06d4b1fac2949bfdabcc7345f628, type: 3}
       propertyPath: m_Name
@@ -688,7 +669,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 167e06d4b1fac2949bfdabcc7345f628, type: 3}
       propertyPath: m_Layer
-      value: 10
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 167e06d4b1fac2949bfdabcc7345f628, type: 3}

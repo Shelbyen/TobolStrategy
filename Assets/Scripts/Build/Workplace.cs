@@ -1,26 +1,26 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
-public class Workplace : MonoBehaviour
+public class Workplace : Building
 {
-    protected Building Building;
     public int[] MaxWorkers;
     public int WorkersCount;
 
-    void Awake()
+    public override void OnDestroy()
     {
-        Building = GetComponent<Building>();
-    }
-
-    void OnDestroy()
-    {
-        ResourceManager.GetInstance().useHuman(-WorkersCount);
+        base.OnDestroy();
+        if (Built)
+        {
+            ResourceManager.GetInstance().useHuman(-WorkersCount);
+        }
     }
 
     public void HireWorker()
     {
-        if (WorkersCount < MaxWorkers[Building.Level])
+        if (WorkersCount < MaxWorkers[Level])
         {
             ResourceManager.GetInstance().useHuman(1);
             WorkersCount += 1;

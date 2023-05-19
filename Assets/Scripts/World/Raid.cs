@@ -8,12 +8,14 @@ public class Raid : MonoBehaviour
     int reward;
     public GameObject[] Humans;
     public GameObject[] Enemys;
-    public UIManagerScript UIManager;
-    private string Message = "";
 
+    private UIManagerScript UIManager;
+    private PauseMenu Pause;
+    private string Message = "";
     void Awake()
     {
         UIManager = GameObject.Find("UIManager").GetComponent<UIManagerScript>();
+        Pause = GameObject.Find("MainInterface - Canvas").GetComponent<PauseMenu>();
     }
 
     public void StartRaid(int Wave)
@@ -49,7 +51,7 @@ public class Raid : MonoBehaviour
                 Camera.main.gameObject.GetComponentInParent<StateManager>().setState(false);
                 Debug.Log("ТЫ - ЛУЗЕР");
                 Message = "Защитники крепости пали";
-                UIManager.OpenDefeatScreen(true, Message);
+                Pause.OpenDefeatScreen(true, Message);
             }
         }
     }

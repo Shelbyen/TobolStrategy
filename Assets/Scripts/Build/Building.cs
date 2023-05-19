@@ -10,8 +10,6 @@ public class Building : MonoBehaviour
     public string Discription;
     public int Level;
 
-    //[NonSerialized] public bool IsWrongPlace;
-    public bool FreeBuild;
     [NonSerialized] public bool Placed;
     [NonSerialized] public bool Built;
     [NonSerialized] public float BuildProgress;
@@ -20,27 +18,16 @@ public class Building : MonoBehaviour
     public float TikTimer;
     public float TimeLeft;
 
-    private SummonBuilding Summon;
-    private HealBuilding Heal;
-    private MoneyBuilding Miner;
-    private House House;
+    protected int GoldCost;
+    protected NavMeshObstacle Obstacle;
+    protected Builder BuilderScript;
+    protected int CollisionCount;
+    protected Material[] BaseMaterial;
+    protected Renderer[] Render;
+    protected Collider BuildingCollider;
 
-    private int GoldCost;
-    private NavMeshObstacle Obstacle;
-    private Builder BuilderScript;
-    private int CollisionCount;
-    private Material[] BaseMaterial;
-    private Renderer[] Render;
-    private Collider BuildingCollider;
-    //private BuildingButton BuildingButton;
-
-    void Awake()
+    public virtual void Awake()
     {
-        Summon = GetComponent<SummonBuilding>();
-        Heal = GetComponent<HealBuilding>();
-        Miner = GetComponent<MoneyBuilding>();
-        House = GetComponent<House>();
-
         Obstacle = GetComponent<NavMeshObstacle>();
         Obstacle.enabled = false;
         BuilderScript = GameObject.Find("Builder").GetComponent<Builder>();
@@ -54,7 +41,7 @@ public class Building : MonoBehaviour
         CheckPlace();
     }
 
-    void Update()
+    public void Update()
     {
         if (!Built)
         {
@@ -67,21 +54,19 @@ public class Building : MonoBehaviour
         }
     }
 
-    void OnDestroy()
+    public virtual void OnDestroy()
     {
-        if (!Built && Placed) ResourceManager.GetInstance().addGold(GoldCost);
-        if (Built && House != null) House.DeleteResidents(Level);
+        if (Placed && !Built) ResourceManager.GetInstance().addGold(GoldCost);
     }
 
-    private void OnTriggerEnter()
+    public void OnTriggerEnter()
     {
         if (!Placed) CollisionCount += 1;
-    }
-    private void OnTriggerExit()
+    } //Collision+
+    public void OnTriggerExit()
     {
         if (!Placed) CollisionCount -= 1;
-    }
-
+    } //Collision-
     public bool CheckPlace()
     {
         if (CollisionCount == 0)
@@ -93,7 +78,6 @@ public class Building : MonoBehaviour
             return false;
         }
     }
-
     public void SetMaterial(Material material)
     {
         foreach (Renderer renderer in GetComponentsInChildren<Renderer>()) renderer.material = material;
@@ -102,21 +86,16 @@ public class Building : MonoBehaviour
     public void PlaceThis()
     {
         Placed = true;
-        foreach (Renderer renderer in GetComponentsInChildren<Renderer>()) renderer.material = BuilderScript.GoodMaterial;
         ResourceManager.GetInstance().checkAndBuyGold(GoldCost);
         Obstacle.enabled = true;
     }
-
-    public void BuildThis()
+    public virtual void BuildThis()
     {
         Obstacle.enabled = true;
         Placed = true;
         Built = true;
         for (int i = 0; i < Render.Length; i += 1) Render[i].material = BaseMaterial[i];
-
-        if (House != null) House.AddResidents(Level);
     }
-
     public void DestroyThis()
     {
         Destroy(gameObject);
@@ -125,30 +104,17 @@ public class Building : MonoBehaviour
     public void Timer()
     {
         TimeLeft += Time.deltaTime;
-        if (TimeLeft >= TikTimer)
-        {
-            if (Heal != null) Heal.Heal();
-            if (Miner != null) Miner.GoldMine(Level);
-            TimeLeft = 0;
-        }
+        if (TimeLeft >= TikTimer) NewTik();
     }
 
-    public void UpgradeThis()
+    public virtual void NewTik()
     {
+        TimeLeft = 0;
+    }
 
-        if (Level < 2)
-        {
-            Level += 1;
-            if (Summon != null)
-            {
-                Summon.UpgradeUnits();
-            }
-            if (House != null)
-            {
-                House.DeleteResidents(Level - 1);
-                House.AddResidents(Level);
-            }
-        }
+    public virtual void UpgradeThis()
+    {
+        Level += 1;
     }
 
     public void SetCost(int Cost)

@@ -10,6 +10,11 @@ public class EnemySpawner : MonoBehaviour
     public int BaseEnemyCount;
     public int EnemyPerWave;
 
+    public void Awake()
+    {
+        SpawnPos = transform.position;
+    }
+
     public IEnumerator SpawnEnemys(int Wave)
     {
         foreach (int i in Enumerable.Range(0, BaseEnemyCount + Wave * EnemyPerWave))

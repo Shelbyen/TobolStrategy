@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 //Only with Workplace class
 public class HealBuilding : Workplace
@@ -8,27 +10,28 @@ public class HealBuilding : Workplace
     public float[] HealPerWorker;
     public float[] MaxHeal;
 
-    void Awake()
+    public override void NewTik()
     {
-        Building = GetComponent<Building>();
+        base.NewTik();
+        HealUnits();
     }
 
-    public void Heal()
+    public void HealUnits()
     {
         GameObject[] HumansForHeal = GameObject.FindGameObjectsWithTag("Human");
         foreach (GameObject human in HumansForHeal)
         {
-            if (human.GetComponent<Human>().HP < human.GetComponent<Human>().MaxHP * MaxHeal[Building.Level])
+            if (human.GetComponent<Human>().HP < human.GetComponent<Human>().MaxHP * MaxHeal[Level])
             {
-                human.GetComponent<Human>().HP += HealPerWorker[Building.Level] * WorkersCount;
-                human.GetComponent<Human>().HP = Mathf.Clamp(human.GetComponent<Human>().HP, 0, human.GetComponent<Human>().MaxHP * MaxHeal[Building.Level]);
+                human.GetComponent<Human>().HP += HealPerWorker[Level] * WorkersCount;
+                human.GetComponent<Human>().HP = Mathf.Clamp(human.GetComponent<Human>().HP, 0, human.GetComponent<Human>().MaxHP * MaxHeal[Level]);
             }
         }
-        Debug.Log(HealPerWorker[Building.Level] * WorkersCount);
+        Debug.Log(HealPerWorker[Level] * WorkersCount);
     }
 
     public float ReturnHealPower()
     {
-        return HealPerWorker[Building.Level] * WorkersCount;
+        return HealPerWorker[Level] * WorkersCount;
     }
 }

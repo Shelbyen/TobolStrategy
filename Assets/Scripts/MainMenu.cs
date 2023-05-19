@@ -1,22 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+    public string GameSceneName;
     public int StartGold = 1000;
-    public int StartPopulation = 5;
 
-    public void PlayGame () {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        ResourceManager.GetInstance().setGold(StartGold);
-        ResourceManager.GetInstance().setMaxHumansCount(StartPopulation);
+    void Awake()
+    {
+        SceneManagerScript.StartGold = StartGold;
     }
-    public void ExitGame () {
-        Debug.Log(SettingsManager.SoundVolume);
-        Debug.Log("Quit Game");
-        Application.Quit();
+
+    public void StartGame()
+    {
+        SceneManagerScript.LoadSceneByName(GameSceneName);
+    }
+    public void ExitGame()
+    {
+        SceneManagerScript.Quit();
     }
 }

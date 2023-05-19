@@ -4,10 +4,8 @@ using UnityEngine.AI;
 using UnityEngine;
 using System.Linq;
 
-public class SummonBuilding : MonoBehaviour
+public class SummonBuilding : Building
 {
-    private Building Building;
-
     public GameObject Unit;
     public int[] MaxUnitNumber;
     public GameObject Enter; //Вектор3
@@ -18,40 +16,42 @@ public class SummonBuilding : MonoBehaviour
     public float[] UnitSpeed;
     public List<GameObject> BuildingsUnits;
 
-    void Awake()
-    {
-        Building = GetComponent<Building>();
-    }
-
-    void OnDestroy()
-    {
-        KillAll();
-    }
-
     void FixedUpdate()
     {
         CheckUnits();
     }
 
-    public void UpgradeUnits()
+    public override void OnDestroy()
+    {
+        base.OnDestroy();
+        KillAll();
+    }
+
+    public override void UpgradeThis()
+    {
+        base.UpgradeThis();
+        UpgradeUnits();
+    }
+
+        public void UpgradeUnits()
     {
         foreach (GameObject Unit in BuildingsUnits)
         {
-            Unit.GetComponent<Human>().MaxHP = UnitMaxHP[Building.Level];
-            Unit.GetComponent<Human>().meleeDamage = UnitDamage[Building.Level];
-            Unit.GetComponent<NavMeshAgent>().speed = UnitSpeed[Building.Level];
+            Unit.GetComponent<Human>().MaxHP = UnitMaxHP[Level];
+            Unit.GetComponent<Human>().meleeDamage = UnitDamage[Level];
+            Unit.GetComponent<NavMeshAgent>().speed = UnitSpeed[Level];
         }
     }
 
     public void BuyUnit()
     {
         ResourceManager.GetInstance().useHuman(1);
-        ResourceManager.GetInstance().checkAndBuyGold(UnitCost[Building.Level]);
+        ResourceManager.GetInstance().checkAndBuyGold(UnitCost[Level]);
         BuildingsUnits.Add(Instantiate(Unit, Enter.transform.position, Quaternion.identity));
         BuildingsUnits.Last().GetComponent<Human>().Target = Enter.transform.position;
         BuildingsUnits.Last().GetComponent<Human>().Summon = GetComponent<SummonBuilding>();
-        BuildingsUnits.Last().GetComponent<Human>().UpdateLevelData(Building.Level);
-        BuildingsUnits.Last().GetComponent<Human>().HP = UnitMaxHP[Building.Level];
+        BuildingsUnits.Last().GetComponent<Human>().UpdateLevelData(Level);
+        BuildingsUnits.Last().GetComponent<Human>().HP = UnitMaxHP[Level];
     }
 
     public void DeleteUnit()

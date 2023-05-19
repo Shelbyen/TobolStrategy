@@ -7,41 +7,54 @@ using TMPro;
 
 public class UIManagerScript : MonoBehaviour
 {
-    public GameObject DefeatScreen;
-    public TMP_Text MessageText;
-
+    //Resources
     public TMP_Text GoldCount;
     public TMP_Text Population;
+    public TMP_Text Faith;
+
     public GameObject BuildMenu;
-    public TMP_Text StatusBar;
     public Image ToggleImage;
     public Image GridImage;
     public Image DestroyImage;
     public GameObject GoldCost;
     public TMP_Text RaidStatus;
-
-    public GameObject Discription;
-
+    //Sprites
     public Sprite BuildSprite;
     public Sprite ViewSprite;
-
     public Sprite GridDefault;
     public Sprite GridPressed;
-
     public Sprite DestroyDefault;
     public Sprite DestroyPressed;
 
-    private void Awake() {
+    public Button[] BuildPages;
+
+    private void Awake()
+    {
         BuildMenu.SetActive(false);
         GoldCost.SetActive(false);
         GoldCost.GetComponentsInChildren<TMP_Text>()[0].text = "";
+
+        foreach (Button Page in BuildPages)
+        {
+            Page.interactable = false;
+        }
+    }
+
+    public void OpenPage(int Page)
+    {
+        BuildPages[Page].interactable = true;
     }
     
-    private void Update() {
-        if (ResourceManager.GetInstance().getCountGold() <= 9999) GoldCount.text = ResourceManager.GetInstance().getCountGold().ToString();
-        else GoldCount.text = "9999+";
+    private void Update() 
+    {
+        ShowResourceData();
+    }
 
+    public void ShowResourceData()
+    {
+        GoldCount.text = ResourceManager.GetInstance().getCountGold().ToString();        
         Population.text = $"{(ResourceManager.GetInstance().maxHumansCount() - ResourceManager.GetInstance().usedHumansCount()) + "/" + ResourceManager.GetInstance().maxHumansCount()}";
+        Faith.text = ResourceManager.GetInstance().getFaith().ToString();
     }
 
     public void ChangeStatusGoldCost (bool State) {
@@ -50,10 +63,6 @@ public class UIManagerScript : MonoBehaviour
 
     public void ChangeStatusBuildMenu (bool State) {
         BuildMenu.SetActive(State);
-    }
-
-    public void ChangeTextStatusBar(string newText) {
-        StatusBar.text = newText;
     }
 
     public void ChangeBuildToggleImage(bool Status) {
@@ -73,26 +82,6 @@ public class UIManagerScript : MonoBehaviour
         else DestroyImage.sprite = DestroyDefault;
     }
 
-    public void SetDiscription(string Disc)
-    {
-        if (Disc == "")
-        {
-            Discription.GetComponentInChildren<TMP_Text>().text = Disc;
-            Discription.SetActive(false);
-            ToggleImage.gameObject.SetActive(true);
-            DestroyImage.gameObject.SetActive(true);
-            //GridDefault.gameObject.SetActive(true);
-        }
-        else
-        {
-            Discription.SetActive(true);
-            Discription.GetComponentInChildren<TMP_Text>().text = Disc;
-            ToggleImage.gameObject.SetActive(false);
-            DestroyImage.gameObject.SetActive(false);
-            //GridDefault.gameObject.SetActive(false);
-        }
-    }
-
     public void ChangeTextRaidStatus(string newText)
     {
         RaidStatus.text = newText;
@@ -100,17 +89,5 @@ public class UIManagerScript : MonoBehaviour
 
     public void ChangeTextGoldCost(string newText) {
         GoldCost.GetComponentsInChildren<TMP_Text>()[0].text = newText;
-    }
-
-    public void OpenDefeatScreen(bool Status, string Message)
-    {
-        Time.timeScale = 0f;
-        MessageText.text = Message;
-        DefeatScreen.SetActive(Status);
-    }
-
-    public void ChangeScene(string Name)
-    {
-        SceneManager.LoadScene(Name);
     }
 }

@@ -1,23 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using TMPro;
 
 public class PauseMenu : MonoBehaviour
 {
     public bool PauseGame;
     public GameObject pauseGameMenu;
-    public GameObject[] ConflictWindows;
+
+    public GameObject DefeatScreen;
+    public TMP_Text MessageText;
 
     void Update()
     {
-        bool CanPause = true;
-        foreach (GameObject Window in ConflictWindows)
-        {
-            if (Window.activeSelf) CanPause = false;
-        }
 
-        if (InputManager.GetKeyDown("Cancel") && CanPause) {
+        if (InputManager.GetKeyDown("Cancel") && !DefeatScreen.activeSelf) 
+        {
             if (PauseGame) {
                 Resume();
             } else {
@@ -25,25 +24,39 @@ public class PauseMenu : MonoBehaviour
             }
         }
     }
-    public void Resume() {
+    public void Resume() 
+    {
         pauseGameMenu.SetActive(false);
         Time.timeScale = 1f;
         PauseGame = false;
     }
 
-    public void Pause () {
+    public void Pause () 
+    {
         pauseGameMenu.SetActive(true);
         Time.timeScale = 0f;
         PauseGame = true;
     }
 
-    public void LoadMenu () {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene("Menu");
+    public void RestartGame()
+    {
+        SceneManagerScript.ReloadScene();
+    }
+
+    public void LoadMenu() 
+    {
+        SceneManagerScript.LoadSceneByName("Menu");
     }
     
-    public void ExitGame () {
-        Debug.Log("Quit Game");
-        Application.Quit();
+    public void ExitGame () 
+    {
+        SceneManagerScript.Quit();
+    }
+
+    public void OpenDefeatScreen(bool Status, string Message)
+    {
+        Time.timeScale = 0f;
+        MessageText.text = Message;
+        DefeatScreen.SetActive(Status);
     }
 }
