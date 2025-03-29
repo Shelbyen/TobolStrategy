@@ -6,11 +6,11 @@ using TMPro;
 
 public class Builder : MonoBehaviour
 {
-    public int GridStep = 1;
-    public LayerMask Ground;
-    public Material WrongMaterial;
-    public Material GoodMaterial;
-    public GameObject ActiveBuilding;
+    [SerializeField] private int GridStep = 1;
+    [SerializeField] private LayerMask Ground;
+    [SerializeField] private Material WrongMaterial;
+    [SerializeField] private Material GoodMaterial;
+    [SerializeField] private GameObject ActiveBuilding;
     private BuildingButton BuildingButton;
 
     private UIManagerScript UIManager;
@@ -25,15 +25,17 @@ public class Builder : MonoBehaviour
     private bool GridMode;
     private bool GoodPlace;
 
+    [SerializeField] private ButtonSwitch GridButton;
+    [SerializeField] private ButtonSwitch BuildButton;
+
     void Awake()
     {
         MainCamera = Camera.main;
         Destroyer = GetComponent<Destroyer>();
         GameManager = GameObject.Find("Selector").GetComponent<GameManagerScript>();
-        UIManager = GameObject.Find("UIManager").GetComponent<UIManagerScript>();
-        UIManager.ChangeStatusBuildMenu(false);
-        UIManager.ChangeStatusGoldCost(false);
-        UIManager.ChangeTextGoldCost("");
+        LinkManager.GetUIManager().ChangeStatusBuildMenu(false);
+        LinkManager.GetUIManager().ChangeStatusGoldCost(false);
+        LinkManager.GetUIManager().ChangeTextGoldCost("");
     }
 
     void Update()
@@ -55,8 +57,6 @@ public class Builder : MonoBehaviour
             {
                 CancelBuilding();
                 Destroyer.SwitchDestroyMode();
-                if (Destroyer.DestroyMode) UIManager.ChangeDestroyImage(true);
-                else UIManager.ChangeDestroyImage(false);
             }
             //Grid
             if (InputManager.GetKeyDown("GridMode")) SwitchGridMode();
@@ -72,12 +72,9 @@ public class Builder : MonoBehaviour
     {
         CancelBuilding();
         BuildMode = Status;
-        UIManager.ChangeStatusBuildMenu(Status);
-        GameManager.BlockRaycast = Status;
-        if (BuildMode) UIManager.ChangeBuildToggleImage(false);
-        else UIManager.ChangeBuildToggleImage(true);
-
-        GameManager.BlockRaycast = Status;
+        LinkManager.GetUIManager().ChangeStatusBuildMenu(Status);
+        GameManager.BlockRaycasting(Status);
+        BuildButton.SetStatus(BuildMode);
         Destroyer.SetDestroyMode(false);
     }
 
@@ -85,8 +82,7 @@ public class Builder : MonoBehaviour
     {
         GridMode = !GridMode;
         Debug.Log("Grid Switched");
-        if (GridMode) UIManager.ChangeGridImage(true);
-        else UIManager.ChangeGridImage(false);
+        GridButton.SetStatus(GridMode);
     }
 
     public void MoveBuilding()
@@ -137,8 +133,8 @@ public class Builder : MonoBehaviour
         ActiveBuilding = Instantiate(BuildingPrefab);
         ActiveBuilding.GetComponent<Building>().SetCost(Cost);
 
-        UIManager.ChangeStatusGoldCost(true);
-        UIManager.ChangeTextGoldCost(Cost.ToString());
+        LinkManager.GetUIManager().ChangeStatusGoldCost(true);
+        LinkManager.GetUIManager().ChangeTextGoldCost(Cost.ToString());
     }
 
     public void PlaceBuilding()
@@ -149,8 +145,8 @@ public class Builder : MonoBehaviour
             ActiveBuilding.GetComponent<Building>().PlaceThis();
             ActiveBuilding = null;
 
-            UIManager.ChangeStatusGoldCost(false);
-            UIManager.ChangeTextGoldCost("");
+            LinkManager.GetUIManager().ChangeStatusGoldCost(false);
+            LinkManager.GetUIManager().ChangeTextGoldCost("");
             if (Input.GetKey(KeyCode.LeftShift))
             {
                 BuildingButton.SpawnBuilding();
@@ -161,7 +157,7 @@ public class Builder : MonoBehaviour
     public void CancelBuilding()
     {
         Destroy(ActiveBuilding);
-        UIManager.ChangeStatusGoldCost(false);
-        UIManager.ChangeTextGoldCost("");
+        LinkManager.GetUIManager().ChangeStatusGoldCost(false);
+        LinkManager.GetUIManager().ChangeTextGoldCost("");
     }
 }

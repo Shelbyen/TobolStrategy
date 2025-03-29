@@ -1857,30 +1857,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0567fa58045d81842a3c5f10bc8b54b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Window: {fileID: 332192883}
-  BuildingIcon: {fileID: 2055789335}
-  BuildingType: {fileID: 949090790}
-  Level: {fileID: 1485517026}
-  Healthbar: {fileID: 522670164}
-  FunctionStats: {fileID: 209093180}
-  TikTimer: {fileID: 1987623323}
-  UpgradeCost: {fileID: 1033423883}
-  UnitCost: {fileID: 1190485740}
-  UnitFree: {fileID: 1910943031}
-  UnitControl: {fileID: 683255534}
-  Upgrade: {fileID: 1285676882}
-  BuyUnit: {fileID: 944643934}
-  FireUnit: {fileID: 56142150}
-  UnitInfo: {fileID: 1508518066}
-  UnitType: {fileID: 1890298462}
-  Health: {fileID: 923068953}
-  Damage: {fileID: 15554358}
-  Speed: {fileID: 743846933}
-  HealInfo: {fileID: 154169874}
-  MaxHeal: {fileID: 1038978952}
-  HealPerTik: {fileID: 2137124950}
-  GoldInfo: {fileID: 870552635}
-  GoldPerTik: {fileID: 254833649}
   BlockRaycast: 0
   SelectedObject: {fileID: 0}
   Mask:
@@ -2358,6 +2334,7 @@ GameObject:
   m_Component:
   - component: {fileID: 212816958}
   - component: {fileID: 212816960}
+  - component: {fileID: 212816961}
   - component: {fileID: 212816959}
   m_Layer: 5
   m_Name: Upgrade - Text
@@ -2483,6 +2460,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 212816957}
   m_CullTransparentMesh: 1
+--- !u!114 &212816961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 212816957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ef4ffa0a09357c41b36663ac494986b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: upgrade
 --- !u!1 &226309179
 GameObject:
   m_ObjectHideFlags: 0
@@ -3095,7 +3085,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.7843138, g: 0.8000001, b: 0.82745105, a: 1}
+  m_Color: {r: 0.9622642, g: 0.9622642, b: 0.9622642, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3645,6 +3635,7 @@ GameObject:
   - component: {fileID: 368282930}
   - component: {fileID: 368282929}
   - component: {fileID: 368282928}
+  - component: {fileID: 368282931}
   m_Layer: 5
   m_Name: Destroy - Button (switch)
   m_TagString: Untagged
@@ -3778,6 +3769,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 368282926}
   m_CullTransparentMesh: 1
+--- !u!114 &368282931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 368282926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 703b010e031458c49b316bacd2e44235, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetImage: {fileID: 368282929}
+  SwitchOn: {fileID: 21300000, guid: 7eedb1a9056bbfc4e832f49f5c07393b, type: 3}
+  SwitchOff: {fileID: 21300000, guid: bd379a309bb16ce4aa49dc4ffee54f31, type: 3}
 --- !u!1 &429564433
 GameObject:
   m_ObjectHideFlags: 0
@@ -3914,6 +3920,7 @@ GameObject:
   m_Component:
   - component: {fileID: 440500903}
   - component: {fileID: 440500905}
+  - component: {fileID: 440500906}
   - component: {fileID: 440500904}
   m_Layer: 5
   m_Name: Mine_info
@@ -4039,6 +4046,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 440500902}
   m_CullTransparentMesh: 1
+--- !u!114 &440500906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 440500902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ef4ffa0a09357c41b36663ac494986b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: gold stats
 --- !u!1 &442436829
 GameObject:
   m_ObjectHideFlags: 0
@@ -4390,6 +4410,7 @@ GameObject:
   m_Component:
   - component: {fileID: 483925098}
   - component: {fileID: 483925100}
+  - component: {fileID: 483925101}
   - component: {fileID: 483925099}
   m_Layer: 5
   m_Name: Heal_info
@@ -4515,6 +4536,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 483925097}
   m_CullTransparentMesh: 1
+--- !u!114 &483925101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 483925097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ef4ffa0a09357c41b36663ac494986b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: heal stats
 --- !u!1 &487028520
 GameObject:
   m_ObjectHideFlags: 0
@@ -5817,6 +5851,7 @@ GameObject:
   m_Component:
   - component: {fileID: 608501667}
   - component: {fileID: 608501669}
+  - component: {fileID: 608501670}
   - component: {fileID: 608501668}
   m_Layer: 5
   m_Name: Text (TMP)
@@ -5942,6 +5977,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 608501666}
   m_CullTransparentMesh: 1
+--- !u!114 &608501670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 608501666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ef4ffa0a09357c41b36663ac494986b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: destroy
 --- !u!1 &621400266
 GameObject:
   m_ObjectHideFlags: 0
@@ -6824,7 +6872,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.7802154, g: 0.8049684, b: 0.8396226, a: 1}
+  m_Color: {r: 0.9575472, g: 0.9906317, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -7811,6 +7859,7 @@ GameObject:
   m_Component:
   - component: {fileID: 787354708}
   - component: {fileID: 787354710}
+  - component: {fileID: 787354711}
   - component: {fileID: 787354709}
   m_Layer: 5
   m_Name: Text
@@ -7936,6 +7985,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 787354707}
   m_CullTransparentMesh: 1
+--- !u!114 &787354711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 787354707}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ef4ffa0a09357c41b36663ac494986b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: build flag
 --- !u!1 &789570299
 GameObject:
   m_ObjectHideFlags: 0
@@ -9940,7 +10002,7 @@ GameObject:
   - component: {fileID: 1033423884}
   - component: {fileID: 1033423883}
   m_Layer: 5
-  m_Name: GoldCost - Image
+  m_Name: GoldCost - Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17529,6 +17591,7 @@ GameObject:
   - component: {fileID: 1361060803}
   - component: {fileID: 1361060802}
   - component: {fileID: 1361060801}
+  - component: {fileID: 1361060804}
   m_Layer: 5
   m_Name: Grid - Button (switch)
   m_TagString: Untagged
@@ -17662,6 +17725,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1361060799}
   m_CullTransparentMesh: 1
+--- !u!114 &1361060804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1361060799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 703b010e031458c49b316bacd2e44235, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetImage: {fileID: 1361060802}
+  SwitchOn: {fileID: 21300000, guid: 3f61cb8a1c10ade43bade6b24c077d83, type: 3}
+  SwitchOff: {fileID: 21300000, guid: a4f2e71721ec8254f823e0f9214c1a5f, type: 3}
 --- !u!1 &1366514805
 GameObject:
   m_ObjectHideFlags: 0
@@ -18363,6 +18441,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1480129183}
   - component: {fileID: 1480129182}
+  - component: {fileID: 1480129184}
+  - component: {fileID: 1480129187}
+  - component: {fileID: 1480129185}
+  - component: {fileID: 1480129186}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: Untagged
@@ -18386,22 +18468,17 @@ MonoBehaviour:
   Population: {fileID: 993228046}
   Faith: {fileID: 442436831}
   BuildMenu: {fileID: 1283400107}
-  ToggleImage: {fileID: 1636628330}
-  GridImage: {fileID: 1361060802}
-  DestroyImage: {fileID: 368282929}
   GoldCost: {fileID: 789570299}
   RaidStatus: {fileID: 1424406666}
-  BuildSprite: {fileID: 21300000, guid: a1647e8af58f63548b7f82b61d327d60, type: 3}
-  ViewSprite: {fileID: 21300000, guid: 249d4915e4ef05c4c9f9c8cc4a4677f3, type: 3}
-  GridDefault: {fileID: 21300000, guid: a4f2e71721ec8254f823e0f9214c1a5f, type: 3}
-  GridPressed: {fileID: 21300000, guid: 3f61cb8a1c10ade43bade6b24c077d83, type: 3}
-  DestroyDefault: {fileID: 21300000, guid: bd379a309bb16ce4aa49dc4ffee54f31, type: 3}
-  DestroyPressed: {fileID: 21300000, guid: 7eedb1a9056bbfc4e832f49f5c07393b, type: 3}
   BuildPages:
   - {fileID: 924052030}
   - {fileID: 1566218094}
   - {fileID: 805049648}
   - {fileID: 6821673}
+  MainStats: {fileID: 1480129184}
+  HealStats: {fileID: 1480129185}
+  MiningStats: {fileID: 1480129186}
+  SummonStats: {fileID: 1480129187}
 --- !u!4 &1480129183
 Transform:
   m_ObjectHideFlags: 0
@@ -18417,6 +18494,78 @@ Transform:
   m_Father: {fileID: 750186023}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1480129184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1480129181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 837cae3cd06065642859a57933d03300, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Window: {fileID: 332192883}
+  BuildingIcon: {fileID: 2055789335}
+  Healthbar: {fileID: 522670164}
+  TikTimer: {fileID: 1987623323}
+  UnitPrice: {fileID: 1190485742}
+  BuildingType: {fileID: 949090790}
+  Level: {fileID: 1485517026}
+  UnitStats: {fileID: 209093180}
+  UpgradeCost: {fileID: 1033423883}
+  UnitCost: {fileID: 489643257}
+  FreeUnit: {fileID: 1910943031}
+  Upgrade: {fileID: 1285676882}
+  HireUnit: {fileID: 944643934}
+  FireUnit: {fileID: 56142150}
+--- !u!114 &1480129185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1480129181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49ba0a3ae74200f46be962e198bdc10a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Window: {fileID: 154169874}
+  HealPerTik: {fileID: 2137124950}
+  MaxHealth: {fileID: 1038978952}
+--- !u!114 &1480129186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1480129181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61ec3875466ef51419a7b95287b0c9ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Window: {fileID: 870552635}
+  GoldMining: {fileID: 254833649}
+--- !u!114 &1480129187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1480129181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdc6a4014b7cfbe49855ad8cbcbcbddc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Window: {fileID: 1508518066}
+  UnitName: {fileID: 1890298462}
+  UnitHealth: {fileID: 923068953}
+  UnitDamage: {fileID: 15554358}
+  UnitSpeed: {fileID: 743846933}
 --- !u!1 &1483753253
 GameObject:
   m_ObjectHideFlags: 0
@@ -18773,7 +18922,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1508518067
 RectTransform:
   m_ObjectHideFlags: 0
@@ -19057,6 +19206,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1554960992}
   - component: {fileID: 1554960994}
+  - component: {fileID: 1554960995}
   - component: {fileID: 1554960993}
   m_Layer: 5
   m_Name: Text (TMP)
@@ -19182,6 +19332,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1554960991}
   m_CullTransparentMesh: 1
+--- !u!114 &1554960995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1554960991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ef4ffa0a09357c41b36663ac494986b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: cancel
 --- !u!1 &1562562291
 GameObject:
   m_ObjectHideFlags: 0
@@ -19614,6 +19777,7 @@ GameObject:
   - component: {fileID: 1636628331}
   - component: {fileID: 1636628330}
   - component: {fileID: 1636628329}
+  - component: {fileID: 1636628332}
   m_Layer: 5
   m_Name: BuildMode - Button (switch)
   m_TagString: Untagged
@@ -19747,6 +19911,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1636628327}
   m_CullTransparentMesh: 1
+--- !u!114 &1636628332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1636628327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 703b010e031458c49b316bacd2e44235, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetImage: {fileID: 1636628330}
+  SwitchOn: {fileID: 21300000, guid: 249d4915e4ef05c4c9f9c8cc4a4677f3, type: 3}
+  SwitchOff: {fileID: 21300000, guid: a1647e8af58f63548b7f82b61d327d60, type: 3}
 --- !u!1 &1678045644
 GameObject:
   m_ObjectHideFlags: 0
@@ -19757,6 +19936,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1678045645}
   - component: {fileID: 1678045647}
+  - component: {fileID: 1678045648}
   - component: {fileID: 1678045646}
   m_Layer: 5
   m_Name: Text (TMP)
@@ -19882,6 +20062,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1678045644}
   m_CullTransparentMesh: 1
+--- !u!114 &1678045648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1678045644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ef4ffa0a09357c41b36663ac494986b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: fire
 --- !u!1 &1704057071
 GameObject:
   m_ObjectHideFlags: 0
@@ -20892,7 +21085,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Soilder
+  m_text: Soldier
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -21124,6 +21317,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1910943030}
   - component: {fileID: 1910943032}
+  - component: {fileID: 1910943033}
   - component: {fileID: 1910943031}
   m_Layer: 5
   m_Name: UnitFree - Text
@@ -21249,6 +21443,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1910943029}
   m_CullTransparentMesh: 1
+--- !u!114 &1910943033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1910943029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ef4ffa0a09357c41b36663ac494986b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: hire
 --- !u!1 &1923585228
 GameObject:
   m_ObjectHideFlags: 0
@@ -21677,6 +21884,8 @@ MonoBehaviour:
   WrongMaterial: {fileID: 2100000, guid: b4e076f02a49fd546a21e1e21a7a65bc, type: 2}
   GoodMaterial: {fileID: 2100000, guid: 1906937684a09694c86960df614369ba, type: 2}
   ActiveBuilding: {fileID: 0}
+  GridButton: {fileID: 1361060804}
+  BuildButton: {fileID: 1636628332}
 --- !u!114 &1945794042
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21693,6 +21902,7 @@ MonoBehaviour:
   Layer:
     serializedVersion: 2
     m_Bits: 128
+  DestroyButton: {fileID: 368282931}
 --- !u!1 &1953703734
 GameObject:
   m_ObjectHideFlags: 0

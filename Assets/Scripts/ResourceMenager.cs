@@ -20,6 +20,7 @@ public class ResourceManager
     private int HumansUsed; //Занятые мужики
     private int FaithPoints = 0; //Очки веры
     private int MaxFaith = 1000; //Максимум веры
+    private int MaxLv = 2; //Наличие ремезова
 
     // for call method use: ResourceManager.GetInstance().Method()
     public int getCountGold () {
@@ -67,6 +68,10 @@ public class ResourceManager
     {
         HumansUsed += count;
     }
+    public bool checkHuman()
+    {
+        return MaxHumans > HumansUsed;
+    }
 
     public int getFaith()
     {
@@ -81,5 +86,14 @@ public class ResourceManager
     {
         FaithPoints += count;
         FaithPoints = Mathf.Clamp(FaithPoints, 0, MaxFaith);
+    }
+
+    public void setMaxLv(int lv)
+    {
+        MaxLv = lv;
+    }
+    public int checkMaxLv()
+    {
+        return MaxLv;
     }
 }

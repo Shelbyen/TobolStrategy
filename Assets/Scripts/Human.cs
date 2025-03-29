@@ -56,9 +56,9 @@ public class Human : MonoBehaviour
 
     public void UpdateLevelData(int Lv)
     {
-        MaxHP = Summon.UnitMaxHP[Lv];
-        meleeDamage = Summon.UnitDamage[Lv];
-        agent.speed = Summon.UnitSpeed[Lv];
+        MaxHP = Summon.SummonData.UnitMaxHP[Lv];
+        meleeDamage = Summon.SummonData.UnitDamage[Lv];
+        agent.speed = Summon.SummonData.UnitSpeed[Lv];
     }
 
     public void Update()

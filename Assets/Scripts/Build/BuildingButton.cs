@@ -14,11 +14,8 @@ public class BuildingButton : MonoBehaviour
     private GameObject FreeBuild;
     private TMP_Text FreeBuildText;
 
-    private Builder Builder;
-
     void Awake()
     {
-        Builder = GameObject.Find("Builder").GetComponent<Builder>();
         FreeBuild = transform.GetChild(0).gameObject;
         FreeBuildText = GetComponentInChildren<TMP_Text>();
 
@@ -56,8 +53,8 @@ public class BuildingButton : MonoBehaviour
     {
         if (PlacedBuildings.Count < MaxCount)
         {
-            if (FreeBuildCount > 0) Builder.StartBuilding(Building, 0, GetComponent<BuildingButton>());
-            else Builder.StartBuilding(Building, Cost, GetComponent<BuildingButton>());
+            if (FreeBuildCount > 0) LinkManager.GetBuilder().StartBuilding(Building, 0, GetComponent<BuildingButton>());
+            else LinkManager.GetBuilder().StartBuilding(Building, Cost, GetComponent<BuildingButton>());
         }
     }
 }

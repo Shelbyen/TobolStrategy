@@ -6,32 +6,23 @@ using UnityEngine.AI;
 
 public class Building : MonoBehaviour
 {
-    public Sprite BuildingTypeImage;
-    public string Discription;
-    public int Level;
-
-    [NonSerialized] public bool Placed;
-    [NonSerialized] public bool Built;
-    [NonSerialized] public float BuildProgress;
-
-    public int[] UpgradeCost;
-    public float TikTimer;
-    public float TimeLeft;
+    [SerializeField] protected BuildingData BuildingData;
+    [SerializeField] protected int Level;
+    [NonSerialized] protected bool Placed;
+    [NonSerialized] protected bool Built;
+    [NonSerialized] protected float BuildProgress;
+    [SerializeField] protected float TimeLeft;
 
     protected int GoldCost;
     protected NavMeshObstacle Obstacle;
-    protected Builder BuilderScript;
     protected int CollisionCount;
     protected Material[] BaseMaterial;
     protected Renderer[] Render;
-    protected Collider BuildingCollider;
 
-    public virtual void Awake()
+    protected virtual void Awake()
     {
         Obstacle = GetComponent<NavMeshObstacle>();
         Obstacle.enabled = false;
-        BuilderScript = GameObject.Find("Builder").GetComponent<Builder>();
-        BuildingCollider = GetComponent<Collider>();
         Render = GetComponentsInChildren<Renderer>();
         BaseMaterial = new Material[Render.Length];
         for (int i = 0; i < Render.Length; i += 1)
@@ -41,7 +32,7 @@ public class Building : MonoBehaviour
         CheckPlace();
     }
 
-    public void Update()
+    protected void Update()
     {
         if (!Built)
         {
@@ -50,20 +41,20 @@ public class Building : MonoBehaviour
         }
         else
         {
-            if (TikTimer != 0) Timer();
+            if (BuildingData.TikTimer != 0) Timer();
         }
     }
 
-    public virtual void OnDestroy()
+    protected virtual void OnDestroy()
     {
         if (Placed && !Built) ResourceManager.GetInstance().addGold(GoldCost);
     }
 
-    public void OnTriggerEnter()
+    protected void OnTriggerEnter()
     {
         if (!Placed) CollisionCount += 1;
     } //Collision+
-    public void OnTriggerExit()
+    protected void OnTriggerExit()
     {
         if (!Placed) CollisionCount -= 1;
     } //Collision-
@@ -95,30 +86,97 @@ public class Building : MonoBehaviour
         Placed = true;
         Built = true;
         for (int i = 0; i < Render.Length; i += 1) Render[i].material = BaseMaterial[i];
+        Render = new Renderer[0];
+        BaseMaterial = new Material[0];
     }
     public void DestroyThis()
     {
         Destroy(gameObject);
     }
 
-    public void Timer()
+    protected void Timer()
     {
         TimeLeft += Time.deltaTime;
-        if (TimeLeft >= TikTimer) NewTik();
+        if (TimeLeft >= BuildingData.TikTimer) NewTik();
     }
 
-    public virtual void NewTik()
+    protected virtual void NewTik()
     {
         TimeLeft = 0;
     }
 
+    public float TimeLeftPercent()
+    {
+        if (BuildingData.TikTimer != 0)
+        {
+            return TimeLeft / BuildingData.TikTimer;
+        }
+        else
+        {
+            return 1f;
+        }
+    }
+
     public virtual void UpgradeThis()
     {
+        ResourceManager.GetInstance().checkAndBuyGold(BuildingData.UpgradeCost[Level]);
         Level += 1;
     }
 
     public void SetCost(int Cost)
     {
         GoldCost = Cost;
+    }
+
+    public virtual void AddUnit()
+    {
+
+    }
+
+    public virtual void DeleteUnit()
+    {
+
+    }
+
+    public virtual void ShowStats()
+    {
+        LinkManager.GetUIManager().MainStats.SetSprite(BuildingData.BuildingTypeImage);
+        LinkManager.GetUIManager().MainStats.SetType(BuildingData.Name);
+        LinkManager.GetUIManager().MainStats.SetLevel(Level + 1);
+        if (BuildingData.UpgradeCost.Length > Level) 
+            LinkManager.GetUIManager().MainStats.SetUpgradeCost(BuildingData.UpgradeCost[Level].ToString());
+        else LinkManager.GetUIManager().MainStats.SetUpgradeCost("---");
+
+        LinkManager.GetUIManager().MainStats.SetWindowStatus(true);
+    }
+
+    public virtual void ShowUnits()
+    {
+        LinkManager.GetUIManager().MainStats.SetUnitsInfo("no vacancies", "");
+    }
+
+    public virtual void ShowUpdatingStats()
+    {
+        LinkManager.GetUIManager().MainStats.SetHealth(BuildProgress);
+        LinkManager.GetUIManager().MainStats.SetTimer(TimeLeftPercent());
+        CheckUpgrade();
+        CheckVacancies();
+        ShowUnits();
+    }
+
+    public virtual void CheckVacancies()
+    {
+        LinkManager.GetUIManager().MainStats.HireUnits(false);
+        LinkManager.GetUIManager().MainStats.FireUnits(false);
+        LinkManager.GetUIManager().MainStats.SetUnitCost(0);
+    }
+
+    public virtual void CheckUpgrade()
+    {
+        if (Built && Level < ResourceManager.GetInstance().checkMaxLv() && Level < BuildingData.UpgradeCost.Length && ResourceManager.GetInstance().checkGold(BuildingData.UpgradeCost[Level]))
+        {
+            LinkManager.GetUIManager().MainStats.SetUpgrade(true);
+        }
+        else LinkManager.GetUIManager().MainStats.SetUpgrade(false);
     }
 }

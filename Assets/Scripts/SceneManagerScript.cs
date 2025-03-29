@@ -9,20 +9,20 @@ public static class SceneManagerScript
 
     public static void LoadSceneByName(string Name)
     {
-        Time.timeScale = 1f;
         SceneManager.LoadScene(Name);
+        Time.timeScale = 1f;
     }
 
     public static void LoadSceneByNumber(int Number)
     {
-        Time.timeScale = 1f;
         SceneManager.LoadScene(Number);
+        Time.timeScale = 1f;
     }
 
     public static void ReloadScene()
     {
-        Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Time.timeScale = 1f;
     }
 
     public static void SetResource()

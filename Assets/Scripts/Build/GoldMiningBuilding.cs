@@ -6,21 +6,33 @@ using UnityEngine.AI;
 
 public class GoldMiningBuilding : Workplace
 {
-    public int[] MoneyPerWorker;
+    [SerializeField] protected GoldMiningData GoldMiningData;
 
-    public override void NewTik()
+    protected override void NewTik()
     {
         base.NewTik();
         MineGold();
     }
 
-    public void MineGold()
+    protected void MineGold()
     {
-        ResourceManager.GetInstance().addGold(ReturnGoldMining());
+        ResourceManager.GetInstance().addGold(PredictGoldMining());
     }
 
-    public int ReturnGoldMining()
+    public int PredictGoldMining()
     {
-        return MoneyPerWorker[Level] * WorkersCount;
+        return GoldMiningData.MoneyPerWorker[Level] * WorkersCount;
+    }
+
+    public int MoneyPerWorker()
+    {
+        return GoldMiningData.MoneyPerWorker[Level];
+    }
+
+    public override void ShowStats()
+    {
+        base.ShowStats();
+        LinkManager.GetUIManager().MiningStats.SetMining(PredictGoldMining());
+        LinkManager.GetUIManager().MiningStats.SetWindowStatus(true);
     }
 }

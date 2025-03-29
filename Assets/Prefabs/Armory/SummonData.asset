@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6a94a61ab2a905489eb8fc0407e4366, type: 3}
+  m_Name: SummonData
+  m_EditorClassIdentifier: 
+  Unit: {fileID: 440588380187811796, guid: cdaf9aa54e92ca842ac7f36253d48790, type: 3}
+  UnitName: unit - soldier
+  MaxUnitNumber: 04000000080000000c00000018000000
+  UnitCost: 0f00000014000000190000001e000000
+  UnitDamage:
+  - 3
+  - 5
+  - 10
+  - 15
+  UnitMaxHP:
+  - 75
+  - 100
+  - 125
+  - 150
+  UnitSpeed:
+  - 3.5
+  - 3.2
+  - 3
+  - 3

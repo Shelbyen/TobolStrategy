@@ -16,13 +16,10 @@ public class StateManager : MonoBehaviour
 
     private bool ActiveStates;
 
-    private UIManagerScript UIManager;
     private Raid raidManager;
 
     void Awake()
     {
-        UIManager = GameObject.Find("UIManager").GetComponent<UIManagerScript>();
-        UIManager.ChangeTextRaidStatus("");
         raidManager = new Raid();
 
         TimeBeforeRaid = SettingsManager.FirstWaitingTime;
@@ -51,7 +48,7 @@ public class StateManager : MonoBehaviour
     {
         timeLeft += Time.fixedDeltaTime;
         timer.fillAmount = (TimeBeforeRaid - timeLeft) / TimeBeforeRaid;
-        UIManager.ChangeTextRaidStatus("Затишье");
+        LinkManager.GetUIManager().ChangeTextRaidStatus(Localization.ReturnTranslation("calm"));
     }
 
     public void StartNewRaid()
@@ -63,7 +60,7 @@ public class StateManager : MonoBehaviour
         Wave += 1;
 
         raidManager.StartRaid(Wave);
-        UIManager.ChangeTextRaidStatus("Волна " + Wave);
+        LinkManager.GetUIManager().ChangeTextRaidStatus(Localization.ReturnTranslation("wave") + " " + Wave);
         Source.Play();
     }
 

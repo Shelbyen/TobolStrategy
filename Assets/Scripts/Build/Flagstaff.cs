@@ -4,16 +4,13 @@ using UnityEngine;
 
 public class Flagstaff : House
 {
-
     public GameObject Fortress;
-    private UIManagerScript UIManager;
     private StateManager StateManager;
 
-    public override void Awake()
+    protected override void Awake()
     {
         base.Awake();
         Fortress.SetActive(false);
-        UIManager = GameObject.Find("UIManager").GetComponent<UIManagerScript>();
         StateManager = Camera.main.GetComponentInParent<StateManager>();
     }
 
@@ -21,7 +18,7 @@ public class Flagstaff : House
     {
         base.BuildThis();
         SceneManagerScript.SetResource();
-        UIManager.OpenPage(0);
+        LinkManager.GetUIManager().OpenPage(0);
         Fortress.SetActive(true);
         Fortress.transform.parent = null;
         StateManager.StartStates();
@@ -30,10 +27,10 @@ public class Flagstaff : House
     public override void UpgradeThis()
     {
         base.UpgradeThis();
-        UIManager.OpenPage(Level);
+        LinkManager.GetUIManager().OpenPage(Level);
     }
 
-    public override void OnDestroy()
+    protected override void OnDestroy()
     {
         base.OnDestroy();
         if (Built) GameObject.Find("MainInterface - Canvas").GetComponent<PauseMenu>().OpenDefeatScreen(true, "Флагшток уничтожен");

@@ -6,33 +6,53 @@ using UnityEngine.AI;
 
 public class Workplace : Building
 {
-    public int[] MaxWorkers;
+    public WorkplaceData WorkplaceData;
     public int WorkersCount;
 
-    public override void OnDestroy()
+    protected override void OnDestroy()
     {
         base.OnDestroy();
-        if (Built)
-        {
-            ResourceManager.GetInstance().useHuman(-WorkersCount);
-        }
+        ResourceManager.GetInstance().useHuman(-WorkersCount);
     }
 
-    public void HireWorker()
+    public override void AddUnit()
     {
-        if (WorkersCount < MaxWorkers[Level])
-        {
-            ResourceManager.GetInstance().useHuman(1);
-            WorkersCount += 1;
-        }
+        base.AddUnit();
+        ResourceManager.GetInstance().useHuman(1);
+        WorkersCount += 1;
     }
 
-    public void FireWorker()
+    public override void DeleteUnit()
     {
-        if (WorkersCount > 0)
+        base.DeleteUnit();
+        ResourceManager.GetInstance().useHuman(-1);
+        WorkersCount -= 1;
+    }
+
+    public string ReturnWorkersCount()
+    {
+        return (WorkersCount + "/" + WorkplaceData.MaxWorkers[Level]);
+    }
+
+    public override void ShowUnits()
+    {
+        LinkManager.GetUIManager().MainStats.SetUnitsInfo("working", ReturnWorkersCount());
+    }
+
+    public override void CheckVacancies()
+    {
+        if (ResourceManager.GetInstance().checkHuman() && WorkersCount < WorkplaceData.MaxWorkers[Level] && Built)
         {
-            ResourceManager.GetInstance().useHuman(-1);
-            WorkersCount -= 1;
+            LinkManager.GetUIManager().MainStats.HireUnits(true);
         }
+        else LinkManager.GetUIManager().MainStats.HireUnits(false);
+
+        if (WorkersCount > 0 && Built)
+        {
+            LinkManager.GetUIManager().MainStats.FireUnits(true);
+        }
+        else LinkManager.GetUIManager().MainStats.FireUnits(false);
+
+        LinkManager.GetUIManager().MainStats.SetUnitCost(0);
     }
 }

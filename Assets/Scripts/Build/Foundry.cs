@@ -4,33 +4,26 @@ using UnityEngine;
 
 public class Foundry : Building
 {
-    public GameObject Bullet;
-    public GameObject CannonBall;
-
-    public int[] BulletDamage;
-    public int[] CannonBallDamage;
-
-    public int DefaultBulletDamage;
-    public int DefaultBallDamage;
-
+    [SerializeField] protected FoundryData FoundryData;
+    
     public override void BuildThis()
     {
         base.BuildThis();
-        Bullet.GetComponent<BulletController>().damage = BulletDamage[Level];
-        //CannonBall.GetComponent<BulletController>().damage = CannonBallDamage[Level];
+        FoundryData.Bullet.GetComponent<BulletController>().damage = FoundryData.BulletDamage[Level];
+        //FoundryData.CannonBall.GetComponent<BulletController>().damage = FoundryData.CannonBallDamage[Level];
     }
 
     public override void UpgradeThis()
     {
         base.UpgradeThis();
-        Bullet.GetComponent<BulletController>().damage = BulletDamage[Level];
-        //CannonBall.GetComponent<BulletController>().damage = CannonBallDamage[Level];
+        FoundryData.Bullet.GetComponent<BulletController>().damage = FoundryData.BulletDamage[Level];
+        //FoundryData.CannonBall.GetComponent<BulletController>().damage = FoundryData.CannonBallDamage[Level];
     }
 
-    public override void OnDestroy()
+    protected override void OnDestroy()
     {
         base.OnDestroy();
-        Bullet.GetComponent<BulletController>().damage = DefaultBulletDamage;
-        //CannonBall.GetComponent<BulletController>().damage = DefaultBallDamage;
+        FoundryData.Bullet.GetComponent<BulletController>().damage = FoundryData.DefaultBulletDamage;
+        //FoundryData.CannonBall.GetComponent<BulletController>().damage = FoundryData.DefaultBallDamage;
     }
 }

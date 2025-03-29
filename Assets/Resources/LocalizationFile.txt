@@ -1,0 +1,32 @@
+language %English %Русский
+upgrade %Upgrade %Улучшить
+hire %Hire %Нанять
+fire %Fire %Снять
+cancel %Close %Назад
+destroy %Burn %Сжечь
+level %Level %Уровень
+barrack %Barrack %Барак
+armory %Armory %Арсенал
+flag %Flagstaff %Флагшток
+church %Church %Церковь
+house %House %Сарай
+hospital %Hospital %Госпиталь
+foundry %Foundry %Литейная
+remezov %Remezov %Ремезов
+living %Residents: %Жители:
+working %Workers: %Рабочие:
+fighting %Units: %Воины:
+pray %Pray: %Молятся:
+no vacancies %No vacancies % Нет вакансий
+heal stats %Unit heal %Лечение войск
+heal tik %Heal: %Лечение: 
+max health %Max: %Макс:
+gold stats %Gold mining %Добыча золота
+mining %Income: %Доход:
+unit - soldier %Soldier %Солдат
+unit health %Health: %Здоровье:
+unit damage %Melee: %Ближний:
+unit speed %Speed: %Скорость:
+calm %Calm %Затишье
+wave %Wave %Волна
+build flag %Build a flagstaff %Возведите флагшток

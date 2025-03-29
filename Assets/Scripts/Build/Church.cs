@@ -4,22 +4,31 @@ using UnityEngine;
 
 public class Church : Building
 {
-    public int[] FaithPerHuman;
+    [SerializeField] protected ChurchData ChurchData;
 
-    public override void NewTik()
+    protected override void NewTik()
     {
         base.NewTik();
         AddFaith();
     }
 
-    public void AddFaith()
+    protected void AddFaith()
     {
-        ResourceManager.GetInstance().addFaith(GetHumans() * FaithPerHuman[Level]);
-        Debug.Log(ResourceManager.GetInstance().getFaith());
+        ResourceManager.GetInstance().addFaith(PredictFaith());
     }
 
     public int GetHumans()
     {
         return ResourceManager.GetInstance().maxHumansCount() - ResourceManager.GetInstance().usedHumansCount();
+    }
+
+    public int PredictFaith()
+    {
+        return (GetHumans() * ChurchData.FaithPerHuman[Level]);
+    }
+
+    public override void ShowUnits()
+    {
+        LinkManager.GetUIManager().MainStats.SetUnitsInfo("pray", GetHumans().ToString());
     }
 }

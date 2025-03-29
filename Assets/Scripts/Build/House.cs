@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class House : Building
 {
-    public int[] ResidentsCount;
+    [SerializeField] protected HouseData HouseData;
 
-    public override void OnDestroy()
+    protected override void OnDestroy()
     {
         base.OnDestroy();
         if (Built)
@@ -28,13 +28,18 @@ public class House : Building
         DeleteResidents(Level - 1);
     }
 
-        public void AddResidents(int Lv)
+    protected void AddResidents(int Lv)
     {
-        ResourceManager.GetInstance().addMaxHumans(ResidentsCount[Lv]);
+        ResourceManager.GetInstance().addMaxHumans(HouseData.ResidentsCount[Lv]);
     }
 
-    public void DeleteResidents(int Lv)
+    protected void DeleteResidents(int Lv)
     {
-        ResourceManager.GetInstance().addMaxHumans(-ResidentsCount[Lv]);
+        ResourceManager.GetInstance().addMaxHumans(-HouseData.ResidentsCount[Lv]);
+    }
+
+    public override void ShowUnits()
+    {
+        LinkManager.GetUIManager().MainStats.SetUnitsInfo("living", HouseData.ResidentsCount[Level].ToString());
     }
 }

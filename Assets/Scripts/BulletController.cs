@@ -27,12 +27,16 @@ public class BulletController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if ((other.CompareTag("Human") && isEnemy) ||
-            (other.CompareTag("Enemy") && !isEnemy))
+        if ((other.CompareTag("Human") && isEnemy) || (other.CompareTag("Enemy") && !isEnemy))
         {
             Human human = other.GetComponent<Human>();
             human.HP -= damage;
         }
-        Destroy(gameObject);
+
+        if ((other.CompareTag("Human") && !isEnemy) || (other.CompareTag("Enemy") && isEnemy))
+        {
+
+        }
+        else Destroy(gameObject);
     }
 }

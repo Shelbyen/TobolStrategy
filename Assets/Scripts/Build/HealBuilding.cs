@@ -7,31 +7,36 @@ using UnityEngine.AI;
 //Only with Workplace class
 public class HealBuilding : Workplace
 {
-    public float[] HealPerWorker;
-    public float[] MaxHeal;
+    [SerializeField] protected HealBuildingData HealBuildingData;
 
-    public override void NewTik()
+    protected override void NewTik()
     {
         base.NewTik();
         HealUnits();
     }
 
-    public void HealUnits()
+    protected void HealUnits()
     {
         GameObject[] HumansForHeal = GameObject.FindGameObjectsWithTag("Human");
         foreach (GameObject human in HumansForHeal)
         {
-            if (human.GetComponent<Human>().HP < human.GetComponent<Human>().MaxHP * MaxHeal[Level])
-            {
-                human.GetComponent<Human>().HP += HealPerWorker[Level] * WorkersCount;
-                human.GetComponent<Human>().HP = Mathf.Clamp(human.GetComponent<Human>().HP, 0, human.GetComponent<Human>().MaxHP * MaxHeal[Level]);
-            }
+            human.GetComponent<Human>().HP += ReturnHealPower();
+            human.GetComponent<Human>().HP = Mathf.Clamp(human.GetComponent<Human>().HP, 0, human.GetComponent<Human>().MaxHP * HealBuildingData.MaxHeal[Level]);
         }
-        Debug.Log(HealPerWorker[Level] * WorkersCount);
+        Debug.Log(HealBuildingData.HealPerWorker[Level] * WorkersCount);
     }
 
     public float ReturnHealPower()
     {
-        return HealPerWorker[Level] * WorkersCount;
+        return HealBuildingData.HealPerWorker[Level] * WorkersCount;
+    }
+
+    public override void ShowStats()
+    {
+        base.ShowStats();
+        LinkManager.GetUIManager().HealStats.SetHealPerTik(ReturnHealPower());
+        LinkManager.GetUIManager().HealStats.SetMaxHealth(HealBuildingData.MaxHeal[Level]);
+
+        LinkManager.GetUIManager().HealStats.SetWindowStatus(true);
     }
 }

@@ -6,22 +6,16 @@ using System.Linq;
 
 public class SummonBuilding : Building
 {
-    public GameObject Unit;
-    public int[] MaxUnitNumber;
+    public SummonData SummonData;
     public GameObject Enter; //Вектор3
+    public List<GameObject> BuildingUnits;
 
-    public int[] UnitCost;
-    public float[] UnitDamage;
-    public float[] UnitMaxHP;
-    public float[] UnitSpeed;
-    public List<GameObject> BuildingsUnits;
-
-    void FixedUpdate()
+    protected void FixedUpdate()
     {
-        CheckUnits();
+        Clear();
     }
 
-    public override void OnDestroy()
+    protected override void OnDestroy()
     {
         base.OnDestroy();
         KillAll();
@@ -33,49 +27,93 @@ public class SummonBuilding : Building
         UpgradeUnits();
     }
 
-        public void UpgradeUnits()
+    public void UpgradeUnits()
     {
-        foreach (GameObject Unit in BuildingsUnits)
+        foreach (GameObject Unit in BuildingUnits)
         {
-            Unit.GetComponent<Human>().MaxHP = UnitMaxHP[Level];
-            Unit.GetComponent<Human>().meleeDamage = UnitDamage[Level];
-            Unit.GetComponent<NavMeshAgent>().speed = UnitSpeed[Level];
+            Unit.GetComponent<Human>().MaxHP = SummonData.UnitMaxHP[Level];
+            Unit.GetComponent<Human>().meleeDamage = SummonData.UnitDamage[Level];
+            Unit.GetComponent<NavMeshAgent>().speed = SummonData.UnitSpeed[Level];
         }
     }
 
-    public void BuyUnit()
+    public override void AddUnit()
     {
+        base.AddUnit();
         ResourceManager.GetInstance().useHuman(1);
-        ResourceManager.GetInstance().checkAndBuyGold(UnitCost[Level]);
-        BuildingsUnits.Add(Instantiate(Unit, Enter.transform.position, Quaternion.identity));
-        BuildingsUnits.Last().GetComponent<Human>().Target = Enter.transform.position;
-        BuildingsUnits.Last().GetComponent<Human>().Summon = GetComponent<SummonBuilding>();
-        BuildingsUnits.Last().GetComponent<Human>().UpdateLevelData(Level);
-        BuildingsUnits.Last().GetComponent<Human>().HP = UnitMaxHP[Level];
+        ResourceManager.GetInstance().checkAndBuyGold(SummonData.UnitCost[Level]);
+        BuildingUnits.Add(Instantiate(SummonData.Unit, Enter.transform.position, Quaternion.identity));
+        BuildingUnits.Last().GetComponent<Human>().Summon = GetComponent<SummonBuilding>();
+        BuildingUnits.Last().GetComponent<Human>().UpdateLevelData(Level);
+        BuildingUnits.Last().GetComponent<Human>().HP = SummonData.UnitMaxHP[Level];
     }
 
-    public void DeleteUnit()
+    public override void DeleteUnit()
     {
-        Destroy(BuildingsUnits.Last());
-        BuildingsUnits.RemoveAt(BuildingsUnits.Count - 1);
+        base.DeleteUnit();
+        Destroy(BuildingUnits.Last());
+        BuildingUnits.RemoveAt(BuildingUnits.Count - 1);
     }
 
-    public void CheckUnits()
+    public void Clear()
     {
-        for (int i = 0; i < BuildingsUnits.Count; i += 1)
+        for (int i = 0; i < BuildingUnits.Count; i += 1)
         {
-            if (BuildingsUnits[i] == null)
+            if (BuildingUnits[i] == null)
             {
-                BuildingsUnits.RemoveAt(i);
+                BuildingUnits.RemoveAt(i);
             }
         }
     }
 
+    public bool CheckUnits()
+    {
+        return SummonData.MaxUnitNumber[Level] > BuildingUnits.Count;
+    }
+
     public void KillAll()
     {
-        foreach (GameObject UnitForKill in BuildingsUnits)
+        foreach (GameObject UnitForKill in BuildingUnits)
         {
             Destroy(UnitForKill);
         }
+    }
+
+    public string ReturnUnitsCount()
+    {
+        return (BuildingUnits.Count + "/" + SummonData.MaxUnitNumber[Level]);
+    }
+
+    public override void ShowStats()
+    {
+        base.ShowStats();
+        LinkManager.GetUIManager().SummonStats.SetName(SummonData.UnitName);
+        LinkManager.GetUIManager().SummonStats.SetDamage(SummonData.UnitDamage[Level]);
+        LinkManager.GetUIManager().SummonStats.SetSpeed(SummonData.UnitSpeed[Level]);
+        LinkManager.GetUIManager().SummonStats.SetHealth(SummonData.UnitMaxHP[Level]);
+
+        LinkManager.GetUIManager().SummonStats.SetWindowStatus(true);
+    }
+
+    public override void ShowUnits()
+    {
+        LinkManager.GetUIManager().MainStats.SetUnitsInfo("fighting", ReturnUnitsCount());
+    }
+
+    public override void CheckVacancies()
+    {
+        if (Built && ResourceManager.GetInstance().checkGold(SummonData.UnitCost[Level]) && ResourceManager.GetInstance().checkHuman() && CheckUnits())
+        {
+            LinkManager.GetUIManager().MainStats.HireUnits(true);
+        }
+        else LinkManager.GetUIManager().MainStats.HireUnits(false);
+
+        if (Built && BuildingUnits.Count > 0)
+        {
+            LinkManager.GetUIManager().MainStats.FireUnits(true);
+        }
+        else LinkManager.GetUIManager().MainStats.FireUnits(false);
+
+        LinkManager.GetUIManager().MainStats.SetUnitCost(SummonData.UnitCost[Level]);
     }
 }
